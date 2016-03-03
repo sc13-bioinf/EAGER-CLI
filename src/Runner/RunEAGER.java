@@ -200,8 +200,9 @@ public class RunEAGER {
             bacterialpool.addModule(new MarkDuplicates(communicator));
         }
 
-        bacterialpool.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.DEDUP));
-        bacterialpool.addModule(new BAM2TDF(communicator));
+        if(communicator.isRun_mapping() && (communicator.isMarkdup_run() || communicator.isRmdup_run())){
+            bacterialpool.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.DEDUP));
+        }
 
         if(communicator.isSchmutzi_run()){
             addContaminationEstimation(bacterialpool);
@@ -344,9 +345,9 @@ public class RunEAGER {
             ancientbacterialpool.addModule(new MarkDuplicates(communicator));
         }
 
-
-        ancientbacterialpool.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.DEDUP));
-        ancientbacterialpool.addModule(new BAM2TDF(communicator));
+        if(communicator.isRun_mapping() && (communicator.isMarkdup_run() || communicator.isRmdup_run())){
+            ancientbacterialpool.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.DEDUP));
+        }
 
         if(communicator.isSchmutzi_run()){
             addContaminationEstimation(ancientbacterialpool);
@@ -489,9 +490,9 @@ public class RunEAGER {
             humanmodernpool.addModule(new MarkDuplicates(communicator));
         }
 
-
-        humanmodernpool.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.DEDUP));
-        humanmodernpool.addModule(new BAM2TDF(communicator));
+        if(communicator.isRun_mapping() && (communicator.isMarkdup_run() || communicator.isRmdup_run())){
+            humanmodernpool.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.DEDUP));
+        }
 
         if(communicator.isSchmutzi_run()){
             addContaminationEstimation(humanmodernpool);
@@ -638,9 +639,10 @@ public class RunEAGER {
             humanancientpool.addModule(new MarkDuplicates(communicator));
         }
 
-        if(communicator.isRmdup_run() || communicator.isMarkdup_run()){
+        if(communicator.isRun_mapping() && (communicator.isMarkdup_run() || communicator.isRmdup_run())){
             humanancientpool.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.DEDUP));
         }
+
 
         if(communicator.isSchmutzi_run()){
             addContaminationEstimation(humanancientpool);
