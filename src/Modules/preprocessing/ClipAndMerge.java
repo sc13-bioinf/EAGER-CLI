@@ -93,7 +93,7 @@ public class ClipAndMerge extends AModule {
         return new String[]{"ClipAndMerge", "-in1",  getAll(),
                 "-f", this.communicator.getMerge_fwadaptor(), "-r", this.communicator.getMerge_bwadaptor(),
                 "-trim3p", this.communicator.getMerge_barcode3p(), "-trim5p", this.communicator.getMerge_barcode5p(),
-                "-l", String.valueOf(this.communicator.getQuality_readlength()), "-no_merging", "-qt", "-q", String.valueOf(this.communicator.getQuality_minreadquality()),
+                "-l", String.valueOf(this.communicator.getQuality_readlength()), "-qt", "-q", String.valueOf(this.communicator.getQuality_minreadquality()),
                 "-log", getOutputfolder()+ "stats.log",
                 "-o ", getOutputfolder() +output_stem+".fq.gz"};
     }
