@@ -37,7 +37,7 @@ public class Bowtie2 extends AModule {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         this.parameters = new String[]{"bowtie2", "-x", this.communicator.getGUI_reference(), "-U", this.inputfile.get(0), "-S",
                             getOutputfolder()+"/"+output_stem + ".bt2.sam", "--end-to-end", "--very-sensitive" ,
-                            "-p", this.communicator.getCpucores()};
+                            "-p", this.communicator.getCpucores(), this.communicator.getMapper_advanced()};
         this.outputfile = new ArrayList<String>();
         this.outputfile.add(getOutputfolder()+"/"+output_stem + ".bt2.sam");
     }
