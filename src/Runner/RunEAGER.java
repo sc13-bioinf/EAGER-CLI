@@ -316,7 +316,7 @@ public class RunEAGER {
             addStampyMapping(ancientbacterialpool);
         }
 
-        if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("BT2")) {
+        if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("Bowtie 2")) {
             ancientbacterialpool.addPredecessor(preprocesspool);
             if (prq.checkForIndices("BT2")) {
                 ancientbacterialpool.addModule(new BT2Index(communicator));
@@ -603,7 +603,7 @@ public class RunEAGER {
             addStampyMapping(humanancientpool);
         }
 
-        if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("BT2")) {
+        if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("Bowtie 2")) {
             humanancientpool.addPredecessor(preprocesspool);
             if (prq.checkForIndices("BT2")) {
                 humanancientpool.addModule(new BT2Index(communicator));
@@ -855,12 +855,7 @@ public class RunEAGER {
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTMAPPED));
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTUNMAPPED));
         }
-
-
         pooltoadd.addModule(new SamtoolsSort(communicator));
-
-        pooltoadd.addModule(new BAM2TDF(communicator));
-
     }
 
     /**

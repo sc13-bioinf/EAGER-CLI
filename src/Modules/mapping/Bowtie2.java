@@ -35,10 +35,11 @@ public class Bowtie2 extends AModule {
     @Override
     public void setParameters() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
-        this.parameters = new String[]{"bowtie2", "-x", this.communicator.getGUI_reference(), "-U", this.inputfile.get(0), "-S", getOutputfolder()+"/"+output_stem + ".bt2.remapped.sam", "--end-to-end", "--very-sensitive" };
+        this.parameters = new String[]{"bowtie2", "-x", this.communicator.getGUI_reference(), "-U", this.inputfile.get(0), "-S",
+                            getOutputfolder()+"/"+output_stem + ".bt2.sam", "--end-to-end", "--very-sensitive" ,
+                            "-p", this.communicator.getCpucores()};
         this.outputfile = new ArrayList<String>();
-        this.outputfile.add(getOutputfolder()+"/"+output_stem + ".bt2.remapped.sam");
-        this.communicator.setUnmapped_reads_to_merge(getOutputfolder()+"/"+output_stem+".bt2.remapped.sam");
+        this.outputfile.add(getOutputfolder()+"/"+output_stem + ".bt2.sam");
     }
 
     @Override
