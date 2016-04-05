@@ -90,7 +90,7 @@ public class ClipAndMerge extends AModule {
 
     private String[] getSingleEndedOnlyParameterList() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
-        return new String[]{"ClipAndMerge", "-in1",  getAll(),
+        return new String[]{"ClipAndMerge", "-in1", getAll(),
                 "-f", this.communicator.getMerge_fwadaptor(), "-r", this.communicator.getMerge_bwadaptor(),
                 "-trim3p", this.communicator.getMerge_barcode3p(), "-trim5p", this.communicator.getMerge_barcode5p(),
                 "-l", String.valueOf(this.communicator.getQuality_readlength()), "-qt", "-q", String.valueOf(this.communicator.getQuality_minreadquality()),
