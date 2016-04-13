@@ -86,5 +86,14 @@ public class BWAIndex extends AModule {
         }
     }
 
-
+    @Override
+    public String getModulename() {
+        switch (currentconf) {
+            case DEFAULT:
+                return this.getClass().getSimpleName();
+            case MT:
+                return this.getClass().getSimpleName() + ".MT";
+        }
+        return this.getClass().getSimpleName();
+    }
 }
