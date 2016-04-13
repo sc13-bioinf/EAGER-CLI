@@ -54,7 +54,7 @@ public class CircularMapperRealigner extends AModule{
     private void getFilteredParameters() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         this.parameters = new String[]{"realignsamfile", "-e",String.valueOf(this.communicator.getCM_elongationfac()), "-i",
-                this.inputfile.get(0), "-r", this.communicator.getGUI_reference(), "-f", "true"};
+                this.inputfile.get(0), "-r", this.communicator.getGUI_reference(), "-f", "true", "-x", "false"};
         this.communicator.setCM_referencemt_elong(this.communicator.getGUI_reference() + "_" + this.communicator.getCM_elongationfac() + ".fa");
         this.communicator.setCM_realigned(getOutputfolder()+"/"+output_stem+"_realigned.bam");
         this.outputfile = new ArrayList<>();
