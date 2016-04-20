@@ -33,6 +33,7 @@ public class ModulePool {
     private ArrayList<String> currentFilePath;
     private FileWriter fw;
     private BufferedWriter bfw;
+    private static String EAGER_VERSION = "1.92.6";
 
     public ModulePool() {
         modulePool = new ArrayList<AModule>();
@@ -45,6 +46,9 @@ public class ModulePool {
 
     public void start() throws IOException, InterruptedException {
         this.setCurrentFilePath(this.getModulePoolPaths());
+        fw = new FileWriter(modulePool.get(0).getResultfolder() + "/" + "execution_log.log", true);
+        bfw = new BufferedWriter(fw);
+        bfw.write("EAGER Version used for this run: " + EAGER_VERSION);
 
         for (AModule module : modulePool) {
             module.setInputfile(this.getCurrentFilePath());
