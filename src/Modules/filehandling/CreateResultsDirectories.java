@@ -36,43 +36,48 @@ public class CreateResultsDirectories extends AModule {
 
     @Override
     public void setParameters() {
+        String useOutputFolderAsTmp = System.getProperty ("file.separator") + ".tmp";
+        if ( this.communicator.isUsesystemtmpdir () ) {
+            useOutputFolderAsTmp = "";
+        }
+
         ArrayList<String> listOfFolders = new ArrayList<String>();
         listOfFolders.add("mkdir");
         listOfFolders.add("-p");
         if(this.communicator.isRun_fastqc()){
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/0-FastQC");
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/0-FastQC"+useOutputFolderAsTmp);
         }
         if(this.communicator.isRun_clipandmerge()){
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/1-ClipAndMerge");
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/1-ClipAndMerge"+useOutputFolderAsTmp);
         }
         if(this.communicator.isRun_qualityfilter()){
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/2-QualityTrimming");
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/2-QualityTrimming"+useOutputFolderAsTmp);
         }
         if(this.communicator.isRun_mapping()){
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/3-Mapper");
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/4-Samtools");
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/3-Mapper"+useOutputFolderAsTmp);
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/4-Samtools"+useOutputFolderAsTmp);
         }
         if(this.communicator.isRmdup_run() || this.communicator.isMarkdup_run() || this.communicator.isMerge_bam_files() || this.communicator.isInput_already_merged()){
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/5-DeDup");
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/5-DeDup"+useOutputFolderAsTmp);
         }
         if(this.communicator.isRun_coveragecalc()){
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/6-QualiMap");
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/6-QualiMap"+useOutputFolderAsTmp);
         }
         if(this.communicator.isRun_mapdamage()){
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/7-MapDamage");
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/7-MapDamage"+useOutputFolderAsTmp);
         }
         if(this.communicator.isRun_complexityestimation()){
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/8-Preseq");
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/8-Preseq"+useOutputFolderAsTmp);
         }
         if(this.communicator.isRun_gatksnpcalling()){
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/9-GATKBasics");
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/10-GATKGenotyper");
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/9-GATKBasics"+useOutputFolderAsTmp);
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/10-GATKGenotyper"+useOutputFolderAsTmp);
         }
         if(this.communicator.isRun_gatksnpfiltering()){
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/11-GATKVariantFilter");
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/11-GATKVariantFilter"+useOutputFolderAsTmp);
         }
         if(this.communicator.isRun_vcf2draft()){
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/12-VCF2Genome");
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/12-VCF2Genome"+useOutputFolderAsTmp);
         }
 
 

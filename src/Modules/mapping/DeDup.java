@@ -21,6 +21,7 @@ import Modules.AModule;
 import com.google.common.io.Files;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by peltzer on 24.01.14.
@@ -37,6 +38,16 @@ public class DeDup extends AModule {
         this.parameters = new String[]{"dedup", "-i", this.inputfile.get(0), "-o", getOutputfolder()};
         this.outputfile = new ArrayList<String>();
         this.outputfile.add(getOutputfolder()+"/"+output_stem+"_rmdup.bam");
+    }
+
+    @Override
+    public void setProcessEnvironment (Map <String, String> env) {
+        if ( !this.communicator.isUsesystemtmpdir() ) {
+          AModule.setEnvironmentForParameterPrepend (env,
+                                                     " ",
+                                                     "JAVA_TOOL_OPTIONS",
+                                                     "-Djava.io.tmpdir=" + getOutputfolder() + System.getProperty ("file.separator") + ".tmp");
+        }
     }
 
     @Override
