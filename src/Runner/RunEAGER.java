@@ -413,6 +413,7 @@ public class RunEAGER {
         ModulePool preprocesspool = new ModulePool();
         ModulePool humanmodernpool = new ModulePool();
         ModulePool gatkpool = new ModulePool();
+        ModulePool reportpool = new ModulePool();
 
         preprocesspool.addModule(new CreateResultsDirectories(communicator));
         if (communicator.isReferenceselected()) {
@@ -541,14 +542,27 @@ public class RunEAGER {
         }
 
         if (communicator.isRun_reportgenerator()) {
-            gatkpool.addModule(new ReportGenerator(communicator));
+            reportpool.addModule(new ReportGenerator(communicator));
         }
 
         pools.add(preprocesspool);
-        humanmodernpool.addPredecessor(preprocesspool);
-        pools.add(humanmodernpool);
-        gatkpool.addPredecessor(humanmodernpool);
-        pools.add(gatkpool);
+        if ( humanmodernpool.getModules().size() > 0 ) {
+            humanmodernpool.addPredecessor(preprocesspool);
+            pools.add(humanmodernpool);
+            reportpool.addPredecessor (humanmodernpool);
+        } else {
+            System.out.println("Skipping Human Modern Modules");
+        }
+        if ( gatkpool.getModules().size() > 0 ) {
+            gatkpool.addPredecessor(humanmodernpool);
+            pools.add(gatkpool);
+            reportpool.addPredecessor(gatkpool);
+        } else {
+            System.out.println("Skipping GATK Modules");
+        }
+        if ( reportpool.getModules().size() > 0 ) {
+            pools.add (reportpool);
+        }
     }
 
 
@@ -561,6 +575,7 @@ public class RunEAGER {
         ModulePool preprocesspool = new ModulePool();
         ModulePool humanancientpool = new ModulePool();
         ModulePool gatkpool = new ModulePool();
+        ModulePool reportpool = new ModulePool();
 
         preprocesspool.addModule(new CreateResultsDirectories(communicator));
         if (communicator.isReferenceselected()) {
@@ -693,14 +708,28 @@ public class RunEAGER {
         }
 
         if (communicator.isRun_reportgenerator()) {
-            gatkpool.addModule(new ReportGenerator(communicator));
+            reportpool.addModule(new ReportGenerator(communicator));
         }
 
         pools.add(preprocesspool);
-        humanancientpool.addPredecessor(preprocesspool);
-        pools.add(humanancientpool);
-        gatkpool.addPredecessor(humanancientpool);
-        pools.add(gatkpool);
+        if ( humanancientpool.getModules().size() > 0 ) {
+            humanancientpool.addPredecessor(preprocesspool);
+            pools.add(humanancientpool);
+            reportpool.addPredecessor(humanancientpool);
+        } else {
+            System.out.println ("Skipping HumanAncient Modules");
+        }
+        if ( gatkpool.getModules().size() > 0 ) {
+            gatkpool.addPredecessor(humanancientpool);
+            pools.add(gatkpool);
+            reportpool.addPredecessor(gatkpool);
+        } else {
+            System.out.println ("Skipping GATK Modules");
+        }
+        if (reportpool.getModules().size() > 0) {
+            reportpool.addModule(new ReportGenerator(communicator));
+            pools.add(reportpool);
+        }
     }
 
     /**
