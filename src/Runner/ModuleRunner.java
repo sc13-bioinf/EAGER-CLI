@@ -21,6 +21,7 @@ import Modules.AModule;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.sql.Time;
+import java.util.Map;
 
 /**
  * Created by peltzer on 22.01.14.
@@ -34,14 +35,16 @@ public class ModuleRunner{
     public ModuleRunner(AModule module) throws IOException, InterruptedException {
         this.parameters = module.getParameters();
         if(!module.hasbeenExecuted()) {
-            run(module.getResultfolder());
+            run(module.getResultfolder(),module);
             runDependencyChecker(module.getOutputfolder(),module);
         }
     }
 
-    public void run(String outputpath) throws IOException, InterruptedException {
+    public void run(String outputpath, AModule module) throws IOException, InterruptedException {
         long currtime_prior_execution = System.currentTimeMillis();
         ProcessBuilder processBuilder = new ProcessBuilder(this.parameters);
+        Map<String, String> env = processBuilder.environment();
+        module.setProcessEnvironment (env);
         processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(new File(outputpath + "/log.log")));
         Process process = processBuilder.start();
         process.waitFor();

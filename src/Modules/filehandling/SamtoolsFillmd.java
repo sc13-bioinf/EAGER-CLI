@@ -35,8 +35,13 @@ public class SamtoolsFillmd extends AModule {
     public void setParameters() {
         String output_stem = Files.getNameWithoutExtension(this.getInputfile().get(0));
         String outfile = getOutputfolder()+"/"+output_stem+".MD.bam";
-        String samtools = "samtools " + "fillmd -b " + this.inputfile.get(0) + " " + this.communicator.getSchmutzi_mt_ref() + " > " +
+
+        String samtools = "samtools " + "fillmd -b " + this.inputfile.get(0) + " " + this.communicator.getGUI_reference() + " > " +
                 outfile;
+        if ( this.communicator.getSchmutzi_mt_ref() != null) {
+          samtools = "samtools " + "fillmd -b " + this.inputfile.get(0) + " " + this.communicator.getSchmutzi_mt_ref() + " > " +
+                  outfile;
+        }
         this.parameters = new String[]{"/bin/sh", "-c", samtools};
         this.outputfile = new ArrayList<>();
         outputfile.add(outfile);

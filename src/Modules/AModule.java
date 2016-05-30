@@ -20,6 +20,7 @@ import IO.Communicator;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by peltzer on 22.01.14.
@@ -89,11 +90,19 @@ public abstract class AModule {
 
     public abstract void setParameters();
 
+    public void setProcessEnvironment (Map <String, String> env) {};
+
     public Communicator getCommunicator(){
         return this.communicator;
     }
 
     public abstract String getOutputfolder();
 
-
+    public static void setEnvironmentForParameterPrepend (Map <String, String> env, String separator, String key, String value) {
+        String resolvedValue = value;
+        if ( env.containsKey(key) ) {
+            resolvedValue = value + separator + env.get(key);
+        }
+        env.put(key, resolvedValue);
+    }
 }
