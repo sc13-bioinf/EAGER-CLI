@@ -807,6 +807,10 @@ public class RunEAGER {
         }
         pooltoadd.addModule(new SamtoolsSort(communicator));
 
+        if (communicator.isRun_mapping_extractmappedandunmapped()) {
+            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTMAPPED));
+            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTUNMAPPED));
+        }
     }
 
     /**
