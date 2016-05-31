@@ -126,7 +126,7 @@ public class ClipAndMerge extends AModule {
 
         String out = "";
         for(String s : this.communicator.getGUI_inputfiles()){
-            if(s.contains("R1_")){
+            if(s.contains("R1")){
                 out+= s + " ";
             }
         }
@@ -136,7 +136,7 @@ public class ClipAndMerge extends AModule {
     private String getReverse(){
         String out = "";
         for(String s : this.communicator.getGUI_inputfiles()){
-            if(s.contains("R2_")){
+            if(s.contains("R2")){
                 out+= s + " ";
             }
         }
