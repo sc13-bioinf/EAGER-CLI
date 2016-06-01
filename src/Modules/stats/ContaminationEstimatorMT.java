@@ -39,9 +39,6 @@ public class ContaminationEstimatorMT extends AModule {
     }
 
 
-
-
-
     @Override
     public void setParameters() {
         this.outputfile = this.inputfile;
