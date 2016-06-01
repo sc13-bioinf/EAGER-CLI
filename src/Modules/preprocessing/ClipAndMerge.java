@@ -33,6 +33,7 @@ public class ClipAndMerge extends AModule {
     public static final int SINGLE_ENDED_ONLY = 2;
 
 
+
     public ClipAndMerge(Communicator c) {
         super(c);
     }
@@ -49,14 +50,17 @@ public class ClipAndMerge extends AModule {
 
         switch (currentConfiguration){
             case DEFAULT: this.parameters = getDefaultParameterList();
+                appendMergedOnly();
                 this.outputfile.add(getOutputfolder()+output_stem+".merged.fq.gz");
-               // addStatsLogger();
                 break;
             case ADAPTER_CLIPPING_ONLY: this.parameters = getAdapterClippingOnlyParameterList();
+                appendMergedOnly();
+
                 this.outputfile.add(getOutputfolder()+output_stem+".clipped.fq.gz");
-              //  addStatsLogger();
                 break;
             case SINGLE_ENDED_ONLY: this.parameters = getSingleEndedOnlyParameterList();
+                appendMergedOnly();
+
                 this.outputfile.add(getOutputfolder()+output_stem+".fq.gz");
                 break;
 
@@ -149,6 +153,20 @@ public class ClipAndMerge extends AModule {
             out+= s + " ";
         }
         return out;
+    }
+
+    private void appendMergedOnly(){
+        String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
+        if(communicator.isMerge_keep_only_merged()){
+        ArrayList<String> params = new ArrayList<String>();
+        for ( String s : this.parameters){
+            params.add(s);
+        }
+        params.add("-u");
+        params.add(getOutputfolder() +output_stem+".forwards.unmerged.fq.gz");
+        params.add(getOutputfolder() + output_stem+".reverse.unmerged.fq.gz");
+        }
+
     }
 
 
