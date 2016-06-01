@@ -36,7 +36,7 @@ public class ContaminationEstimator extends AModule {
     public void setParameters() {
         this.outputfile = this.inputfile;
 
-        this.parameters = new String[]{"contDeam", "--length", "20", "--library", this.communicator.getSchmutzi_library_type(), "--out", getOutputfolder()+"/outputdeam", this.getInputfile().get(0)};
+        this.parameters = new String[]{"contDeam", "--library", this.communicator.getSchmutzi_library_type(), "--out", getOutputfolder()+"/outputdeam", this.getInputfile().get(0)};
     }
 
 

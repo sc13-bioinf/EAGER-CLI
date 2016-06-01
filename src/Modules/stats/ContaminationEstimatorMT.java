@@ -57,7 +57,7 @@ public class ContaminationEstimatorMT extends AModule {
 
 
     private String[] getDefaultParams(){
-        String prepend = "schmutzi --uselength --t " + this.communicator.getCpucores() + " --ref " + this.communicator.getSchmutzi_mt_ref() +
+        String prepend = "schmutzi --uselength --t " + Math.floor(Integer.parseInt(this.communicator.getCpucores())/2) + " --ref " + this.communicator.getSchmutzi_mt_ref() +
                 " " + getOutputfolder()+"/outputdeam" + " " + this.communicator.getSchmutzi_mt_refDB() + " " + this.getInputfile().get(0) +
                 " &> " + getOutputfolder()+"/schmutzi.log";
         String[] tmp = new String[]{"/bin/sh", "-c", prepend};
@@ -65,7 +65,7 @@ public class ContaminationEstimatorMT extends AModule {
     }
 
     private String[] getNotPredCParams(){
-        String prepend = "schmutzi --uselength --notusepredC --t " + this.communicator.getCpucores() + " --ref " + this.communicator.getSchmutzi_mt_ref() +
+        String prepend = "schmutzi --uselength --notusepredC --t " + Math.floor(Integer.parseInt(this.communicator.getCpucores())/2) + " --ref " + this.communicator.getSchmutzi_mt_ref() +
                 " " + getOutputfolder()+"/outputdeam" + " " + this.communicator.getSchmutzi_mt_refDB() + " " + this.getInputfile().get(0) +
                 " &> " + getOutputfolder()+"/schmutzi.log";
         String[] tmp = new String[]{"/bin/sh", "-c", prepend};
