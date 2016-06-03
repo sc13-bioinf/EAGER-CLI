@@ -18,7 +18,7 @@ public class CleanSam extends AModule {
     @Override
     public void setParameters() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
-        String output = getOutputfolder()+"/"+output_stem+"rmdup.cleaned.bam";
+        String output = getOutputfolder()+"/"+output_stem+".cleaned.bam";
         this.parameters = new String[]{"picard", "CleanSam", "INPUT="+this.inputfile.get(0), "OUTPUT="+ output};
         this.outputfile = new ArrayList<>();
         this.outputfile.add(output);
