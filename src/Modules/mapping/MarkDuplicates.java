@@ -34,7 +34,8 @@ public class MarkDuplicates extends AModule {
     public void setParameters() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         String output = getOutputfolder()+"/"+output_stem+"rmdup.MarkD.bam";
-        this.parameters = new String[]{"picard", "MarkDuplicates", "INPUT="+this.inputfile.get(0), "OUTPUT="+ output, "REMOVE_DUPLICATES=TRUE", "AS=TRUE", "METRICS_FILE=metrics.txt"};
+        String metricsout = getOutputfolder()+"/"+output_stem+".markdup.metrics";
+        this.parameters = new String[]{"picard", "MarkDuplicates", "INPUT="+this.inputfile.get(0), "OUTPUT="+ output, "REMOVE_DUPLICATES=TRUE", "AS=TRUE", "METRICS_FILE=" + metricsout};
         this.outputfile = new ArrayList<>();
         this.outputfile.add(output);
     }
