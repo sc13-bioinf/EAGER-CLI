@@ -197,6 +197,7 @@ public class RunEAGER {
         }
 
         if (communicator.isMarkdup_run()) {
+            bacterialpool.addModule(new CleanSam(communicator));
             bacterialpool.addModule(new MarkDuplicates(communicator));
         }
 
@@ -344,6 +345,7 @@ public class RunEAGER {
         }
 
         if (communicator.isMarkdup_run()) {
+            ancientbacterialpool.addModule(new CleanSam(communicator));
             ancientbacterialpool.addModule(new MarkDuplicates(communicator));
         }
 
@@ -654,6 +656,7 @@ public class RunEAGER {
         }
 
         if (communicator.isMarkdup_run()) {
+            humanancientpool.addModule(new CleanSam(communicator));
             humanancientpool.addModule(new MarkDuplicates(communicator));
         }
 
