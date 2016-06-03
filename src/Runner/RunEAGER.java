@@ -490,6 +490,7 @@ public class RunEAGER {
         }
 
         if (communicator.isMarkdup_run()) {
+            humanmodernpool.addModule(new CleanSam(communicator));
             humanmodernpool.addModule(new MarkDuplicates(communicator));
         }
 
