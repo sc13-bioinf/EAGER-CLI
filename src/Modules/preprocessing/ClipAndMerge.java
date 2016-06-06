@@ -158,19 +158,20 @@ public class ClipAndMerge extends AModule {
     private void appendMergedOnly(){
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         ArrayList<String> params = new ArrayList<String>();
-        if(communicator.isMerge_keep_only_merged()){
-        for ( String s : this.parameters){
-            params.add(s);
-        }
-        params.add("-u");
-        params.add(getOutputfolder() +output_stem+".forwards.unmerged.fq.gz");
-        params.add(getOutputfolder() + output_stem+".reverse.unmerged.fq.gz");
-        }
+        if(communicator.isMerge_keep_only_merged()) {
+            for (String s : this.parameters) {
+                params.add(s);
+            }
+            params.add("-u");
+            params.add(getOutputfolder() + output_stem + ".forwards.unmerged.fq.gz");
+            params.add(getOutputfolder() + output_stem + ".reverse.unmerged.fq.gz");
 
-        this.parameters = new String[params.size()];
 
-        for(int i = 0; i < params.size(); i++){
-            this.parameters[i] = params.get(i);
+            this.parameters = new String[params.size()];
+
+            for (int i = 0; i < params.size(); i++) {
+                this.parameters[i] = params.get(i);
+            }
         }
 
     }
