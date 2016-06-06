@@ -54,7 +54,7 @@ public class ContaminationEstimatorMT extends AModule {
 
 
     private String[] getDefaultParams(){
-        String prepend = "schmutzi --uselength --t " + Math.floor(Integer.parseInt(this.communicator.getCpucores())/2) + " --ref " + this.communicator.getSchmutzi_mt_ref() +
+        String prepend = "schmutzi --uselength --t " + ((Double) Math.floor(Integer.parseInt(this.communicator.getCpucores())/2)).intValue() + " --ref " + this.communicator.getSchmutzi_mt_ref() +
                 " " + getOutputfolder()+"/outputdeam" + " " + this.communicator.getSchmutzi_mt_refDB() + " " + this.getInputfile().get(0) +
                 " &> " + getOutputfolder()+"/schmutzi_default.log";
         String[] tmp = new String[]{"/bin/sh", "-c", prepend};
