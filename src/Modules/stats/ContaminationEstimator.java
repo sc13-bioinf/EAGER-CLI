@@ -35,8 +35,9 @@ public class ContaminationEstimator extends AModule {
     @Override
     public void setParameters() {
         this.outputfile = this.inputfile;
-
-        this.parameters = new String[]{"contDeam", "--library", this.communicator.getSchmutzi_library_type(), "--out", getOutputfolder()+"/outputdeam", this.getInputfile().get(0)};
+        String prepend = "contDeam --library " + this.communicator.getSchmutzi_library_type() + " --out " + getOutputfolder()+"/contDeam/outputdeam " + this.getInputfile().get(0);
+        String[] tmp = new String[]{"/bin/sh", "-c", "mkdir -p " + getOutputfolder() + "/contDeam && "+ prepend};
+        this.parameters = tmp;
     }
 
 

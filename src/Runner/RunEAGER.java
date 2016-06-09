@@ -906,7 +906,7 @@ public class RunEAGER {
         pooltoadd.addModule(new SamtoolsIndex(communicator,SamtoolsIndex.SCHMUTZI));
         if(communicator.isRun_mt_capture_mode()){
             pooltoadd.addModule(new ContaminationEstimator(communicator));
-            pooltoadd.addModule(new ContaminationEstimatorMT(communicator,ContaminationEstimatorMT.DEFAULT));
+            pooltoadd.addModule(new ContaminationEstimatorMT(communicator, ContaminationEstimatorMT.DEFAULT));
             pooltoadd.addModule(new ContaminationEstimatorMT(communicator, ContaminationEstimatorMT.NOTPREDC));
         } else {
             pooltoadd.addModule(new ContaminationEstimator(communicator));

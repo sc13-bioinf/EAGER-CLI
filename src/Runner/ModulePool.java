@@ -33,7 +33,7 @@ public class ModulePool {
     private ArrayList<String> currentFilePath;
     private FileWriter fw;
     private BufferedWriter bfw;
-    private static String EAGER_VERSION = "1.92.6";
+    private static String EAGER_VERSION = "1.94.1";
 
     public ModulePool() {
         modulePool = new ArrayList<AModule>();
@@ -51,20 +51,22 @@ public class ModulePool {
         bfw.write("EAGER Version used for this run: " + EAGER_VERSION);
 
         for (AModule module : modulePool) {
+            if (this.getCurrentFilePath() != null) {
+
             module.setInputfile(this.getCurrentFilePath());
             module.getCommunicator().setGUI_inputfiles(this.getModulePoolPaths());
-            fw = new FileWriter(module.getResultfolder()+"/"+"execution_log.log", true); //append only, do not overwrite!
+            fw = new FileWriter(module.getResultfolder() + "/" + "execution_log.log", true); //append only, do not overwrite!
             bfw = new BufferedWriter(fw);
             System.out.println("ModulePoolPaths: " + Arrays.toString(this.getModulePoolPaths().toArray()));
-            System.out.println("Module that will be now executed: "+ module.getModulename());
+            System.out.println("Module that will be now executed: " + module.getModulename());
             bfw.write(getParameterString(module));
             bfw.flush();
             bfw.close();
             ModuleRunner modrunner = new ModuleRunner(module);
             this.setCurrentFilePath(module.getOutputfile());
-            System.out.println("Outputpath of ModulePool right now: "+this.getCurrentFilePath());
-
+            System.out.println("Outputpath of ModulePool right now: " + this.getCurrentFilePath());
         }
+    }
     }
 
 
@@ -92,7 +94,9 @@ public class ModulePool {
             return this.getCurrentFilePath();
         } else {
             for (ModulePool mp : listofPredecessors) {
-                output.addAll(mp.getCurrentFilePath());
+                if(mp.getCurrentFilePath() != null){
+                    output.addAll(mp.getCurrentFilePath());
+                }
             }
         }
         return output;

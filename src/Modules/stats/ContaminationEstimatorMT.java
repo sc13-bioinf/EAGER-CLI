@@ -43,29 +43,32 @@ public class ContaminationEstimatorMT extends AModule {
     public void setParameters() {
         this.outputfile = this.inputfile;
         switch(currentConfiguration){
-        case DEFAULT: getDefaultParams();
+        case DEFAULT: this.parameters = getDefaultParams();
             break;
-        case NOTPREDC: getNotPredCParams();
+        case NOTPREDC: this.parameters = getNotPredCParams();
             break;
         }
-        this.parameters = getDefaultParams();
 
     }
 
 
     private String[] getDefaultParams(){
-        String prepend = "schmutzi --uselength --t " + ((Double) Math.floor(Integer.parseInt(this.communicator.getCpucores())/2)).intValue() + " --ref " + this.communicator.getSchmutzi_mt_ref() +
-                " " + getOutputfolder()+"/outputdeam" + " " + this.communicator.getSchmutzi_mt_refDB() + " " + this.getInputfile().get(0) +
-                " &> " + getOutputfolder()+"/schmutzi_default.log";
-        String[] tmp = new String[]{"/bin/sh", "-c", prepend};
+        String prepend = "schmutzi --uselength --t " + ((Double) Math.floor(Integer.parseInt(this.communicator.getCpucores())/2)).intValue() +
+                " --out " + getOutputfolder()+"/schmutzi_default/outputdeam "+
+                " --ref " + this.communicator.getSchmutzi_mt_ref() +
+                " " + getOutputfolder()+"/contDeam/outputdeam" + " " + this.communicator.getSchmutzi_mt_refDB() + " " + this.getInputfile().get(0) +
+                " &> " + getOutputfolder()+"/schmutzi_default/schmutzi_default.log";
+        String[] tmp = new String[]{"/bin/sh", "-c", "mkdir -p " + getOutputfolder() + "/schmutzi_default && "+ prepend};
         return tmp;
     }
 
     private String[] getNotPredCParams(){
-        String prepend = "schmutzi --uselength --notusepredC --t " + Math.floor(Integer.parseInt(this.communicator.getCpucores())/2) + " --ref " + this.communicator.getSchmutzi_mt_ref() +
-                " " + getOutputfolder()+"/outputdeam" + " " + this.communicator.getSchmutzi_mt_refDB() + " " + this.getInputfile().get(0) +
-                " &> " + getOutputfolder()+"/schmutzi_notpredC.log";
-        String[] tmp = new String[]{"/bin/sh", "-c", prepend};
+        String prepend = "schmutzi --uselength --notusepredC --t " + ((Double) Math.floor(Integer.parseInt(this.communicator.getCpucores())/2)).intValue() +
+                " --out " + getOutputfolder()+"/schmutzi_mtnotpredc/outputdeam "+
+                " --ref " + this.communicator.getSchmutzi_mt_ref() +
+                " " + getOutputfolder()+"/contDeam/outputdeam" + " " + this.communicator.getSchmutzi_mt_refDB() + " " + this.getInputfile().get(0) +
+                " &> " + getOutputfolder()+"/schmutzi_mtnotpredc/schmutzi_notpredC.log";
+        String[] tmp = new String[]{"/bin/sh", "-c", "mkdir -p " + getOutputfolder()+ "/schmutzi_mtnotpredc && " + prepend};
         return tmp;
     }
 
