@@ -830,7 +830,7 @@ public class RunEAGER {
             pooltoadd.addModule(new CircularMapperRealigner(communicator, CircularMapperRealigner.DEFAULT));
         }
 
-        if (this.communicator.getMapper_mapquality_filter() != "0") {
+        if (!this.communicator.getMapper_mapquality_filter().equals("0")) {
             pooltoadd.addModule(new Flagstat(communicator));
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.FILTERED));
             pooltoadd.addModule(new Flagstat(communicator));
