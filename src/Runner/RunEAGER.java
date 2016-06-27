@@ -152,6 +152,7 @@ public class RunEAGER {
                 bacterialpool.addModule(new BWAIndex(communicator));
             }
             addCircularMapping(bacterialpool);
+            bacterialpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
 
@@ -161,6 +162,7 @@ public class RunEAGER {
                 bacterialpool.addModule(new BWAIndex(communicator));
             }
             addBWAMapping(bacterialpool);
+            bacterialpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("Bowtie 2")) {
@@ -169,6 +171,7 @@ public class RunEAGER {
                 bacterialpool.addModule(new BT2Index(communicator));
             }
             addBT2Mapping(bacterialpool);
+            bacterialpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("Stampy")) {
@@ -178,6 +181,7 @@ public class RunEAGER {
                 bacterialpool.addModule(new StampyHash(communicator));
             }
             addStampyMapping(bacterialpool);
+            bacterialpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("BWAMem")) {
@@ -186,6 +190,7 @@ public class RunEAGER {
                 bacterialpool.addModule(new BWAIndex(communicator));
             }
             addBWAMemMapping(bacterialpool);
+            bacterialpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_complexityestimation()) {
@@ -197,7 +202,6 @@ public class RunEAGER {
         }
 
         if (communicator.isMarkdup_run()) {
-            bacterialpool.addModule(new CleanSam(communicator));
             bacterialpool.addModule(new MarkDuplicates(communicator));
         }
 
@@ -300,6 +304,7 @@ public class RunEAGER {
                 ancientbacterialpool.addModule(new BWAIndex(communicator));
             }
             addCircularMapping(ancientbacterialpool);
+            ancientbacterialpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("BWA")) {
@@ -308,6 +313,7 @@ public class RunEAGER {
                 ancientbacterialpool.addModule(new BWAIndex(communicator));
             }
             addBWAMapping(ancientbacterialpool);
+            ancientbacterialpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("Stampy")) {
@@ -317,6 +323,7 @@ public class RunEAGER {
                 ancientbacterialpool.addModule(new StampyHash(communicator));
             }
             addStampyMapping(ancientbacterialpool);
+            ancientbacterialpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("Bowtie 2")) {
@@ -325,6 +332,7 @@ public class RunEAGER {
                 ancientbacterialpool.addModule(new BT2Index(communicator));
             }
             addBT2Mapping(ancientbacterialpool);
+            ancientbacterialpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("BWAMem")) {
@@ -333,6 +341,7 @@ public class RunEAGER {
                 ancientbacterialpool.addModule(new BWAIndex(communicator));
             }
             addBWAMemMapping(ancientbacterialpool);
+            ancientbacterialpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_complexityestimation()) {
@@ -345,7 +354,6 @@ public class RunEAGER {
         }
 
         if (communicator.isMarkdup_run()) {
-            ancientbacterialpool.addModule(new CleanSam(communicator));
             ancientbacterialpool.addModule(new MarkDuplicates(communicator));
         }
 
@@ -448,6 +456,7 @@ public class RunEAGER {
                 humanmodernpool.addModule(new BWAIndex(communicator));
             }
             addBWAMapping(humanmodernpool);
+            humanmodernpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("Stampy")) {
@@ -457,6 +466,7 @@ public class RunEAGER {
                 humanmodernpool.addModule(new StampyHash(communicator));
             }
             addStampyMapping(humanmodernpool);
+            humanmodernpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("BWAMem")) {
@@ -465,6 +475,7 @@ public class RunEAGER {
                 humanmodernpool.addModule(new BWAIndex(communicator));
             }
             addBWAMemMapping(humanmodernpool);
+            humanmodernpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("Bowtie 2")) {
@@ -473,6 +484,7 @@ public class RunEAGER {
                 humanmodernpool.addModule(new BT2Index(communicator));
             }
             addBT2Mapping(humanmodernpool);
+            humanmodernpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("CircularMapper")) {
@@ -481,6 +493,7 @@ public class RunEAGER {
                 humanmodernpool.addModule(new BWAIndex(communicator));
             }
             addCircularMapping(humanmodernpool);
+            humanmodernpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_complexityestimation()) {
@@ -492,7 +505,6 @@ public class RunEAGER {
         }
 
         if (communicator.isMarkdup_run()) {
-            humanmodernpool.addModule(new CleanSam(communicator));
             humanmodernpool.addModule(new MarkDuplicates(communicator));
         }
 
@@ -612,6 +624,7 @@ public class RunEAGER {
                 humanancientpool.addModule(new BWAIndex(communicator));
             }
             addBWAMapping(humanancientpool);
+            humanancientpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("Stampy")) {
@@ -621,6 +634,7 @@ public class RunEAGER {
                 humanancientpool.addModule(new StampyHash(communicator));
             }
             addStampyMapping(humanancientpool);
+            humanancientpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("Bowtie 2")) {
@@ -629,6 +643,7 @@ public class RunEAGER {
                 humanancientpool.addModule(new BT2Index(communicator));
             }
             addBT2Mapping(humanancientpool);
+            humanancientpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("BWAMem")) {
@@ -637,6 +652,7 @@ public class RunEAGER {
                 humanancientpool.addModule(new BWAIndex(communicator));
             }
             addBWAMemMapping(humanancientpool);
+            humanancientpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_mapping() && communicator.getMapper_to_use().equals("CircularMapper")) {
@@ -645,6 +661,7 @@ public class RunEAGER {
                 humanancientpool.addModule(new BWAIndex(communicator));
             }
             addCircularMapping(humanancientpool);
+            humanancientpool.addModule(new CleanSam(communicator, CleanSam.SET_UNMAPPED_MAPQ_TO_ZERO_ONLY));
         }
 
         if (communicator.isRun_complexityestimation()) {
@@ -656,14 +673,12 @@ public class RunEAGER {
         }
 
         if (communicator.isMarkdup_run()) {
-            humanancientpool.addModule(new CleanSam(communicator));
             humanancientpool.addModule(new MarkDuplicates(communicator));
         }
 
         if(communicator.isRun_mapping() && (communicator.isMarkdup_run() || communicator.isRmdup_run())){
             humanancientpool.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.DEDUP));
         }
-
 
         if(communicator.isSchmutzi_run()){
             addContaminationEstimation(humanancientpool);
