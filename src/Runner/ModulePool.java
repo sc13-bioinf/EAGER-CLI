@@ -46,7 +46,12 @@ public class ModulePool {
 
     public void start() throws IOException, InterruptedException {
         this.setCurrentFilePath(this.getModulePoolPaths());
-        fw = new FileWriter(modulePool.get(0).getResultfolder() + "/" + "execution_log.log", true);
+        if ( modulePool.isEmpty() ) {
+          ModulePool nonEmptyPool = listofPredecessors.stream().filter( p -> ! p.getModules().isEmpty() ).findAny().orElseThrow(() -> new RuntimeException("This modulePool is empty and all of its predecessors are empty. Giving up attempt to create a log file"));
+          fw = new FileWriter(nonEmptyPool.getModules().get(0).getResultfolder() + "/" + "execution_log.log", true);
+        } else {
+          fw = new FileWriter(modulePool.get(0).getResultfolder() + "/" + "execution_log.log", true);
+        }
         bfw = new BufferedWriter(fw);
         bfw.write("EAGER Version used for this run: " + EAGER_VERSION);
 
