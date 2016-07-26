@@ -19,6 +19,7 @@ import IO.Communicator;
 import Modules.AModule;
 
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * Created by peltzer on 22.01.14.
@@ -38,6 +39,15 @@ public class FastQC extends AModule {
         this.currentConfiguration = currentConf;
     }
 
+    @Override
+    public void setProcessEnvironment (Map <String, String> env) {
+        if ( !this.communicator.isUsesystemtmpdir() ) {
+          AModule.setEnvironmentForParameterPrepend (env,
+                                                     " ",
+                                                     "JAVA_TOOL_OPTIONS",
+                                                     "-Djava.io.tmpdir=" + getOutputfolder() + System.getProperty ("file.separator") + ".tmp");
+        }
+    }
 
     @Override
     public void setParameters() {

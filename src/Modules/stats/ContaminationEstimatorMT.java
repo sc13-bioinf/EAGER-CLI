@@ -19,6 +19,7 @@ package Modules.stats;
 import IO.Communicator;
 import Modules.AModule;
 import com.google.common.io.Files;
+import java.util.Map;
 
 /**
  * Created by peltzer on 01/12/15.
@@ -38,6 +39,14 @@ public class ContaminationEstimatorMT extends AModule {
         this.currentConfiguration = currentConfiguration;
     }
 
+    @Override
+    public void setProcessEnvironment (Map <String, String> env) {
+        if ( !this.communicator.isUsesystemtmpdir() ) {
+          AModule.setEnvironmentForParameterReplace (env,
+                                                     "TMPDIR",
+                                                     getOutputfolder() + System.getProperty ("file.separator") + ".tmp");
+        }
+    }
 
     @Override
     public void setParameters() {
