@@ -66,7 +66,7 @@ public class ContaminationEstimatorMT extends AModule {
                 " --out " + getOutputfolder()+"/schmutzi_default/outputdeam "+
                 " --ref " + this.communicator.getSchmutzi_mt_ref() +
                 " " + getOutputfolder()+"/contDeam/outputdeam" + " " + this.communicator.getSchmutzi_mt_refDB() + " " + this.getInputfile().get(0) +
-                " &> " + getOutputfolder()+"/schmutzi_default/schmutzi_default.log";
+                " > " + getOutputfolder()+"/schmutzi_default/schmutzi_default.log" + " 2>&1";
         String[] tmp = new String[]{"/bin/sh", "-c", "mkdir -p " + getOutputfolder() + "/schmutzi_default && "+ prepend};
         return tmp;
     }
@@ -76,7 +76,7 @@ public class ContaminationEstimatorMT extends AModule {
                 " --out " + getOutputfolder()+"/schmutzi_mtnotpredc/outputdeam "+
                 " --ref " + this.communicator.getSchmutzi_mt_ref() +
                 " " + getOutputfolder()+"/contDeam/outputdeam" + " " + this.communicator.getSchmutzi_mt_refDB() + " " + this.getInputfile().get(0) +
-                " &> " + getOutputfolder()+"/schmutzi_mtnotpredc/schmutzi_notpredC.log";
+                " > " + getOutputfolder()+"/schmutzi_mtnotpredc/schmutzi_notpredC.log" + " 2>&1";
         String[] tmp = new String[]{"/bin/sh", "-c", "mkdir -p " + getOutputfolder()+ "/schmutzi_mtnotpredc && " + prepend};
         return tmp;
     }
