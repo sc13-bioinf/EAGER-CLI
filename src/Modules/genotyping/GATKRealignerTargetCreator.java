@@ -19,6 +19,7 @@ package Modules.genotyping;
 import IO.Communicator;
 import Modules.AModule;
 import com.google.common.io.Files;
+import java.util.Map;
 
 /**
  * Created by peltzer on 24.01.14.
@@ -26,6 +27,16 @@ import com.google.common.io.Files;
 public class GATKRealignerTargetCreator extends AModule {
     public GATKRealignerTargetCreator(Communicator c) {
         super(c);
+    }
+
+    @Override
+    public void setProcessEnvironment (Map <String, String> env) {
+        if ( !this.communicator.isUsesystemtmpdir() ) {
+          AModule.setEnvironmentForParameterPrepend (env,
+                                                     " ",
+                                                     "JAVA_TOOL_OPTIONS",
+                                                     "-Djava.io.tmpdir=" + getOutputfolder() + System.getProperty ("file.separator") + ".tmp");
+        }
     }
 
     @Override
