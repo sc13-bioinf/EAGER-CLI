@@ -105,4 +105,8 @@ public abstract class AModule {
         }
         env.put(key, resolvedValue);
     }
+
+    public static void setEnvironmentForParameterReplace (Map <String, String> env, String key, String value) {
+        env.put(key, value);
+    }
 }

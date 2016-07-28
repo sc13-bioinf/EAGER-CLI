@@ -19,6 +19,7 @@ package Modules.stats;
 import IO.Communicator;
 import Modules.AModule;
 import com.google.common.io.Files;
+import java.util.Map;
 
 /**
  * Created by peltzer on 24.01.14.
@@ -26,6 +27,15 @@ import com.google.common.io.Files;
 public class MapDamage extends AModule {
     public MapDamage(Communicator c) {
         super(c);
+    }
+
+    @Override
+    public void setProcessEnvironment (Map <String, String> env) {
+        if ( !this.communicator.isUsesystemtmpdir() ) {
+          AModule.setEnvironmentForParameterReplace (env,
+                                                     "TMPDIR",
+                                                     getOutputfolder() + System.getProperty ("file.separator") + ".tmp");
+        }
     }
 
     @Override

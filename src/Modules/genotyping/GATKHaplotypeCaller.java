@@ -21,6 +21,7 @@ import Modules.AModule;
 import com.google.common.io.Files;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by peltzer on 24.01.14.
@@ -40,6 +41,16 @@ public class GATKHaplotypeCaller extends AModule {
     public GATKHaplotypeCaller(Communicator c, int currentConfiguration) {
         super(c);
         this.currentConfiguration = currentConfiguration;
+    }
+
+    @Override
+    public void setProcessEnvironment (Map <String, String> env) {
+        if ( !this.communicator.isUsesystemtmpdir() ) {
+          AModule.setEnvironmentForParameterPrepend (env,
+                                                     " ",
+                                                     "JAVA_TOOL_OPTIONS",
+                                                     "-Djava.io.tmpdir=" + getOutputfolder() + System.getProperty ("file.separator") + ".tmp");
+        }
     }
 
     @Override
