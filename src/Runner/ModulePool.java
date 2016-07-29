@@ -72,6 +72,7 @@ public class ModulePool {
             bfw.write(getParameterString(module));
             bfw.flush();
             bfw.close();
+
             ModuleRunner modrunner = new ModuleRunner(module);
             this.setCurrentFilePath(module.getOutputfile());
             System.out.println("Outputpath of ModulePool right now: " + this.getCurrentFilePath());

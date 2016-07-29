@@ -28,7 +28,8 @@ public class CleanUpRedundantData extends AModule {
 
         public CleanUpRedundantData(Communicator c){
             super(c);
-            this.inputfile = this.outputfile;
+            this.outputfile = new ArrayList<String>();
+            this.outputfile.add(c.getGUI_resultspath());
             setParameters();
         }
 
