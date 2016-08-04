@@ -205,7 +205,7 @@ public class RunEAGER {
             bacterialpool.addModule(new MarkDuplicates(communicator));
         }
 
-        if(communicator.isRun_mapping() && (communicator.isMarkdup_run() || communicator.isRmdup_run())){
+        if(communicator.isRun_mapping() || communicator.isMarkdup_run() || communicator.isRmdup_run()){
             bacterialpool.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.DEDUP));
         }
 
@@ -357,7 +357,7 @@ public class RunEAGER {
             ancientbacterialpool.addModule(new MarkDuplicates(communicator));
         }
 
-        if(communicator.isRun_mapping() && (communicator.isMarkdup_run() || communicator.isRmdup_run())){
+        if(communicator.isRun_mapping() || communicator.isMarkdup_run() || communicator.isRmdup_run()){
             ancientbacterialpool.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.DEDUP));
         }
 
@@ -508,7 +508,7 @@ public class RunEAGER {
             humanmodernpool.addModule(new MarkDuplicates(communicator));
         }
 
-        if(communicator.isRun_mapping() && (communicator.isMarkdup_run() || communicator.isRmdup_run())){
+        if(communicator.isRun_mapping() || communicator.isMarkdup_run() || communicator.isRmdup_run()){
             humanmodernpool.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.DEDUP));
         }
 
@@ -676,7 +676,7 @@ public class RunEAGER {
             humanancientpool.addModule(new MarkDuplicates(communicator));
         }
 
-        if(communicator.isRun_mapping() && (communicator.isMarkdup_run() || communicator.isRmdup_run())){
+        if(communicator.isRun_mapping() || communicator.isMarkdup_run() || communicator.isRmdup_run()){
             humanancientpool.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.DEDUP));
         }
 
