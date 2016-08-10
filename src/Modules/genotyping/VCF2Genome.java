@@ -35,7 +35,7 @@ public class VCF2Genome extends AModule {
     public void setParameters() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         String output_path = getOutputfolder();
-        String sample_name = new File(this.communicator.getGUI_resultspath()).getParentFile().getName();
+        String filename = Files.getNameWithoutExtension(this.inputfile.get(0)).substring(0,8);
 
         updateVCF2OutputName();
         String vcf2genome = "vcf2genome " + this.inputfile.get(0) + " " + this.communicator.getGUI_reference() + " " + output_path+"/"+output_stem+".fasta "
@@ -43,7 +43,7 @@ public class VCF2Genome extends AModule {
                 String.valueOf(this.communicator.getVcf2draft_minquality()) + " " +
                 String.valueOf(this.communicator.getVcf2dmincov())+ " " +
                 String.valueOf(this.communicator.getVcf2dminsnpall())+ " " +
-                String.valueOf(sample_name)+ " " +
+                String.valueOf(filename)+ " " +
                 String.valueOf(this.communicator.getVcf2draft_advanced()) +
                 " > " + output_path+"/"+output_stem+".fasta.stats";
                 this.parameters = new String[]{"/bin/sh", "-c", vcf2genome};
