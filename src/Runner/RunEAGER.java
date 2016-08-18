@@ -804,7 +804,7 @@ public class RunEAGER {
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.DEFAULT));
             pooltoadd.addModule(new Flagstat(communicator));
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.FILTERED));
-            pooltoadd.addModule(new Flagstat(communicator));
+            pooltoadd.addModule(new Flagstat(communicator, Flagstat.FILTERED));
 
         } else {
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.DEFAULT));
@@ -848,7 +848,7 @@ public class RunEAGER {
         if (!this.communicator.getMapper_mapquality_filter().equals("0")) {
             pooltoadd.addModule(new Flagstat(communicator));
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.FILTERED));
-            pooltoadd.addModule(new Flagstat(communicator));
+            pooltoadd.addModule(new Flagstat(communicator, Flagstat.FILTERED));
         } else {
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.DEFAULT));
             pooltoadd.addModule(new Flagstat(communicator));
@@ -876,7 +876,7 @@ public class RunEAGER {
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.DEFAULT));
             pooltoadd.addModule(new Flagstat(communicator));
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.FILTERED));
-            pooltoadd.addModule(new Flagstat(communicator));
+            pooltoadd.addModule(new Flagstat(communicator, Flagstat.FILTERED));
 
         } else {
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.DEFAULT));
