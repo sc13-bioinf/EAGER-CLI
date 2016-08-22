@@ -839,6 +839,7 @@ public class RunEAGER {
         }
         pooltoadd.addModule(new BWAAlign(communicator, BWAAlign.MT));
         pooltoadd.addModule(new BWASamse(communicator, BWASamse.SAMSEMT));
+        pooltoadd.addModule(new Flagstat(communicator, Flagstat.SAM));
         if(communicator.isRun_mt_capture_mode()){
             pooltoadd.addModule(new CircularMapperRealigner(communicator,CircularMapperRealigner.FILTERED));
         } else {
