@@ -24,8 +24,10 @@ import Modules.AModule;
  */
 public class Flagstat extends AModule {
     public static final int DEFAULT = 0;
-    private int currentConfiguration = DEFAULT;
     public static final int FILTERED = 1;
+    public static final int SAM = 2;
+    private int currentConfiguration = DEFAULT;
+
 
     public Flagstat(Communicator c){
         super(c);
@@ -42,6 +44,7 @@ public class Flagstat extends AModule {
     public void setParameters() {
         String toFireBash = "";
         switch(currentConfiguration){
+            case SAM :
             case DEFAULT :
                 toFireBash = "samtools flagstat "+this.inputfile.get(0)+" > "+this.inputfile.get(0)+".stats";
                 this.parameters =  new String[]{"/bin/sh", "-c", toFireBash};
@@ -69,6 +72,8 @@ public class Flagstat extends AModule {
 
     private String getSubModuleName() {
         switch (currentConfiguration){
+            case SAM:
+                return "sam";
             case DEFAULT:
                 return "default";
             case FILTERED:
