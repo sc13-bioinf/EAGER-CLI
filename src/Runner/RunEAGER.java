@@ -257,11 +257,18 @@ public class RunEAGER {
         }
 
         pools.add(preprocesspool);
-        bacterialpool.addPredecessor(preprocesspool);
-        pools.add(bacterialpool);
-        gatkpool.addPredecessor(bacterialpool);
-        pools.add(gatkpool);
-
+        if ( bacterialpool.getModules().size() > 0 ) {
+            bacterialpool.addPredecessor(preprocesspool);
+            pools.add(bacterialpool);
+        } else {
+          System.out.println("Skipping Bacterial Modules");
+        }
+        if ( gatkpool.getModules().size() > 0 ) {
+            gatkpool.addPredecessor(bacterialpool);
+            pools.add(gatkpool);
+        } else {
+          System.out.println("Skipping GATK Modules");
+        }
     }
 
     /**
@@ -407,11 +414,18 @@ public class RunEAGER {
         }
 
         pools.add(preprocesspool);
-        ancientbacterialpool.addPredecessor(preprocesspool);
-        pools.add(ancientbacterialpool);
-        gatkpool.addPredecessor(ancientbacterialpool);
-        pools.add(gatkpool);
-
+        if ( ancientbacterialpool.getModules().size() > 0 ) {
+            ancientbacterialpool.addPredecessor(preprocesspool);
+            pools.add(ancientbacterialpool);
+        } else {
+            System.out.println("Skipping AncientBacterial Modules");
+        }
+        if ( gatkpool.getModules().size() > 0 ) {
+            gatkpool.addPredecessor(ancientbacterialpool);
+            pools.add(gatkpool);
+        } else {
+            System.out.println("Skipping GATK pool");
+        }
     }
 
     /**
