@@ -51,7 +51,7 @@ public class MapDamage extends AModule {
 
     @Override
     public String getOutputfolder() {
-        return this.communicator.getGUI_resultspath() + "/7-MapDamage";
+        return this.communicator.getGUI_resultspath() + "/7-DnaDamage";
     }
 
 

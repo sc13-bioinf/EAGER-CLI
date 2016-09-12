@@ -221,8 +221,11 @@ public class RunEAGER {
             bacterialpool.addModule(new QualiMap(communicator));
         }
 
-        if (communicator.isRun_mapdamage()) {
+
+        if (communicator.isRun_mapdamage() && communicator.getDNA_damage_calculator_to_use().equals("mapDamage")) {
             bacterialpool.addModule(new MapDamage(communicator));
+        } else if(communicator.isRun_mapdamage() && communicator.getDNA_damage_calculator_to_use().equals("DamageProfiler")){
+            bacterialpool.addModule(new DamageProfiler(communicator));
         }
 
         if (communicator.isRun_gatksnpcalling() && !communicator.getGatk_caller().equals("ANGSD")) {
@@ -378,9 +381,11 @@ public class RunEAGER {
             ancientbacterialpool.addModule(new QualiMap(communicator));
         }
 
-        if (communicator.isRun_mapdamage()) {
+
+        if (communicator.isRun_mapdamage() && communicator.getDNA_damage_calculator_to_use().equals("mapDamage")) {
             ancientbacterialpool.addModule(new MapDamage(communicator));
-            //We dont run Mapdamage on CM results!
+        } else if(communicator.isRun_mapdamage() && communicator.getDNA_damage_calculator_to_use().equals("DamageProfiler")){
+            ancientbacterialpool.addModule(new DamageProfiler(communicator));
         }
 
         if (communicator.isRun_gatksnpcalling() && !communicator.getGatk_caller().equals("ANGSD")) {
@@ -708,8 +713,11 @@ public class RunEAGER {
             humanancientpool.addModule(new MTToNucRatioCalculator(communicator));
         }
 
-        if (communicator.isRun_mapdamage()) {
+
+        if (communicator.isRun_mapdamage() && communicator.getDNA_damage_calculator_to_use().equals("mapDamage")) {
             humanancientpool.addModule(new MapDamage(communicator));
+        } else if(communicator.isRun_mapdamage() && communicator.getDNA_damage_calculator_to_use().equals("DamageProfiler")){
+            humanancientpool.addModule(new DamageProfiler(communicator));
         }
 
         if (communicator.isRun_gatksnpcalling() && !communicator.getGatk_caller().equals("ANGSD")) {
