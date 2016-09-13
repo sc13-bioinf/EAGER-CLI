@@ -64,7 +64,7 @@ public class CreateResultsDirectories extends AModule {
             listOfFolders.add(this.communicator.getGUI_resultspath()+"/6-QualiMap"+useOutputFolderAsTmp);
         }
         if(this.communicator.isRun_mapdamage()){
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/7-MapDamage"+useOutputFolderAsTmp);
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/7-DnaDamage"+useOutputFolderAsTmp);
         }
         if(this.communicator.isRun_complexityestimation()){
             listOfFolders.add(this.communicator.getGUI_resultspath()+"/8-Preseq"+useOutputFolderAsTmp);
