@@ -29,7 +29,7 @@ public class DamageProfiler extends AModule {
     public void setParameters() {
         String output_stem = Files.getNameWithoutExtension(this.getInputfile().get(0));
         String output_path = getOutputfolder();
-        this.parameters = new String[]{"java", "-jar", "/home/neukamm/IdeaProjects/DamageProfiler/out/artifacts/DamageProfilerv0_2_jar/DamageProfilerv0.2.jar", "-i", this.getInputfile().get(0), "-r", this.communicator.getGUI_reference(),
+        this.parameters = new String[]{"damageprofiler", "-i", this.getInputfile().get(0), "-r", this.communicator.getGUI_reference(),
                 "-l", this.communicator.getMapdamage_length(),
                 "-o", output_path+"/"+output_stem,
                 "-t", "25",
