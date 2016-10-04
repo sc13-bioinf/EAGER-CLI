@@ -1,0 +1,22 @@
+pkgname=eager-cli
+pkgver=1.92.17
+pkgrel=1
+pkgdesc="A novel pipeline for reconstructing ancient but also modern genomes."
+realnamecli="EAGER-CLI-${pkgver}.jar"
+arch=('any')
+url="http://it.inf.uni-tuebingen.de/?page_id=161"
+license=('custom')
+depends=('java-runtime' 'eager-gui' 'bwa' 'bowtie2' 'samtools' 'picard-tools' 'mapdamage' 'qualimap' 
+         'fastqc' 'dedup' 'circularmapper' 'eager-reportengine' 'eagerstat' 'preseq' 'bam2tdf' 
+         'htslib' 'samtools' 'stampy' 'fastx_toolkit' 'clipandmerge' 'vcf2genome' 'schmutzi' 'angsd')
+source=("$realnamecli" "starterCLI.sh")
+noextract=("$realnamecli")
+
+md5sums=('SKIP' 'SKIP')
+
+package() {
+  install -D -m755 "${srcdir}/$realnamecli" "${pkgdir}/opt/$pkgname/$realnamecli"
+  install -D -m755 "${srcdir}/starterCLI.sh" "${pkgdir}/opt/$pkgname/starterCLI.sh"
+  install -D -m755 "${pkgdir}/opt/$pkgname/starterCLI.sh" "${pkgdir}/usr/bin/eagercli"
+}
+
