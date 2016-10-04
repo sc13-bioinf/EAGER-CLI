@@ -9,4 +9,4 @@ sed -i "s/^pkgrel=.*/pkgrel=$VERSIONREL/" PKGBUILD
 sed -i "s/^VERSION=.*/VERSION=$VERSION/" starterCLI.sh
 
 cp ../build/libs/*.jar . 
-makepkg
+makepkg -d
