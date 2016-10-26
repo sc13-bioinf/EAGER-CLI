@@ -60,6 +60,9 @@ public class CreateResultsDirectories extends AModule {
         if(this.communicator.isRmdup_run() || this.communicator.isMarkdup_run() || this.communicator.isMerge_bam_files() || this.communicator.isInput_already_merged()){
             listOfFolders.add(this.communicator.getGUI_resultspath()+"/5-DeDup"+useOutputFolderAsTmp);
         }
+        if(this.communicator.isRun_pmdtools()){
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/5.1-PMDtools"+useOutputFolderAsTmp);
+        }
         if(this.communicator.isRun_coveragecalc()){
             listOfFolders.add(this.communicator.getGUI_resultspath()+"/6-QualiMap"+useOutputFolderAsTmp);
         }

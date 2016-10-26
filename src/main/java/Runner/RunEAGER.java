@@ -201,6 +201,10 @@ public class RunEAGER {
             bacterialpool.addModule(new DeDup(communicator));
         }
 
+        if (communicator.isRun_pmdtools() ) {
+            bacterialpool.addModule(new PmdTools(communicator));
+        }
+
         if (communicator.isMarkdup_run()) {
             bacterialpool.addModule(new MarkDuplicates(communicator));
         }
@@ -363,6 +367,10 @@ public class RunEAGER {
             ancientbacterialpool.addModule(new DeDup(communicator));
         }
 
+        if (communicator.isRun_pmdtools() ) {
+            ancientbacterialpool.addModule(new PmdTools(communicator));
+        }
+
         if (communicator.isMarkdup_run()) {
             ancientbacterialpool.addModule(new MarkDuplicates(communicator));
         }
@@ -521,6 +529,10 @@ public class RunEAGER {
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             humanmodernpool.addModule(new DeDup(communicator));
+        }
+
+        if (communicator.isRun_pmdtools() ) {
+            humanmodernpool.addModule(new PmdTools(communicator));
         }
 
         if (communicator.isMarkdup_run()) {
@@ -689,6 +701,10 @@ public class RunEAGER {
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             humanancientpool.addModule(new DeDup(communicator));
+        }
+
+        if (communicator.isRun_pmdtools() ) {
+            humanancientpool.addModule(new PmdTools(communicator));
         }
 
         if (communicator.isMarkdup_run()) {

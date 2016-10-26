@@ -30,10 +30,10 @@ public class DamageProfiler extends AModule {
         String output_stem = Files.getNameWithoutExtension(this.getInputfile().get(0));
         String output_path = getOutputfolder();
         this.parameters = new String[]{"damageprofiler", "-i", this.getInputfile().get(0), "-r", this.communicator.getGUI_reference(),
-                "-l", this.communicator.getMapdamage_length(),
+                "-l", this.communicator.getDamageProfiler_length(),
                 "-o", output_path+"/"+output_stem,
-                "-t", "25",
-                this.communicator.getMapdamage_advanced()};
+                "-t", this.communicator.getDamageProfiler_threshold(),
+                this.communicator.getDamageProfiler_advanced()};
         this.outputfile = this.inputfile;
     }
 
