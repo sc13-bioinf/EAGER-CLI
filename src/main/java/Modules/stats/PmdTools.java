@@ -17,10 +17,12 @@ public class PmdTools extends AModule {
 
     @Override
     public void setParameters() {
-        if ( this.communicator.isPMDSFilter() ) {
+        if ( this.communicator.isPMDSFilter() && !this.communicator.isCpGRestriction()) {
             this.parameters = getParamsPmdsFilter();
-        } else {
+        } else if(!this.communicator.isPMDSFilter() && this.communicator.isCpGRestriction()){
             this.parameters = getParamsCpGRestriction();
+        } else if(this.communicator.isPMDSFilter() && this.communicator.isCpGRestriction()){
+            this.parameters = getParamsBoth();
         }
         //this.outputfile = new ArrayList<String>();
         //this.outputfile.add(getOutputfolder()+"/"+output_stem+"_rmdup.bam");
@@ -50,6 +52,22 @@ public class PmdTools extends AModule {
         return params;
 
     }
+
+    private String[] getParamsBoth(){
+        String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
+        String commandOne = "samtools view -h " + this.inputfile.get(0) +
+                " | pmdtools --threshold " + this.communicator.getPmdtoolsThreshold() + " --header | samtools view -Sb - > " +
+                output_stem + ".pmds" + this.communicator.getPmdtoolsThreshold() + "filter.bam" ;
+
+        String commandTwo = "samtools view " + this.inputfile.get(0) +
+                " | pmdtools --deamination --range " + this.communicator.getCpGRange() + " --CpG";
+        String[] params = new String[]{"/bin/sh", "-c", commandOne, " ; ", commandTwo};
+
+        return params;
+
+    }
+
+
 
     @Override
     public void setProcessEnvironment (Map<String, String> env) {
