@@ -42,7 +42,7 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
     compile 'com.google.guava:guava:19.0'
     compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.9'
-    compile 'com.uni-tuebingen.de.it.eager:EAGER-lib:1.92.16'
+    compile 'com.uni-tuebingen.de.it.eager:EAGER-lib:+'
 }
 
 jar {
