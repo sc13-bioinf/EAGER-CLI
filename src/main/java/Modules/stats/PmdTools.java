@@ -60,7 +60,8 @@ public class PmdTools extends AModule {
                 output_stem + ".pmds" + this.communicator.getPmdtoolsThreshold() + "filter.bam" ;
 
         String commandTwo = "samtools view " + this.inputfile.get(0) +
-                " | pmdtools --deamination --range " + this.communicator.getCpGRange() + " --CpG";
+                " | pmdtools --deamination --range " + this.communicator.getCpGRange() + " --CpG > " + output_stem +
+                ".cpg.range" + this.communicator.getCpGRange() + ".txt";
         String[] params = new String[]{"/bin/sh", "-c", commandOne, " ; ", commandTwo};
 
         return params;
