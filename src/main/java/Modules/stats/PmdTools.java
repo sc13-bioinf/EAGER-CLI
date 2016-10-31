@@ -24,8 +24,6 @@ public class PmdTools extends AModule {
         } else if(this.communicator.isPMDSFilter() && this.communicator.isCpGRestriction()){
             this.parameters = getParamsBoth();
         }
-        //this.outputfile = new ArrayList<String>();
-        //this.outputfile.add(getOutputfolder()+"/"+output_stem+"_rmdup.bam");
         this.outputfile = this.inputfile;
     }
 
@@ -46,7 +44,8 @@ public class PmdTools extends AModule {
     private String[] getParamsCpGRestriction(){
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         String command = "samtools view " + this.inputfile.get(0) +
-                " | pmdtools --deamination --range " + this.communicator.getCpGRange() + " --CpG";
+                " | pmdtools --deamination --range " + this.communicator.getCpGRange() + " --CpG > " + output_stem +
+                ".cpg.range" + this.communicator.getCpGRange() + ".txt";
         String[] params = new String[]{"/bin/sh", "-c", command};
 
         return params;
@@ -82,6 +81,6 @@ public class PmdTools extends AModule {
 
     @Override
     public String getOutputfolder() {
-        return this.communicator.getGUI_resultspath() + "/5-DeDup";
+        return this.communicator.getGUI_resultspath() + "/5.1-PMDtools";
     }
 }
