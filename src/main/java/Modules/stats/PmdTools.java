@@ -4,6 +4,7 @@ import IO.Communicator;
 import Modules.AModule;
 import com.google.common.io.Files;
 
+import java.io.File;
 import java.util.Map;
 
 /**
@@ -31,9 +32,10 @@ public class PmdTools extends AModule {
 
     private String[] getParamsPmdsFilter(){
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
+        String output_path = getOutputfolder();
         String command = "samtools view -h " + this.inputfile.get(0) +
                 " | pmdtools --threshold " + this.communicator.getPmdtoolsThreshold() + " --header | samtools view -Sb - > " +
-                output_stem + ".pmds" + this.communicator.getPmdtoolsThreshold() + "filter.bam" ;
+                output_path + File.separator + output_stem + ".pmds" + this.communicator.getPmdtoolsThreshold() + "filter.bam" ;
         String[] params = new String[]{"/bin/sh", "-c", command};
 
         return params;
@@ -43,9 +45,10 @@ public class PmdTools extends AModule {
 
     private String[] getParamsCpGRestriction(){
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
+        String output_path = getOutputfolder();
         String command = "samtools view " + this.inputfile.get(0) +
-                " | pmdtools --deamination --range " + this.communicator.getCpGRange() + " --CpG > " + output_stem +
-                ".cpg.range" + this.communicator.getCpGRange() + ".txt";
+                " | pmdtools --deamination --range " + this.communicator.getCpGRange() + " --CpG > " + output_path +
+                File.separator + output_stem + ".cpg.range" + this.communicator.getCpGRange() + ".txt";
         String[] params = new String[]{"/bin/sh", "-c", command};
 
         return params;
@@ -54,13 +57,14 @@ public class PmdTools extends AModule {
 
     private String[] getParamsBoth(){
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
+        String output_path = getOutputfolder();
         String commandOne = "samtools view -h " + this.inputfile.get(0) +
                 " | pmdtools --threshold " + this.communicator.getPmdtoolsThreshold() + " --header | samtools view -Sb - > " +
-                output_stem + ".pmds" + this.communicator.getPmdtoolsThreshold() + "filter.bam" ;
+                output_path + File.separator + output_stem + ".pmds" + this.communicator.getPmdtoolsThreshold() + "filter.bam" ;
 
         String commandTwo = "samtools view " + this.inputfile.get(0) +
-                " | pmdtools --deamination --range " + this.communicator.getCpGRange() + " --CpG > " + output_stem +
-                ".cpg.range" + this.communicator.getCpGRange() + ".txt";
+                " | pmdtools --deamination --range " + this.communicator.getCpGRange() + " --CpG > " +  output_path +
+                File.separator + output_stem + ".cpg.range" + this.communicator.getCpGRange() + ".txt";
         String[] params = new String[]{"/bin/sh", "-c", commandOne, " ; ", commandTwo};
 
         return params;
