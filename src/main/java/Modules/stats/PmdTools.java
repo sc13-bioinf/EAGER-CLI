@@ -65,10 +65,11 @@ public class PmdTools extends AModule {
         String commandTwo = "samtools view " + this.inputfile.get(0) +
                 " | pmdtools --deamination --range " + this.communicator.getCpGRange() + " --CpG > " +  output_path +
                 File.separator + output_stem + ".cpg.range" + this.communicator.getCpGRange() + ".txt";
-        String[] params = new String[]{"/bin/sh", "-c", commandOne, " && ", commandTwo};
 
-        return params;
+        String combiner = " && ";
 
+        return new String[]{
+                "/bin/sh", "-c", commandOne+combiner+commandTwo};
     }
 
 
