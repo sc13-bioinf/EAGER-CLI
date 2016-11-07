@@ -193,15 +193,14 @@ public class RunEAGER {
             bacterialpool.addModule(new CleanSam(communicator));
         }
 
-        if (communicator.isRun_complexityestimation()) {
-            addComplexityEstimation(bacterialpool);
-        }
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             bacterialpool.addModule(new DeDup(communicator));
+            addComplexityEstimation(bacterialpool);
         }
 
         if (communicator.isMarkdup_run()) {
+            addComplexityEstimation(bacterialpool);
             bacterialpool.addModule(new MarkDuplicates(communicator));
         }
 
@@ -354,13 +353,9 @@ public class RunEAGER {
             ancientbacterialpool.addModule(new CleanSam(communicator));
         }
 
-        if (communicator.isRun_complexityestimation()) {
-            ancientbacterialpool.addModule(new PreseqCCurveCalculation(communicator));
-            ancientbacterialpool.addModule(new PreseqLCExtrapCalculation(communicator));
-        }
-
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             ancientbacterialpool.addModule(new DeDup(communicator));
+            addComplexityEstimation(ancientbacterialpool);
         }
 
         if (communicator.isRun_pmdtools() ) {
@@ -368,6 +363,7 @@ public class RunEAGER {
         }
 
         if (communicator.isMarkdup_run()) {
+            addComplexityEstimation(ancientbacterialpool);
             ancientbacterialpool.addModule(new MarkDuplicates(communicator));
         }
 
@@ -519,15 +515,14 @@ public class RunEAGER {
             humanmodernpool.addModule(new CleanSam(communicator));
         }
 
-        if (communicator.isRun_complexityestimation()) {
-            addComplexityEstimation(humanmodernpool);
-        }
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             humanmodernpool.addModule(new DeDup(communicator));
+            addComplexityEstimation(humanmodernpool);
         }
 
         if (communicator.isMarkdup_run()) {
+            addComplexityEstimation(humanmodernpool);
             humanmodernpool.addModule(new MarkDuplicates(communicator));
         }
 
@@ -687,12 +682,10 @@ public class RunEAGER {
             humanancientpool.addModule(new CleanSam(communicator));
         }
 
-        if (communicator.isRun_complexityestimation()) {
-            addComplexityEstimation(humanancientpool);
-        }
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             humanancientpool.addModule(new DeDup(communicator));
+            addComplexityEstimation(humanancientpool);
         }
 
         if (communicator.isRun_pmdtools() ) {
@@ -700,6 +693,7 @@ public class RunEAGER {
         }
 
         if (communicator.isMarkdup_run()) {
+            addComplexityEstimation(humanancientpool);
             humanancientpool.addModule(new MarkDuplicates(communicator));
         }
 
@@ -1047,12 +1041,15 @@ public class RunEAGER {
 
     return mp;
 
-}
-
 
     private void addComplexityEstimation(ModulePool pooltoadd) {
-        pooltoadd.addModule(new PreseqCCurveCalculation(communicator));
-        pooltoadd.addModule(new PreseqLCExtrapCalculation(communicator));
+        if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
+            pooltoadd.addModule(new PreseqCCurveCalculation(communicator, PreseqCCurveCalculation.RUN_ON_HISTOGRAM));
+            pooltoadd.addModule(new PreseqLCExtrapCalculation(communicator, PreseqLCExtrapCalculation.RUN_ON_HIST));
+        } else {
+            pooltoadd.addModule(new PreseqCCurveCalculation(communicator, PreseqCCurveCalculation.DEFAULT));
+            pooltoadd.addModule(new PreseqLCExtrapCalculation(communicator, PreseqLCExtrapCalculation.DEFAULT));
+        }
     }
 
 

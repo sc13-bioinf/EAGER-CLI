@@ -24,17 +24,33 @@ import com.google.common.io.Files;
  * Created by peltzer on 24.01.14.
  */
 public class PreseqCCurveCalculation extends AModule {
+    public static final int DEFAULT = 0;
+    private int currentConfiguration = DEFAULT;
+    public static final int RUN_ON_HISTOGRAM = 1;
 
     public PreseqCCurveCalculation(Communicator c) {
         super(c);
     }
 
+    public PreseqCCurveCalculation(Communicator c, int config) {
+        super(c);
+        this.currentConfiguration = config;
+    }
+
     @Override
     public void setParameters() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
-        this.parameters = new String[]{"preseq","c_curve", "-s", String.valueOf(this.communicator.getPreseq_ccurve_stepsize()), "-o",
-                                        getOutputfolder()+"/"+output_stem + ".ccurve", "-B", this.inputfile.get(0)};
         this.outputfile = this.inputfile;
+
+        switch(currentConfiguration) {
+            case DEFAULT:
+                this.parameters = new String[]{"preseq", "c_curve", "-s", String.valueOf(this.communicator.getPreseq_ccurve_stepsize()), "-o",
+                        getOutputfolder() + "/" + output_stem + ".ccurve", "-B", this.inputfile.get(0)};
+                break;
+            case RUN_ON_HISTOGRAM:
+                this.parameters = new String[]{"preseq", "c_curve", "-s", String.valueOf(this.communicator.getPreseq_ccurve_stepsize()), "-o",
+                        getOutputfolder() + "/" + output_stem + ".ccurve", "-H", this.inputfile.get(0).replace("_rmdup.bam", ".hist")};
+        }
 
     }
 

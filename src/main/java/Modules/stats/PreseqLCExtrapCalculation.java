@@ -27,6 +27,7 @@ public class PreseqLCExtrapCalculation extends AModule {
     private int currentConfiguration = DEFAULT;
     public static final int DEFAULT = 0;
     public static final int QUICKMODE = 1;
+    public static final int RUN_ON_HIST = 2;
 
     public PreseqLCExtrapCalculation(Communicator c) {
         super(c);
@@ -50,6 +51,11 @@ public class PreseqLCExtrapCalculation extends AModule {
                 this.parameters = getQuickParameters();
                 this.outputfile = this.inputfile;
                 break;
+
+            case RUN_ON_HIST:
+                this.parameters = getHistParameters();
+                this.outputfile = this.inputfile;
+                break;
         }
 
     }
@@ -71,6 +77,13 @@ public class PreseqLCExtrapCalculation extends AModule {
                 "-e", this.communicator.getPreseq_lcextrap_extrapolationsize()
         };
     }
+
+    private String[] getHistParameters() {
+        String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
+        return new String[]{"preseq", "lc_extrap", "-s", String.valueOf(this.communicator.getPreseq_lcextrap_stepsize()), "-o",
+                getOutputfolder() + "/" + output_stem + ".lcextrap", "-H", this.inputfile.get(0).replace("_rmdup.bam", ".hist"),
+                "-e", this.communicator.getPreseq_lcextrap_extrapolationsize(), "-Q"
+        };
 
 
     @Override
