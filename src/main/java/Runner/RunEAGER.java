@@ -1047,6 +1047,7 @@ public class RunEAGER {
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             pooltoadd.addModule(new PreseqCCurveCalculation(communicator, PreseqCCurveCalculation.RUN_ON_HISTOGRAM));
             pooltoadd.addModule(new PreseqLCExtrapCalculation(communicator, PreseqLCExtrapCalculation.RUN_ON_HIST));
+
         } else {
             pooltoadd.addModule(new PreseqCCurveCalculation(communicator, PreseqCCurveCalculation.DEFAULT));
             pooltoadd.addModule(new PreseqLCExtrapCalculation(communicator, PreseqLCExtrapCalculation.DEFAULT));
