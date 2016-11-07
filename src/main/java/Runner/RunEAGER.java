@@ -1029,20 +1029,21 @@ public class RunEAGER {
 
                     mp.addModule(new GATKUnifiedGenotyper(communicator, GATKUnifiedGenotyper.EMIT_VARIANT_NODBSNP));
                 }
-            }
+        }
 
 
-        if (!communicator.isRun_vcf2draft() && !communicator.isRun_gatksnpfiltering() && !communicator.isSnpcapturedata()){
+        if (!communicator.isRun_vcf2draft() && !communicator.isRun_gatksnpfiltering() && !communicator.isSnpcapturedata()) {
             //then we need to keep the VCF files untouched!
             mp.addModule(new BGZip(communicator));
             mp.addModule(new Tabix(communicator));
         }
 
 
-    return mp;
+        return mp;
+    }
 
 
-    private void addComplexityEstimation(ModulePool pooltoadd) {
+    private void addComplexityEstimation(ModulePool pooltoadd){
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             pooltoadd.addModule(new PreseqCCurveCalculation(communicator, PreseqCCurveCalculation.RUN_ON_HISTOGRAM));
             pooltoadd.addModule(new PreseqLCExtrapCalculation(communicator, PreseqLCExtrapCalculation.RUN_ON_HIST));

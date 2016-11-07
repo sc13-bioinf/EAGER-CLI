@@ -84,7 +84,7 @@ public class PreseqLCExtrapCalculation extends AModule {
                 getOutputfolder() + "/" + output_stem + ".lcextrap", "-H", this.inputfile.get(0).replace("_rmdup.bam", ".hist"),
                 "-e", this.communicator.getPreseq_lcextrap_extrapolationsize(), "-Q"
         };
-
+    }
 
     @Override
     public String getOutputfolder() {
