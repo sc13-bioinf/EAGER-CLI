@@ -57,7 +57,7 @@ public class CreateResultsDirectories extends AModule {
             listOfFolders.add(this.communicator.getGUI_resultspath()+"/3-Mapper"+useOutputFolderAsTmp);
             listOfFolders.add(this.communicator.getGUI_resultspath()+"/4-Samtools"+useOutputFolderAsTmp);
         }
-        //Always create this, we need the folder for some parts :-) 
+        //Always create this, we need the folder for some parts :-)
         listOfFolders.add(this.communicator.getGUI_resultspath()+"/5-DeDup"+useOutputFolderAsTmp);
 
         if(this.communicator.isRun_pmdtools()){

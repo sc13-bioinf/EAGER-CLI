@@ -196,11 +196,15 @@ public class RunEAGER {
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             bacterialpool.addModule(new DeDup(communicator));
-            addComplexityEstimation(bacterialpool);
+            if(communicator.isRun_complexityestimation()){
+                addComplexityEstimation(bacterialpool);
+            }
         }
 
         if (communicator.isMarkdup_run()) {
-            addComplexityEstimation(bacterialpool);
+            if(communicator.isRun_complexityestimation()){
+                addComplexityEstimation(bacterialpool);
+            }
             bacterialpool.addModule(new MarkDuplicates(communicator));
         }
 
@@ -355,7 +359,10 @@ public class RunEAGER {
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             ancientbacterialpool.addModule(new DeDup(communicator));
-            addComplexityEstimation(ancientbacterialpool);
+            if(communicator.isRun_complexityestimation()){
+                addComplexityEstimation(ancientbacterialpool);
+            }
+
         }
 
         if (communicator.isRun_pmdtools() ) {
@@ -363,8 +370,9 @@ public class RunEAGER {
         }
 
         if (communicator.isMarkdup_run()) {
-            addComplexityEstimation(ancientbacterialpool);
-            ancientbacterialpool.addModule(new MarkDuplicates(communicator));
+            if(communicator.isRun_complexityestimation()){
+                addComplexityEstimation(ancientbacterialpool);
+            }            ancientbacterialpool.addModule(new MarkDuplicates(communicator));
         }
 
         if(communicator.isRun_mapping() || communicator.isMarkdup_run() || communicator.isRmdup_run()){
@@ -517,11 +525,14 @@ public class RunEAGER {
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             humanmodernpool.addModule(new DeDup(communicator));
-            addComplexityEstimation(humanmodernpool);
-        }
+            if(communicator.isRun_complexityestimation()){
+                addComplexityEstimation(humanmodernpool);
+            }        }
 
         if (communicator.isMarkdup_run()) {
-            addComplexityEstimation(humanmodernpool);
+            if(communicator.isRun_complexityestimation()){
+                addComplexityEstimation(humanmodernpool);
+            }
             humanmodernpool.addModule(new MarkDuplicates(communicator));
         }
 
@@ -684,7 +695,9 @@ public class RunEAGER {
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             humanancientpool.addModule(new DeDup(communicator));
-            addComplexityEstimation(humanancientpool);
+            if(communicator.isRun_complexityestimation()){
+                addComplexityEstimation(humanancientpool);
+            }
         }
 
         if (communicator.isRun_pmdtools() ) {
@@ -692,7 +705,9 @@ public class RunEAGER {
         }
 
         if (communicator.isMarkdup_run()) {
-            addComplexityEstimation(humanancientpool);
+            if(communicator.isRun_complexityestimation()){
+                addComplexityEstimation(humanancientpool);
+            }
             humanancientpool.addModule(new MarkDuplicates(communicator));
         }
 
@@ -1036,8 +1051,6 @@ public class RunEAGER {
             mp.addModule(new BGZip(communicator));
             mp.addModule(new Tabix(communicator));
         }
-
-
         return mp;
     }
 
