@@ -381,7 +381,6 @@ public class RunEAGER {
             ancientbacterialpool.addModule(new QualiMap(communicator));
         }
 
-
         if (communicator.isRun_mapdamage() && communicator.getDNA_damage_calculator_to_use().equals("mapDamage")) {
             ancientbacterialpool.addModule(new MapDamage(communicator));
         } else if(communicator.isRun_mapdamage() && communicator.getDNA_damage_calculator_to_use().equals("DamageProfiler")){
