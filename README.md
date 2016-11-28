@@ -2,6 +2,7 @@
 The EAGER Command Line Component. This is the main execution runner required to run XML files created with the GUI component.
 
 [![Build Status](https://lambda.informatik.uni-tuebingen.de/jenkins/buildStatus/icon?job=EAGER-CLI)](https://lambda.informatik.uni-tuebingen.de/jenkins/view/EAGER/job/EAGER-CLI/)
+[ ![Download](https://api.bintray.com/packages/apeltzer/EAGER/EAGER-CLI/images/download.svg) ](https://bintray.com/apeltzer/EAGER/EAGER-CLI/_latestVersion)
 
 Author: Alexander Peltzer <alexander.peltzer@uni-tuebingen.de>
 
