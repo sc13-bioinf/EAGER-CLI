@@ -1056,12 +1056,12 @@ public class RunEAGER {
 
 
     private void addComplexityEstimation(ModulePool pooltoadd){
-        if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
+        if (communicator.isRmdup_run() && !communicator.isMarkdup_run() && communicator.isRun_complexityestimation()) {
             pooltoadd.addModule(new PreseqCCurveCalculation(communicator, PreseqCCurveCalculation.RUN_ON_HISTOGRAM));
             pooltoadd.addModule(new PreseqLCExtrapCalculation(communicator, PreseqLCExtrapCalculation.RUN_ON_HIST));
             pooltoadd.addModule(new ComplexityPlotting(communicator));
 
-        } else {
+        } else if(communicator.isMarkdup_run() && communicator.isRun_complexityestimation()){
             pooltoadd.addModule(new PreseqCCurveCalculation(communicator, PreseqCCurveCalculation.DEFAULT));
             pooltoadd.addModule(new PreseqLCExtrapCalculation(communicator, PreseqLCExtrapCalculation.DEFAULT));
             pooltoadd.addModule(new ComplexityPlotting(communicator));
