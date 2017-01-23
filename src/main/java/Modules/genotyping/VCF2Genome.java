@@ -20,7 +20,6 @@ import IO.Communicator;
 import Modules.AModule;
 import com.google.common.io.Files;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -37,14 +36,14 @@ public class VCF2Genome extends AModule {
         String output_path = getOutputfolder();
         String filename = Files.getNameWithoutExtension(this.inputfile.get(0)).substring(0,8);
 
-        updateVCF2OutputName();
-        String vcf2genome = "vcf2genome " + this.inputfile.get(0) + " " + this.communicator.getGUI_reference() + " " + output_path+"/"+output_stem+".fasta "
-                + output_path+"/"+output_stem+".refMod.fasta " + output_path+"/"+output_stem+".nr1234.fasta "+
-                String.valueOf(this.communicator.getVcf2draft_minquality()) + " " +
-                String.valueOf(this.communicator.getVcf2dmincov())+ " " +
-                String.valueOf(this.communicator.getVcf2dminsnpall())+ " " +
-                String.valueOf(filename)+ " " +
-                String.valueOf(this.communicator.getVcf2draft_advanced()) +
+       // -in -ref -draft -refMod -uncertain -minq -minc -minfreq -draftname -h
+
+        String vcf2genome = "vcf2genome " + "-in "+ this.inputfile.get(0) + " -ref " + this.communicator.getGUI_reference() + " -draft " + output_path+"/"+output_stem+".fasta "
+                + "-refMod "+ output_path+"/"+output_stem+".refMod.fasta " + " -uncertain " + output_path+"/"+output_stem+".nr1234.fasta "+ "-minq " +
+                String.valueOf(this.communicator.getVcf2draft_minquality()) + " -minc " +
+                String.valueOf(this.communicator.getVcf2dmincov())+ " -minfreq " +
+                String.valueOf(this.communicator.getVcf2dminsnpall())+ " -draftname " +
+                String.valueOf(filename) +
                 " > " + output_path+"/"+output_stem+".fasta.stats";
                 this.parameters = new String[]{"/bin/sh", "-c", vcf2genome};
         this.outputfile = new ArrayList<String>();
@@ -53,9 +52,7 @@ public class VCF2Genome extends AModule {
 
     }
 
-    private void updateVCF2OutputName() {
-        communicator.setVcf2dname(communicator.getGUI_inputfiles().get(0));
-    }
+
 
     @Override
     public String getOutputfolder() {
