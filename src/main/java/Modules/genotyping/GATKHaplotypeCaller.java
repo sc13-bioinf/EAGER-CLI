@@ -109,7 +109,7 @@ public class GATKHaplotypeCaller extends AModule {
                 "--sample_ploidy", this.communicator.getGatk_ploidy(),
                 "-stand_call_conf", this.communicator.getGatk_standard_call_confidence(),
                 "-stand_emit_conf", this.communicator.getGatk_standard_emit_confidence(),
-                "--output_Mode EMIT_ALL_SITES",
+                "--ERC BP_RESOLUTION --variant_index_type LINEAR --variant_index_parameter 128000",
                 this.communicator.getGatk_snp_advanced()};
     }
 
@@ -123,7 +123,7 @@ public class GATKHaplotypeCaller extends AModule {
                 "--sample_ploidy", this.communicator.getGatk_ploidy(),
                 "-stand_call_conf", this.communicator.getGatk_standard_call_confidence(),
                 "-stand_emit_conf", this.communicator.getGatk_standard_emit_confidence(),
-                "--output_Mode EMIT_CONFIDENT_SITES",
+                "--ERC GVCF --variant_index_type LINEAR --variant_index_parameter 128000",
                 this.communicator.getGatk_snp_advanced()};
     }
 
@@ -137,7 +137,7 @@ public class GATKHaplotypeCaller extends AModule {
                 "--sample_ploidy", this.communicator.getGatk_ploidy(),
                 "-stand_call_conf", this.communicator.getGatk_standard_call_confidence(),
                 "-stand_emit_conf", this.communicator.getGatk_standard_emit_confidence(),
-                "--output_Mode EMIT_ALL_SITES",
+                "--ERC BP_RESOLUTION --variant_index_type LINEAR --variant_index_parameter 128000",
                 this.communicator.getGatk_snp_advanced()};
     }
 
@@ -151,7 +151,7 @@ public class GATKHaplotypeCaller extends AModule {
                 "--sample_ploidy", this.communicator.getGatk_ploidy(),
                 "-stand_call_conf", this.communicator.getGatk_standard_call_confidence(),
                 "-stand_emit_conf", this.communicator.getGatk_standard_emit_confidence(),
-                "--output_Mode EMIT_CONFIDENT_SITES",
+                "--ERC GVCF --variant_index_type LINEAR --variant_index_parameter 128000",
                 this.communicator.getGatk_snp_advanced()};
     }
 
