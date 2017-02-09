@@ -35,6 +35,7 @@ public class SamtoolsView extends AModule {
     public static final int EXTRACTMAPPED = 7;
     public static final int EXTRACTUNMAPPED = 8;
     public static final int FILTERED = 9;
+    public static final int ONLYMAPPEDFILTERED = 10;
 
     public SamtoolsView(Communicator c){
         super(c);
@@ -62,8 +63,11 @@ public class SamtoolsView extends AModule {
             case ONLYMAPPED: this.parameters = getOnlyMapped();
                 this.outputfile.add(output_path+"/"+output_stem+".mappedonly.bam");
                 break;
+            case ONLYMAPPEDFILTERED: this.parameters = getOnlyMappedFiltered();
+                this.outputfile.add(output_path+"/"+output_stem+".mappedonlyqF.bam");
+                break;
             case ONLYMAPPEDSAM: this.parameters = getOnlyMappedSAM();
-                this.outputfile.add(output_path+"/"+output_stem+".mappedsamonly.bam");
+                this.outputfile.add(output_path+"/"+output_stem+".mappedsamonly.sam");
                 break;
             case HYBRID: this.parameters = getHybridSAM();
                 this.outputfile.add(output_path+"/"+output_stem+".hybridmap.bam");
@@ -103,14 +107,20 @@ public class SamtoolsView extends AModule {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         String output_path = this.communicator.getGUI_resultspath() + "/4-Samtools";
         return new String[]{"samtools", "view", "-@", String.valueOf(this.communicator.getCpucores()),
-                "-F4", "-q", this.communicator.getMapper_mapquality_filter(),"-bS", this.inputfile.get(0), "-o", output_path+ "/"+ output_stem +".mappedsamonly.bam"};
+                "-F4", "-q", this.communicator.getMapper_mapquality_filter(),"-bS", this.inputfile.get(0), "-o", output_path+ "/"+ output_stem +".mappedsamonly.sam"};
 
     }
 
     private String[] getOnlyMapped() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         String output_path = this.communicator.getGUI_resultspath() + "/4-Samtools";
-        return new String[]{"samtools", "view", "-F4", "-q", this.communicator.getMapper_mapquality_filter(),"-b", this.inputfile.get(0), "-o", output_path+ "/"+ output_stem +".mappedonly.bam"};
+        return new String[]{"samtools", "view", "-F4", "-b", this.inputfile.get(0), "-o", output_path+ "/"+ output_stem +".mappedonly.bam"};
+    }
+
+    private String[] getOnlyMappedFiltered() {
+        String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
+        String output_path = this.communicator.getGUI_resultspath() + "/4-Samtools";
+        return new String[]{"samtools", "view", "-F4", "-q", this.communicator.getMapper_mapquality_filter(),"-b", this.inputfile.get(0), "-o", output_path+ "/"+ output_stem +".mappedonlyqF.bam"};
     }
 
     private String[] getOnlyUnmapped() {
@@ -155,6 +165,8 @@ public class SamtoolsView extends AModule {
                 return "OnlyUnmapped";
             case ONLYMAPPED:
                 return "OnlyMapped";
+            case ONLYMAPPEDFILTERED:
+                return "OnlyMappedFiltered";
             case ONLYMAPPEDSAM:
                 return "OnlyMappedSAM";
             case HYBRID:

@@ -812,10 +812,10 @@ public class RunEAGER {
         if (!this.communicator.getMapper_mapquality_filter().equals("0")) {
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.DEFAULT));
             pooltoadd.addModule(new Flagstat(communicator));
-            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.FILTERED));
+            pooltoadd.addModule(new SamtoolsView(communicator, communicator.isMapper_filter_unmapped() ? SamtoolsView.ONLYMAPPEDFILTERED : SamtoolsView.FILTERED));
             pooltoadd.addModule(new Flagstat(communicator,Flagstat.FILTERED));
         } else {
-            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.DEFAULT));
+            pooltoadd.addModule(new SamtoolsView(communicator, communicator.isMapper_filter_unmapped() ? SamtoolsView.ONLYMAPPED : SamtoolsView.DEFAULT));
             pooltoadd.addModule(new Flagstat(communicator));
         }
         pooltoadd.addModule(new SamtoolsSort(communicator));
