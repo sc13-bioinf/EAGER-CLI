@@ -49,9 +49,9 @@ public class GATKVariantFilter extends AModule {
                                         "-o", output_path+"/"+output_stem+".filtered.vcf",
                                         "--variant", this.inputfile.get(0),
                                         "--filterName", "\'CoverageFilter\'",
-                                        "--filterExpression", "\"DP>" + this.communicator.getGatk_variantfilter_coveragefilter() + "\"",
+                                        "--filterExpression", "DP>" + this.communicator.getGatk_variantfilter_coveragefilter(),
                                         "--filterName", "\'BaseQualityFilter\'",
-                                        "--filterExpression", "\"QUAL>" + this.communicator.getGatk_variantfilter_qualityfilter() + "\""
+                                        "--filterExpression", "QUAL>" + this.communicator.getGatk_variantfilter_qualityfilter()
         };
         this.outputfile = new ArrayList<String>();
         outputfile.add(output_path+"/"+output_stem+".filtered.vcf");
