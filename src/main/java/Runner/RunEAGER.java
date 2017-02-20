@@ -551,6 +551,7 @@ public class RunEAGER {
             } else {
                 humanmodernpool.addModule(new QualiMap(communicator));
             }
+            humanmodernpool.addModule(new CaptureOnTarget(communicator));
             humanmodernpool.addModule(new MTToNucRatioCalculator(communicator));
         }
 
@@ -726,6 +727,7 @@ public class RunEAGER {
             } else {
                 humanancientpool.addModule(new QualiMap(communicator));
             }
+            humanancientpool.addModule(new CaptureOnTarget(communicator));
             humanancientpool.addModule(new MTToNucRatioCalculator(communicator));
         }
 
