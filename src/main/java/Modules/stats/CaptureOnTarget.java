@@ -39,7 +39,7 @@ public class CaptureOnTarget extends AModule {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         String output_path = getOutputfolder();
 
-        String toFireBash = "samtools bedcov "+this.captureBed+" "+this.inputfile.get(0)+" > "+this.inputfile.get(0)+".bedcov";
+        String toFireBash = "samtools view -c -L "+this.captureBed+" "+this.inputfile.get(0)+" > "+this.inputfile.get(0)+".ontarget";
         this.parameters =  new String[]{"/bin/sh", "-c", toFireBash};
         this.outputfile = this.inputfile;
     }
