@@ -522,12 +522,16 @@ public class RunEAGER {
             humanmodernpool.addModule(new CleanSam(communicator));
         }
 
+        if ( communicator.isSnpcapturedata() || communicator.isRun_mt_capture_mode() ) {
+            humanmodernpool.addModule(new CaptureOnTarget(communicator));
+        }
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             humanmodernpool.addModule(new DeDup(communicator));
             if(communicator.isRun_complexityestimation()){
                 addComplexityEstimation(humanmodernpool);
-            }        }
+            }
+        }
 
         if (communicator.isMarkdup_run()) {
             if(communicator.isRun_complexityestimation()){
@@ -551,7 +555,6 @@ public class RunEAGER {
             } else {
                 humanmodernpool.addModule(new QualiMap(communicator));
             }
-            humanmodernpool.addModule(new CaptureOnTarget(communicator));
             humanmodernpool.addModule(new MTToNucRatioCalculator(communicator));
         }
 
@@ -693,6 +696,9 @@ public class RunEAGER {
             humanancientpool.addModule(new CleanSam(communicator));
         }
 
+        if ( communicator.isSnpCapturedata() || communicator.isRun_mt_capture_mode() ) {
+            humanancientpool.addModule(new CaptureOnTarget(communicator));
+        }
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             humanancientpool.addModule(new DeDup(communicator));
@@ -727,7 +733,6 @@ public class RunEAGER {
             } else {
                 humanancientpool.addModule(new QualiMap(communicator));
             }
-            humanancientpool.addModule(new CaptureOnTarget(communicator));
             humanancientpool.addModule(new MTToNucRatioCalculator(communicator));
         }
 
