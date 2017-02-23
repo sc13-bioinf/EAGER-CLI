@@ -366,7 +366,12 @@ public class RunEAGER {
         }
 
         if (communicator.isRun_pmdtools() ) {
-            ancientbacterialpool.addModule(new PmdTools(communicator));
+            if ( communicator.isPMDSFilter()) {
+                ancientbacterialpool.addModule(new PmdTools(communicator, PmdTools.PMDS_FILTER));
+            }
+            if ( communicator.isPmdtoolsCalcRange() ) {
+                ancientbacterialpool.addModule(new PmdTools(communicator, PmdTools.CALC_RANGE));
+            }
         }
 
         if (communicator.isMarkdup_run()) {
@@ -696,7 +701,7 @@ public class RunEAGER {
             humanancientpool.addModule(new CleanSam(communicator));
         }
 
-        if ( communicator.isSnpCapturedata() || communicator.isRun_mt_capture_mode() ) {
+        if ( communicator.isSnpcapturedata() || communicator.isRun_mt_capture_mode() ) {
             humanancientpool.addModule(new CaptureOnTarget(communicator));
         }
 
@@ -708,7 +713,12 @@ public class RunEAGER {
         }
 
         if (communicator.isRun_pmdtools() ) {
-            humanancientpool.addModule(new PmdTools(communicator));
+            if ( communicator.isPMDSFilter() ) {
+                humanancientpool.addModule(new PmdTools(communicator, PmdTools.PMDS_FILTER));
+            }
+            if ( communicator.isPmdtoolsCalcRange() ) {
+                humanancientpool.addModule(new PmdTools(communicator, PmdTools.CALC_RANGE));
+            }
         }
 
         if (communicator.isMarkdup_run()) {
