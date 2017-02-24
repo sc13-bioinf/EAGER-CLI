@@ -6,6 +6,7 @@ import com.google.common.io.Files;
 
 import java.io.File;
 import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * Created by neukamm on 26.10.16.
@@ -28,10 +29,17 @@ public class PmdTools extends AModule {
     public void setParameters() {
         if ( this.runTarget == PmdTools.PMDS_FILTER ) {
             this.parameters = getParamsPmdsFilter();
+
+            String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
+
+            this.outputfile = new ArrayList<String>();
+            this.outputfile.add(getOutputfolder()+"/"+output_stem+ ".pmds." + this.communicator.getPmdtoolsThreshold() + ".filter.bam");
         } else if( this.runTarget == PmdTools.CALC_RANGE ){
             this.parameters = getParamsCalcRange();
+            this.outputfile = this.inputfile;
+        } else {
+            this.outputfile = this.inputfile;
         }
-        this.outputfile = this.inputfile;
     }
 
     private String getDataDependentOptions() {
@@ -43,7 +51,7 @@ public class PmdTools extends AModule {
         }
 
         if ( this.communicator.isSnpcapturedata() && this.communicator.getGUI_reference_mask() != null ) {
-            data_dependent_options += " --maskss " + this.communicator.getGUI_reference_mask();
+            data_dependent_options += " --refseq " + this.communicator.getGUI_reference_mask();
         }
 
         if ( !this.communicator.getPmdtools_advanced().isEmpty() ) {

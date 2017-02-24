@@ -60,9 +60,6 @@ public class CreateResultsDirectories extends AModule {
         //Always create this, we need the folder for some parts :-)
         listOfFolders.add(this.communicator.getGUI_resultspath()+"/5-DeDup"+useOutputFolderAsTmp);
 
-        if(this.communicator.isRun_pmdtools()){
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/5.1-PMDtools"+useOutputFolderAsTmp);
-        }
         if(this.communicator.isRun_coveragecalc()){
             listOfFolders.add(this.communicator.getGUI_resultspath()+"/6-QualiMap"+useOutputFolderAsTmp);
         }

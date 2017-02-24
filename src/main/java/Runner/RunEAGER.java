@@ -527,7 +527,7 @@ public class RunEAGER {
             humanmodernpool.addModule(new CleanSam(communicator));
         }
 
-        if ( communicator.isSnpcapturedata() || communicator.isRun_mt_capture_mode() ) {
+        if ( communicator.isSnpcapturedata() || communicator.isCalcCaptureOnTarget() || communicator.isRun_mt_capture_mode() ) {
             humanmodernpool.addModule(new CaptureOnTarget(communicator));
         }
 
@@ -701,7 +701,7 @@ public class RunEAGER {
             humanancientpool.addModule(new CleanSam(communicator));
         }
 
-        if ( communicator.isSnpcapturedata() || communicator.isRun_mt_capture_mode() ) {
+        if ( communicator.isSnpcapturedata() || communicator.isCalcCaptureOnTarget() || communicator.isRun_mt_capture_mode() ) {
             humanancientpool.addModule(new CaptureOnTarget(communicator));
         }
 
