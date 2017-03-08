@@ -19,7 +19,7 @@ public class CleanSam extends AModule {
     public void setParameters() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         String output = getOutputfolder()+"/"+output_stem+".cleaned.bam";
-        this.parameters = new String[]{"picard", "CleanSam", "INPUT="+this.inputfile.get(0), "OUTPUT="+ output};
+        this.parameters = new String[]{"picard", "CleanSam", "INPUT="+this.inputfile.get(0), "OUTPUT="+ output, "VALIDATION_STRINGENCY=SILENT"};
         this.outputfile = new ArrayList<>();
         this.outputfile.add(output);
     }
