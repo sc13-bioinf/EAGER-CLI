@@ -36,7 +36,7 @@ public class SamtoolsMerge extends AModule {
 
         //Find the other realigned file!
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
-        this.parameters = new String[]{"samtools", "merge", output_path+"/"+output_stem+"CM.bam",
+        this.parameters = new String[]{"samtools", "merge", "-@", String.valueOf(this.communicator.getCpucores()), output_path+"/"+output_stem+"CM.bam",
                                         this.inputfile.get(0),
                                         this.communicator.getCM_realigned()};
         this.outputfile = new ArrayList<String>();

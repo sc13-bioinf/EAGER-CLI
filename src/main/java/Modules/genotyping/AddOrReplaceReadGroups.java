@@ -36,7 +36,7 @@ public class AddOrReplaceReadGroups extends AModule {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         String fileout = getOutputfolder()+"/"+output_stem+".RG.bam";
         this.parameters = new String[]{"picard", "AddOrReplaceReadGroups", "I="+this.inputfile.get(0), "O="+fileout,
-                                        "RGLB=lib", "RGPL=illumina", "RGPU=4410", "RGSM=Project"};
+                                        "RGLB=lib", "RGPL=illumina", "RGPU=4410", "RGSM=Project", "VALIDATION_STRINGENCY=SILENT"};
         this.outputfile = new ArrayList<String>();
         outputfile.add(fileout);
     }
