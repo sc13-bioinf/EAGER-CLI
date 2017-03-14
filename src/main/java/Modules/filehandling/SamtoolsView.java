@@ -54,7 +54,7 @@ public class SamtoolsView extends AModule {
 
         switch (currentConfiguration){
             case DEFAULT: this.parameters = getDefaultParameterList();
-                this.outputfile.add(output_path+"/"+output_stem+".bam");
+                this.outputfile.add(output_path+"/"+output_stem+".mapped.bam");
                 break;
             case ONLYUNMAPPED: this.parameters = getOnlyUnmapped();
                 this.outputfile.add(output_path+"/"+output_stem+".unmapped.bam");
@@ -128,7 +128,7 @@ public class SamtoolsView extends AModule {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         String output_path = this.communicator.getGUI_resultspath() + "/4-Samtools";
         return new String[]{"samtools", "view", "-@", String.valueOf(this.communicator.getCpucores()),
-                "-bS", this.inputfile.get(0), "-o", output_path+ "/"+ output_stem +".bam"};
+                "-bS", this.inputfile.get(0), "-o", output_path+ "/"+ output_stem +".mapped.bam"};
     }
 
     private String[] getHybridSAM() {
