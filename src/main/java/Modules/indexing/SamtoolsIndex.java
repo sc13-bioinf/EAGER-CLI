@@ -27,6 +27,7 @@ public class SamtoolsIndex extends AModule {
     public static final int DEFAULT = 0;
     public static final int DEDUP = 1;
     public static final int SCHMUTZI = 2;
+    public static final int UNFILTERED = 3;
     private int currentconf = DEFAULT;
     private String[] schmutziParameters;
 
@@ -43,31 +44,8 @@ public class SamtoolsIndex extends AModule {
     @Override
     public void setParameters() {
         this.outputfile = this.inputfile;
-        switch (currentconf) {
-            case DEFAULT:
-                this.parameters = getDefaultParameters();
-                this.outputfile = this.inputfile;
-                break;
-            case DEDUP:
-                this.parameters = getDeDupParameters();
-                this.outputfile = this.inputfile;
-                break;
-            case SCHMUTZI:
-                this.parameters = getSchmutziParameters();
-                this.outputfile = this.inputfile;
-                break;
-        }
+        this.parameters = new String[]{"samtools","index", this.inputfile.get(0)};
     }
-
-    private String[] getDefaultParameters(){
-        return new String[]{"samtools","index", this.inputfile.get(0)};
-    }
-
-    private String[] getDeDupParameters(){
-        return new String[]{"samtools","index", this.inputfile.get(0)};
-    }
-
-    private String[] getSchmutziParameters() { return new String[]{"samtools", "index", this.inputfile.get(0)};}
 
     @Override
     public String getOutputfolder() {
@@ -94,13 +72,11 @@ public class SamtoolsIndex extends AModule {
                 return "default";
             case DEDUP:
                 return "Dedup";
-
             case SCHMUTZI:
                 return "Schmutzi";
+            case UNFILTERED:
+                return "Unfiltered";
             default: return "default";
         }
     }
-
-
-
 }

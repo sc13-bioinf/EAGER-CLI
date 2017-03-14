@@ -826,26 +826,26 @@ public class RunEAGER {
             pooltoadd.addModule(new BWASamse(communicator));
         }
 
+        if (communicator.isRun_mapping_extractmappedandunmapped()) {
+            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTMAPPED));
+            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTUNMAPPED));
+        }
+
         if (!this.communicator.getMapper_mapquality_filter().equals("0")) {
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.DEFAULT));
             pooltoadd.addModule(new Flagstat(communicator));
-            pooltoadd.addModule(new SamtoolsView(communicator, communicator.isMapper_filter_unmapped() ? SamtoolsView.ONLYMAPPEDFILTERED : SamtoolsView.FILTERED));
+            pooltoadd.addModule(new SamtoolsView(communicator, communicator.isMapper_filter_unmapped() ? SamtoolsView.ONLYMAPPED : SamtoolsView.DEFAULT));
+            pooltoadd.addModule(new SamtoolsSort(communicator, SamtoolsSort.UNFILTERED));
+            pooltoadd.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.UNFILTERED));
+            // We want to retain the bam file before quality filtering, therefore only mapped must come before that and produce a bam
+            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.FILTERED));
             pooltoadd.addModule(new Flagstat(communicator,Flagstat.FILTERED));
         } else {
             pooltoadd.addModule(new SamtoolsView(communicator, communicator.isMapper_filter_unmapped() ? SamtoolsView.ONLYMAPPED : SamtoolsView.DEFAULT));
             pooltoadd.addModule(new Flagstat(communicator));
         }
         pooltoadd.addModule(new SamtoolsSort(communicator));
-
-
-        if (communicator.isRun_mapping_extractmappedandunmapped()) {
-            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTMAPPED));
-            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTUNMAPPED));
-        }
-
-
         pooltoadd.addModule(new SamtoolsIndex(communicator));
-
     }
 
     /**
@@ -855,9 +855,18 @@ public class RunEAGER {
     private void addStampyMapping(ModulePool pooltoadd) {
         pooltoadd.addModule(new Stampy(communicator));
 
+        if (communicator.isRun_mapping_extractmappedandunmapped()) {
+            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTMAPPED));
+            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTUNMAPPED));
+        }
+
         if (!this.communicator.getMapper_mapquality_filter().equals("0")) {
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.DEFAULT));
             pooltoadd.addModule(new Flagstat(communicator));
+            pooltoadd.addModule(new SamtoolsView(communicator, communicator.isMapper_filter_unmapped() ? SamtoolsView.ONLYMAPPED : SamtoolsView.DEFAULT));
+            pooltoadd.addModule(new SamtoolsSort(communicator, SamtoolsSort.UNFILTERED));
+            pooltoadd.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.UNFILTERED));
+            // We want to retain the bam file before quality filtering, therefore only mapped must come before that and produce a bam
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.FILTERED));
             pooltoadd.addModule(new Flagstat(communicator, Flagstat.FILTERED));
 
@@ -867,15 +876,10 @@ public class RunEAGER {
 
         }
 
-        pooltoadd.addModule(new SamtoolsSort(communicator));
-
-
         pooltoadd.addModule(new AddOrReplaceReadGroups(communicator)); //Required, Stampy does not add RG information at all -.-
-        if (communicator.isRun_mapping_extractmappedandunmapped()) {
-            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTMAPPED));
-            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTUNMAPPED));
-        }
 
+        pooltoadd.addModule(new SamtoolsSort(communicator));
+        pooltoadd.addModule(new SamtoolsIndex(communicator));
     }
 
     /**
@@ -901,8 +905,17 @@ public class RunEAGER {
             pooltoadd.addModule(new CircularMapperRealigner(communicator, CircularMapperRealigner.DEFAULT));
         }
 
+        if (communicator.isRun_mapping_extractmappedandunmapped()) {
+            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTMAPPED));
+            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTUNMAPPED));
+        }
+
         if (!this.communicator.getMapper_mapquality_filter().equals("0")) {
             pooltoadd.addModule(new Flagstat(communicator));
+            pooltoadd.addModule(new SamtoolsView(communicator, communicator.isMapper_filter_unmapped() ? SamtoolsView.ONLYMAPPED : SamtoolsView.DEFAULT));
+            pooltoadd.addModule(new SamtoolsSort(communicator, SamtoolsSort.UNFILTERED));
+            pooltoadd.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.UNFILTERED));
+            // We want to retain the bam file before quality filtering, therefore only mapped must come before that and produce a bam
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.FILTERED));
             pooltoadd.addModule(new Flagstat(communicator, Flagstat.FILTERED));
         } else {
@@ -910,11 +923,8 @@ public class RunEAGER {
             pooltoadd.addModule(new Flagstat(communicator));
         }
         pooltoadd.addModule(new SamtoolsSort(communicator));
+        pooltoadd.addModule(new SamtoolsIndex(communicator));
 
-        if (communicator.isRun_mapping_extractmappedandunmapped()) {
-            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTMAPPED));
-            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTUNMAPPED));
-        }
     }
 
     /**
@@ -928,9 +938,18 @@ public class RunEAGER {
             pooltoadd.addModule(new BWAMem(communicator));
         }
 
+        if (communicator.isRun_mapping_extractmappedandunmapped()) {
+            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTMAPPED));
+            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTUNMAPPED));
+        }
+
         if (!this.communicator.getMapper_mapquality_filter().equals("0")) {
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.DEFAULT));
             pooltoadd.addModule(new Flagstat(communicator));
+            pooltoadd.addModule(new SamtoolsView(communicator, communicator.isMapper_filter_unmapped() ? SamtoolsView.ONLYMAPPED : SamtoolsView.DEFAULT));
+            pooltoadd.addModule(new SamtoolsSort(communicator, SamtoolsSort.UNFILTERED));
+            pooltoadd.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.UNFILTERED));
+            // We want to retain the bam file before quality filtering, therefore only mapped must come before that and produce a bam
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.FILTERED));
             pooltoadd.addModule(new Flagstat(communicator, Flagstat.FILTERED));
 
@@ -940,15 +959,10 @@ public class RunEAGER {
 
         }
 
-        pooltoadd.addModule(new SamtoolsSort(communicator));
         pooltoadd.addModule(new AddOrReplaceReadGroups(communicator));
 
-        if (communicator.isRun_mapping_extractmappedandunmapped()) {
-            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTMAPPED));
-            pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.EXTRACTUNMAPPED));
-        }
-
-
+        pooltoadd.addModule(new SamtoolsSort(communicator));
+        pooltoadd.addModule(new SamtoolsIndex(communicator));
     }
 
     /**

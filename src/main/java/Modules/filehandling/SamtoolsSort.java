@@ -29,6 +29,7 @@ public class SamtoolsSort extends AModule {
     public static final int DEFAULT = 0;
     private int currentConfiguration = DEFAULT;
     public static final int CIRCULARMAPPER = 1;
+    public static final int UNFILTERED = 2;
 
     public SamtoolsSort(Communicator c){
         super(c);
@@ -43,31 +44,12 @@ public class SamtoolsSort extends AModule {
     @Override
     public void setParameters() {
         this.outputfile = new ArrayList<String>();
-        switch (currentConfiguration){
-            case DEFAULT: this.parameters = getDefaultParameters();
-            break;
-            case CIRCULARMAPPER: this.parameters = getCMParameters();
-                break;
-        }
-    }
-
-    private String[] getCMParameters() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
-        String output_path = getOutputfolder();
-        String[] output =  new String[]{"samtools","sort","-@", this.communicator.getCpucores(),
-                "-m",this.communicator.getMaxmemory()+"G", this.inputfile.get(0), "-o", output_path+"/"+output_stem+".sorted.bam"};
-        outputfile.add(output_path+"/"+output_stem+".sorted.bam");
-        return output;
-    }
+        String output_path = getOutputfolder()+"/"+output_stem+".sorted.bam";
+        outputfile.add(output_path);
 
-
-    private String[] getDefaultParameters(){
-        String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
-        String output_path = getOutputfolder();
-        String[] output =  new String[]{"samtools","sort","-@", this.communicator.getCpucores(),
-                "-m",this.communicator.getMaxmemory()+"G", this.inputfile.get(0), "-o", output_path+"/"+output_stem+".sorted.bam"};
-        outputfile.add(output_path+"/"+output_stem+".sorted.bam");
-        return output;
+        this.parameters = new String[]{"samtools","sort","-@", this.communicator.getCpucores(),
+                "-m",this.communicator.getMaxmemory()+"G", this.inputfile.get(0), "-o", output_path};
     }
 
     @Override
@@ -75,5 +57,20 @@ public class SamtoolsSort extends AModule {
         return this.communicator.getGUI_resultspath() + "/4-Samtools";
     }
 
+    @Override
+    public String getModulename(){
+        return super.getModulename() + getSubModuleName();
+    }
 
+    private String getSubModuleName() {
+        switch (currentConfiguration){
+            case DEFAULT:
+                return "default";
+            case CIRCULARMAPPER:
+                return "CircularMapper";
+            case UNFILTERED:
+                return "Unfiltered";
+            default: return "default";
+        }
+    }
 }
