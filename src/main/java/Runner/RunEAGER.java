@@ -366,7 +366,12 @@ public class RunEAGER {
         }
 
         if (communicator.isRun_pmdtools() ) {
-            ancientbacterialpool.addModule(new PmdTools(communicator));
+            if ( communicator.isPMDSFilter()) {
+                ancientbacterialpool.addModule(new PmdTools(communicator, PmdTools.PMDS_FILTER));
+            }
+            if ( communicator.isPmdtoolsCalcRange() ) {
+                ancientbacterialpool.addModule(new PmdTools(communicator, PmdTools.CALC_RANGE));
+            }
         }
 
         if (communicator.isMarkdup_run()) {
@@ -522,12 +527,16 @@ public class RunEAGER {
             humanmodernpool.addModule(new CleanSam(communicator));
         }
 
+        if ( communicator.isSnpcapturedata() || communicator.isCalcCaptureOnTarget() || communicator.isRun_mt_capture_mode() ) {
+            humanmodernpool.addModule(new CaptureOnTarget(communicator));
+        }
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             humanmodernpool.addModule(new DeDup(communicator));
             if(communicator.isRun_complexityestimation()){
                 addComplexityEstimation(humanmodernpool);
-            }        }
+            }
+        }
 
         if (communicator.isMarkdup_run()) {
             if(communicator.isRun_complexityestimation()){
@@ -692,6 +701,9 @@ public class RunEAGER {
             humanancientpool.addModule(new CleanSam(communicator));
         }
 
+        if ( communicator.isSnpcapturedata() || communicator.isCalcCaptureOnTarget() || communicator.isRun_mt_capture_mode() ) {
+            humanancientpool.addModule(new CaptureOnTarget(communicator));
+        }
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             humanancientpool.addModule(new DeDup(communicator));
@@ -701,7 +713,12 @@ public class RunEAGER {
         }
 
         if (communicator.isRun_pmdtools() ) {
-            humanancientpool.addModule(new PmdTools(communicator));
+            if ( communicator.isPMDSFilter() ) {
+                humanancientpool.addModule(new PmdTools(communicator, PmdTools.PMDS_FILTER));
+            }
+            if ( communicator.isPmdtoolsCalcRange() ) {
+                humanancientpool.addModule(new PmdTools(communicator, PmdTools.CALC_RANGE));
+            }
         }
 
         if (communicator.isMarkdup_run()) {

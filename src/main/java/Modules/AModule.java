@@ -41,7 +41,7 @@ public abstract class AModule {
 
     public boolean hasbeenExecuted(){
         String regEx = "DONE."+this.getModulename();
-        if(regEx.contains("Report")){
+        if(regEx.contains("Report")) {
             regEx = "";
         }
 
@@ -50,10 +50,14 @@ public abstract class AModule {
             return false;
         }
         File f = new File(path);
-        for(File file  : f.listFiles()){
-            if(file.getName().matches(regEx)){
-                return true;
+        if ( f.isDirectory() ) {
+            for(File file  : f.listFiles()) {
+                if (file.getName().matches(regEx)) {
+                    return true;
+                }
             }
+        } else {
+            System.err.println("Output folder is not a directory: "+f.getPath());
         }
         return false;
     }
