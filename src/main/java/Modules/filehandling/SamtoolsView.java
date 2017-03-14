@@ -114,19 +114,19 @@ public class SamtoolsView extends AModule {
     private String[] getOnlyMapped() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         String output_path = this.communicator.getGUI_resultspath() + "/4-Samtools";
-        return new String[]{"samtools", "view", "-F4", "-b", this.inputfile.get(0), "-o", output_path+ "/"+ output_stem +".mappedonly.bam"};
+        return new String[]{"samtools", "view", "-@", String.valueOf(this.communicator.getCpucores()), "-F4", "-b", this.inputfile.get(0), "-o", output_path+ "/"+ output_stem +".mappedonly.bam"};
     }
 
     private String[] getOnlyMappedFiltered() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         String output_path = this.communicator.getGUI_resultspath() + "/4-Samtools";
-        return new String[]{"samtools", "view", "-F4", "-q", this.communicator.getMapper_mapquality_filter(),"-b", this.inputfile.get(0), "-o", output_path+ "/"+ output_stem +".mappedonlyqF.bam"};
+        return new String[]{"samtools", "view", "-F4", "-@", String.valueOf(this.communicator.getCpucores()), "-q", this.communicator.getMapper_mapquality_filter(),"-b", this.inputfile.get(0), "-o", output_path+ "/"+ output_stem +".mappedonlyqF.bam"};
     }
 
     private String[] getOnlyUnmapped() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         String output_path = this.communicator.getGUI_resultspath() + "/4-Samtools";
-        return new String[]{"samtools", "view", "-f4", "-q", this.communicator.getMapper_mapquality_filter(),"-b", this.inputfile.get(0), "-o", output_path+ "/"+ output_stem +".unmapped.bam"};    }
+        return new String[]{"samtools", "view", "-f4", "-@", String.valueOf(this.communicator.getCpucores()), "-q", this.communicator.getMapper_mapquality_filter(),"-b", this.inputfile.get(0), "-o", output_path+ "/"+ output_stem +".unmapped.bam"};    }
 
     private String[] getQualityFiltered() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
