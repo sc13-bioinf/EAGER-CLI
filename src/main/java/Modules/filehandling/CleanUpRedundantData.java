@@ -20,6 +20,7 @@ import IO.Communicator;
 import Modules.AModule;
 
 import java.util.ArrayList;
+import java.io.File;
 
 /**
  * Created by peltzer on 11/5/14.
@@ -33,23 +34,37 @@ public class CleanUpRedundantData extends AModule {
             setParameters();
         }
 
-        @Override
-        public void setParameters() {
+    @Override
+    public void setParameters () {};
 
-            //This is to remove sam files, as these are just uncompressed BAM files and therefore are not required in the pipeline!
-            //Afterwards we run touch with the name "DUMMY.SAM"
-            String remove_sam_data = "rm "+this.communicator.getGUI_resultspath()+"/3-Mapper/*.sam";
+    // Need to set parameters at runTime for this one
+    @Override
+    public String [] getParameters () {
+        String combiner = "; ";
+        //This is to remove sam files, as these are just uncompressed BAM files and therefore are not required in the pipeline!
+        //Afterwards we run touch with the name "DUMMY.SAM"
+        String remove_sam_data = "rm "+this.communicator.getGUI_resultspath()+"/3-Mapper/*.sam";
 
-            //See above, we combine these command using the shell && command, combine a single string out of them and run these calling bash
-            //This removes redundant data and touches the files again, so the other tools will even not be run again if this is required in the pipeline!
-            String remove_bam_unsorted_data = "rm "+this.communicator.getGUI_resultspath()+"/4-Samtools/*[!sorted].bam";
+        String remove_bam_unsorted_data = combiner+"echo \"No bam dir found\"";
 
+        File d = new File(this.communicator.getGUI_resultspath()+"/4-Samtools");
 
-            String combiner = " && ";
-
-            this.parameters = new String[]{
-                    "/bin/sh", "-c", remove_sam_data+combiner+remove_bam_unsorted_data};
+        if ( d.isDirectory() ) {
+            remove_bam_unsorted_data = "";
+            for (File f : d.listFiles()) {
+                if ( f.getName().endsWith(".bam") && !( f.getName().endsWith(".mappedonly.sorted.bam") || f.getName().endsWith(".mapped.sorted.bam") ) ) {
+                    remove_bam_unsorted_data += combiner+"rm " + f.getPath() + " ";
+                }
+                else if ( f.getName().endsWith(".bai") && !( f.getName().endsWith(".mappedonly.sorted.bam.bai") || f.getName().endsWith(".mapped.sorted.bam.bai") ) ) {
+                    remove_bam_unsorted_data += combiner + "rm " + f.getPath();
+                }
+            }
         }
+
+        return new String[] {
+                "/bin/sh", "-c", remove_sam_data+remove_bam_unsorted_data
+        };
+    }
 
         @Override
         public String getOutputfolder() {
