@@ -47,12 +47,14 @@ public class CleanUpRedundantData extends AModule {
 
         String remove_bam_unsorted_data = "echo 'No bam dir found'";
 
-        File f = new File(this.communicator.getGUI_resultspath());
+        File f = new File(this.communicator.getGUI_resultspath()+"/4-Samtools");
 
         if ( f.isDirectory() ) {
             remove_bam_unsorted_data = "";
             for (File file : f.listFiles()) {
-               remove_bam_unsorted_data += "rm " + file.getPath() + " ";
+                if ( f.getName().endsWith(".bam") && !( f.getName().endsWith(".mappedonly.sorted.bam") || f.getName().endsWith(".mapped.sorted.bam") ) ) {
+                    remove_bam_unsorted_data += "rm " + file.getPath() + " ";
+                }
             }
         }
 
