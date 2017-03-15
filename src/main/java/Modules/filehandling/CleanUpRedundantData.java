@@ -40,26 +40,29 @@ public class CleanUpRedundantData extends AModule {
     // Need to set parameters at runTime for this one
     @Override
     public String [] getParameters () {
-        String combiner = " && ";
+        String combiner = "; ";
         //This is to remove sam files, as these are just uncompressed BAM files and therefore are not required in the pipeline!
         //Afterwards we run touch with the name "DUMMY.SAM"
         String remove_sam_data = "rm "+this.communicator.getGUI_resultspath()+"/3-Mapper/*.sam";
 
-        String remove_bam_unsorted_data = "echo 'No bam dir found'";
+        String remove_bam_unsorted_data = combiner+"echo \"No bam dir found\"";
 
-        File f = new File(this.communicator.getGUI_resultspath()+"/4-Samtools");
+        File d = new File(this.communicator.getGUI_resultspath()+"/4-Samtools");
 
-        if ( f.isDirectory() ) {
+        if ( d.isDirectory() ) {
             remove_bam_unsorted_data = "";
-            for (File file : f.listFiles()) {
+            for (File f : d.listFiles()) {
                 if ( f.getName().endsWith(".bam") && !( f.getName().endsWith(".mappedonly.sorted.bam") || f.getName().endsWith(".mapped.sorted.bam") ) ) {
-                    remove_bam_unsorted_data += "rm " + file.getPath() + " ";
+                    remove_bam_unsorted_data += combiner+"rm " + f.getPath() + " ";
+                }
+                else if ( f.getName().endsWith(".bai") && !( f.getName().endsWith(".mappedonly.sorted.bam.bai") || f.getName().endsWith(".mapped.sorted.bam.bai") ) ) {
+                    remove_bam_unsorted_data += combiner + "rm " + f.getPath();
                 }
             }
         }
 
         return new String[] {
-                "/bin/sh", "-c", remove_sam_data+combiner+remove_bam_unsorted_data
+                "/bin/sh", "-c", remove_sam_data+remove_bam_unsorted_data
         };
     }
 
