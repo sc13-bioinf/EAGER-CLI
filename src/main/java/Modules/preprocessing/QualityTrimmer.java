@@ -38,27 +38,27 @@ public class QualityTrimmer extends AModule {
 
 
     private String addAllParamsUp(){
-        String params = "";
         String output_path = getOutputfolder();
-        String combiner = "&&";
+        String combiner = " && ";
+        ArrayList<String> commands = new ArrayList<>();
         ArrayList<String> outputfiles = new ArrayList<>();
 
 
-        for(int i = 0; i<= this.inputfile.size(); i++){
-            String file = this.inputfile.get(i);
-            String output_stem = Files.getNameWithoutExtension(file);
-            String filename = output_path+"/"+output_stem+".qT"+this.communicator.getQuality_minreadquality()+".lT"+this.communicator.getQuality_readlength()+".fq.gz";
-            if(i< this.inputfile.size()){
-                params+= "fastq_quality_trimmer -t " + String.valueOf(this.communicator.getQuality_minreadquality())+" -l "+String.valueOf(this.communicator.getQuality_readlength())
-                        +" -Q33" + " -i " + filename + " -z " + combiner;
+        for(int i = 0; i < this.inputfile.size(); i++){
+            String input_file_path = this.inputfile.get(i);
+            String output_stem = Files.getNameWithoutExtension(input_file_path);
+            String output_file_path = output_path+"/"+output_stem+".qT"+this.communicator.getQuality_minreadquality()+".lT"+this.communicator.getQuality_readlength()+".fq.gz";
+            if ( input_file_path.endsWith(".gz") ) {
+                commands.add("zcat " + input_file_path + " | fastq_quality_trimmer -t " + String.valueOf(this.communicator.getQuality_minreadquality())+" -l "+String.valueOf(this.communicator.getQuality_readlength())
+                    +" -Q33" + " -z -o "+output_file_path);
             } else {
-                params+= "fastq_quality_trimmer -t " + String.valueOf(this.communicator.getQuality_minreadquality())+" -l "+String.valueOf(this.communicator.getQuality_readlength())
-                        +" -Q33" + " -i " + filename + " -z ";
+                commands.add("fastq_quality_trimmer -t " + String.valueOf(this.communicator.getQuality_minreadquality())+" -l "+String.valueOf(this.communicator.getQuality_readlength())
+                    +" -Q33" + " -i " + input_file_path + " -z -o "+output_file_path);
             }
-            outputfiles.add(filename);
+            outputfiles.add(output_file_path);
         }
         this.outputfile = outputfiles;
-        return params;
+        return String.join(combiner, commands);
     }
 
     @Override
