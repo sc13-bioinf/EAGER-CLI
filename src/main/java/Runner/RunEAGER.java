@@ -196,6 +196,7 @@ public class RunEAGER {
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             bacterialpool.addModule(new DeDup(communicator));
+            bacterialpool.addModule(new SamtoolsSort(communicator,SamtoolsSort.DEDUP));
             if(communicator.isRun_complexityestimation()){
                 addComplexityEstimation(bacterialpool);
             }
@@ -359,6 +360,7 @@ public class RunEAGER {
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             ancientbacterialpool.addModule(new DeDup(communicator));
+            ancientbacterialpool.addModule(new SamtoolsSort(communicator,SamtoolsSort.DEDUP));
             if(communicator.isRun_complexityestimation()){
                 addComplexityEstimation(ancientbacterialpool);
             }
@@ -533,6 +535,7 @@ public class RunEAGER {
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             humanmodernpool.addModule(new DeDup(communicator));
+            humanmodernpool.addModule(new SamtoolsSort(communicator,SamtoolsSort.DEDUP));
             if(communicator.isRun_complexityestimation()){
                 addComplexityEstimation(humanmodernpool);
             }
@@ -707,6 +710,7 @@ public class RunEAGER {
 
         if (communicator.isRmdup_run() && !communicator.isMarkdup_run()) {
             humanancientpool.addModule(new DeDup(communicator));
+            humanancientpool.addModule(new SamtoolsSort(communicator,SamtoolsSort.DEDUP));
             if(communicator.isRun_complexityestimation()){
                 addComplexityEstimation(humanancientpool);
             }

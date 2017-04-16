@@ -30,6 +30,7 @@ public class SamtoolsSort extends AModule {
     private int currentConfiguration = DEFAULT;
     public static final int CIRCULARMAPPER = 1;
     public static final int UNFILTERED = 2;
+    public static final int DEDUP = 3;
 
     public SamtoolsSort(Communicator c){
         super(c);
@@ -54,7 +55,19 @@ public class SamtoolsSort extends AModule {
 
     @Override
     public String getOutputfolder() {
-        return this.communicator.getGUI_resultspath() + "/4-Samtools";
+        switch(currentConfiguration){
+            case DEDUP:
+                return this.communicator.getGUI_resultspath() + "/5-DeDup";
+            case DEFAULT:
+                return this.communicator.getGUI_resultspath() + "/4-Samtools";
+            case CIRCULARMAPPER:
+                return this.communicator.getGUI_resultspath() + "/4-Samtools";
+            case UNFILTERED:
+                return this.communicator.getGUI_resultspath() + "/4-Samtools";
+            default:                 return this.communicator.getGUI_resultspath() + "/4-Samtools";
+
+        }
+
     }
 
     @Override
@@ -70,6 +83,8 @@ public class SamtoolsSort extends AModule {
                 return "CircularMapper";
             case UNFILTERED:
                 return "Unfiltered";
+            case DEDUP:
+                return "DeDup";
             default: return "default";
         }
     }
