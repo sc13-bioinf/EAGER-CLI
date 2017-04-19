@@ -41,7 +41,7 @@ public class AdapterRemoval extends AModule {
 
     private String[] getDefaultParameterList(){
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
-        this.outputfile.add(getOutputfolder()+output_stem+".collapsed.fq.gz");
+        this.outputfile.add(getOutputfolder()+output_stem+".collapsed.gz");
 
         return new String[]{"adapterremoval", "--file1",  getForwards(), "--file2", getReverse(), "--basename", getOutputfolder()+ output_stem, "--gzip",
                 "--threads", this.communicator.getCpucores(), "--trimns", "--trimqualities",
@@ -53,8 +53,8 @@ public class AdapterRemoval extends AModule {
     private String[] getAdapterClippingOnlyParameterList(){
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
 
-        this.outputfile.add(getOutputfolder()+output_stem+".pair1.truncated.fq.gz");
-        this.outputfile.add(getOutputfolder()+output_stem+".pair2.truncated.fq.gz");
+        this.outputfile.add(getOutputfolder()+output_stem+".pair1.truncated.gz");
+        this.outputfile.add(getOutputfolder()+output_stem+".pair2.truncated.gz");
 
         return new String[]{"adapterremoval", "--file1", getForwards(), "--file2", getReverse(), "--basename", getOutputfolder()+ output_stem, "--gzip", "--threads", this.communicator.getCpucores(),
         "--trimns", "--trimqualities", "--adapter1", this.communicator.getMerge_fwadaptor(), "--adapter2", this.communicator.getMerge_bwadaptor(),
@@ -64,7 +64,7 @@ public class AdapterRemoval extends AModule {
 
     private String[] getSingleEndedOnlyParameterList() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
-        this.outputfile.add(getOutputfolder()+output_stem+".truncated.fq.gz");
+        this.outputfile.add(getOutputfolder()+output_stem+".truncated.gz");
 
 
         return new String[]{"adapterremoval", "--file1", getForwards(), "--basename", getOutputfolder()+ output_stem, "--gzip", "--threads", this.communicator.getCpucores(),
