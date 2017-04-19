@@ -55,7 +55,6 @@ public class ClipAndMerge extends AModule {
                 break;
             case ADAPTER_CLIPPING_ONLY: this.parameters = getAdapterClippingOnlyParameterList();
                 appendMergedOnly();
-
                 this.outputfile.add(getOutputfolder()+output_stem+".clipped.fq.gz");
                 break;
             case SINGLE_ENDED_ONLY: this.parameters = getSingleEndedOnlyParameterList();
@@ -74,7 +73,7 @@ public class ClipAndMerge extends AModule {
         return new String[]{"ClipAndMerge", "-in1",  getForwards(), "-in2", getReverse(),
                 "-f", this.communicator.getMerge_fwadaptor(), "-r", this.communicator.getMerge_bwadaptor(),
                 "-trim3p", this.communicator.getMerge_barcode3p(), "-trim5p", this.communicator.getMerge_barcode5p(),
-                "-l", String.valueOf(this.communicator.getQuality_readlength()), "-qt", "-q", String.valueOf(this.communicator.getQuality_minreadquality()),
+                "-l", String.valueOf(this.communicator.getQuality_readlength()), "-m", String.valueOf(this.communicator.getMerge_min_adapter_overlap()), "-qt", "-q", String.valueOf(this.communicator.getQuality_minreadquality()),
                 "-log", getOutputfolder()+ "stats.log",
                 this.communicator.getMerge_advanced(),
                 "-o ", getOutputfolder() +output_stem+".merged.fq.gz"};
@@ -88,7 +87,7 @@ public class ClipAndMerge extends AModule {
         return new String[]{"ClipAndMerge", "-in1",  getForwards(), "-in2", getReverse(),
                 "-f", this.communicator.getMerge_fwadaptor(), "-r", this.communicator.getMerge_bwadaptor(),
                 "-l", String.valueOf(this.communicator.getQuality_readlength()),"-no_merging", "-qt", "-q", String.valueOf(this.communicator.getQuality_minreadquality()),
-                "-log", getOutputfolder()+ "stats.log",
+                "-log", getOutputfolder()+ "stats.log", String.valueOf(this.communicator.getMerge_min_adapter_overlap()),
                 this.communicator.getMerge_advanced(),
                 "-o ", getOutputfolder() +output_stem+".clipped.fq.gz", "-u", getOutputfolder()+output_stem+".forwards.fq.gz", getOutputfolder()+output_stem+".reverse.fq.gz"};
 
@@ -100,7 +99,7 @@ public class ClipAndMerge extends AModule {
                 "-f", this.communicator.getMerge_fwadaptor(), "-r", this.communicator.getMerge_bwadaptor(),
                 "-trim3p", this.communicator.getMerge_barcode3p(), "-trim5p", this.communicator.getMerge_barcode5p(),
                 "-l", String.valueOf(this.communicator.getQuality_readlength()), "-qt", "-q", String.valueOf(this.communicator.getQuality_minreadquality()),
-                "-log", getOutputfolder()+ "stats.log",
+                "-log", getOutputfolder()+ "stats.log", String.valueOf(this.communicator.getMerge_min_adapter_overlap()),
                 this.communicator.getMerge_advanced(),
                 "-o ", getOutputfolder() +output_stem+".fq.gz"};
     }
