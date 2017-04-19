@@ -22,6 +22,7 @@ import Modules.filehandling.*;
 import Modules.genotyping.*;
 import Modules.indexing.*;
 import Modules.mapping.*;
+import Modules.preprocessing.AdapterRemoval;
 import Modules.preprocessing.ClipAndMerge;
 import Modules.preprocessing.FastQC;
 import Modules.preprocessing.QualityTrimmer;
@@ -129,17 +130,8 @@ public class RunEAGER {
             preprocesspool.addModule(new FastQC(communicator));
         }
 
-        if (communicator.isRun_clipandmerge()) {
-            if(communicator.getMerge_type().equals("PAIRED")){
-                if (!communicator.isMerge_only_clipping()) {
-                    preprocesspool.addModule(new ClipAndMerge(communicator));
-                } else {
-                    preprocesspool.addModule(new ClipAndMerge(communicator, ClipAndMerge.ADAPTER_CLIPPING_ONLY));
-                }
-            } else {
-               preprocesspool.addModule(new ClipAndMerge(communicator, ClipAndMerge.SINGLE_ENDED_ONLY));
-            }
-        }
+        addClipAndMerge(preprocesspool);
+
 
         if (communicator.isRun_qualityfilter()) {
             preprocesspool.addModule(new QualityTrimmer(communicator));
@@ -296,17 +288,9 @@ public class RunEAGER {
         if (communicator.isRun_fastqc()) {
             preprocesspool.addModule(new FastQC(communicator));
         }
-        if (communicator.isRun_clipandmerge()) {
-            if(communicator.getMerge_type().equals("PAIRED")){
-                if (!communicator.isMerge_only_clipping()) {
-                    preprocesspool.addModule(new ClipAndMerge(communicator));
-                } else {
-                    preprocesspool.addModule(new ClipAndMerge(communicator, ClipAndMerge.ADAPTER_CLIPPING_ONLY));
-                }
-            } else {
-                preprocesspool.addModule(new ClipAndMerge(communicator, ClipAndMerge.SINGLE_ENDED_ONLY));
-            }
-        }
+
+        addClipAndMerge(preprocesspool);
+
         if (communicator.isRun_qualityfilter()) {
             preprocesspool.addModule(new QualityTrimmer(communicator));
             preprocesspool.addModule(new FastQC(communicator, FastQC.AFTERMERGING));
@@ -467,17 +451,9 @@ public class RunEAGER {
         if (communicator.isRun_fastqc()) {
             preprocesspool.addModule(new FastQC(communicator));
         }
-        if (communicator.isRun_clipandmerge()) {
-            if(communicator.getMerge_type().equals("PAIRED")){
-                if (!communicator.isMerge_only_clipping()) {
-                    preprocesspool.addModule(new ClipAndMerge(communicator));
-                } else {
-                    preprocesspool.addModule(new ClipAndMerge(communicator, ClipAndMerge.ADAPTER_CLIPPING_ONLY));
-                }
-            } else {
-                preprocesspool.addModule(new ClipAndMerge(communicator, ClipAndMerge.SINGLE_ENDED_ONLY));
-            }
-        }
+
+        addClipAndMerge(preprocesspool);
+
         if (communicator.isRun_qualityfilter()) {
             preprocesspool.addModule(new QualityTrimmer(communicator));
             preprocesspool.addModule(new FastQC(communicator, FastQC.AFTERMERGING));
@@ -642,17 +618,9 @@ public class RunEAGER {
         if (communicator.isRun_fastqc()) {
             preprocesspool.addModule(new FastQC(communicator));
         }
-        if (communicator.isRun_clipandmerge()) {
-            if(communicator.getMerge_type().equals("PAIRED")){
-                if (!communicator.isMerge_only_clipping()) {
-                    preprocesspool.addModule(new ClipAndMerge(communicator));
-                } else {
-                    preprocesspool.addModule(new ClipAndMerge(communicator, ClipAndMerge.ADAPTER_CLIPPING_ONLY));
-                }
-            } else {
-                preprocesspool.addModule(new ClipAndMerge(communicator, ClipAndMerge.SINGLE_ENDED_ONLY));
-            }
-        }
+
+        addClipAndMerge(preprocesspool);
+
         if (communicator.isRun_qualityfilter()) {
             preprocesspool.addModule(new QualityTrimmer(communicator));
             preprocesspool.addModule(new FastQC(communicator, FastQC.AFTERMERGING));
@@ -1100,6 +1068,37 @@ public class RunEAGER {
             pooltoadd.addModule(new PreseqCCurveCalculation(communicator, PreseqCCurveCalculation.DEFAULT));
             pooltoadd.addModule(new PreseqLCExtrapCalculation(communicator, PreseqLCExtrapCalculation.DEFAULT));
             pooltoadd.addModule(new ComplexityPlotting(communicator));
+        }
+    }
+
+
+    /**
+     * Adds the ClipAndMerge module with proper configuration or the AdapterRemoval module with proper configuration to EAGER.
+     * @param toadd
+     */
+
+    private void addClipAndMerge(ModulePool toadd){
+        if (communicator.isRun_clipandmerge() && communicator.getMerge_tool().equals("Clip&Merge")) {
+            if(communicator.getMerge_type().equals("PAIRED")){
+                if (!communicator.isMerge_only_clipping()) {
+                    toadd.addModule(new ClipAndMerge(communicator));
+                } else {
+                    toadd.addModule(new ClipAndMerge(communicator, ClipAndMerge.ADAPTER_CLIPPING_ONLY));
+                }
+            } else {
+                toadd.addModule(new ClipAndMerge(communicator, ClipAndMerge.SINGLE_ENDED_ONLY));
+            }
+        } else if(communicator.isRun_clipandmerge() && communicator.getMerge_tool().equals("AdapterRemoval")){
+            if(communicator.getMerge_type().equals("PAIRED")){
+                if(!communicator.isMerge_only_clipping()){
+                    toadd.addModule(new AdapterRemoval(communicator));
+                } else {
+                    toadd.addModule(new AdapterRemoval(communicator, AdapterRemoval.ADAPTER_CLIPPING_ONLY));
+                }
+            } else {
+                toadd.addModule(new AdapterRemoval(communicator, AdapterRemoval.SINGLE_ENDED_ONLY));
+            }
+
         }
     }
 
