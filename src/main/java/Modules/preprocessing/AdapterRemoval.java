@@ -43,7 +43,7 @@ public class AdapterRemoval extends AModule {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         this.outputfile.add(getOutputfolder()+output_stem+".collapsed.fq.gz");
 
-        return new String[]{"adapterremoval", "--file1",  getForwards(), "--file2", getReverse(), "--basename", output_stem, "--gzip",
+        return new String[]{"adapterremoval", "--file1",  getForwards(), "--file2", getReverse(), "--basename", getOutputfolder()+ output_stem, "--gzip",
                 "--threads", this.communicator.getCpucores(), "--trimns", "--trimqualities",
                 "--adapter1", this.communicator.getMerge_fwadaptor(), "--adapter2", this.communicator.getMerge_bwadaptor(),
                 "--minlength", String.valueOf(this.communicator.getQuality_readlength()), "--minquality", String.valueOf(this.communicator.getQuality_minreadquality()),
@@ -56,7 +56,7 @@ public class AdapterRemoval extends AModule {
         this.outputfile.add(getOutputfolder()+output_stem+".pair1.truncated.fq.gz");
         this.outputfile.add(getOutputfolder()+output_stem+".pair2.truncated.fq.gz");
 
-        return new String[]{"adapterremoval", "--file1", getForwards(), "--file2", getReverse(), "--basename", output_stem, "--gzip", "--threads", this.communicator.getCpucores(),
+        return new String[]{"adapterremoval", "--file1", getForwards(), "--file2", getReverse(), "--basename", getOutputfolder()+ output_stem, "--gzip", "--threads", this.communicator.getCpucores(),
         "--trimns", "--trimqualities", "--adapter1", this.communicator.getMerge_fwadaptor(), "--adapter2", this.communicator.getMerge_bwadaptor(),
         "--minlength", String.valueOf(this.communicator.getQuality_readlength()), "--minquality", String.valueOf(this.communicator.getQuality_minreadquality())};
 
@@ -67,7 +67,7 @@ public class AdapterRemoval extends AModule {
         this.outputfile.add(getOutputfolder()+output_stem+".truncated.fq.gz");
 
 
-        return new String[]{"adapterremoval", "--file1", getForwards(), "--basename", output_stem, "--gzip", "--threads", this.communicator.getCpucores(),
+        return new String[]{"adapterremoval", "--file1", getForwards(), "--basename", getOutputfolder()+ output_stem, "--gzip", "--threads", this.communicator.getCpucores(),
                 "--trimns", "--trimqualities", "--adapter1", this.communicator.getMerge_fwadaptor(), "--adapter2", this.communicator.getMerge_bwadaptor(),
                 "--minlength", String.valueOf(this.communicator.getQuality_readlength()), "--minquality", String.valueOf(this.communicator.getQuality_minreadquality())};
 
