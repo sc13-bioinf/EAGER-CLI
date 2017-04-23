@@ -1097,6 +1097,8 @@ public class RunEAGER {
                 }
             } else {
                 toadd.addModule(new AdapterRemoval(communicator, AdapterRemoval.SINGLE_ENDED_ONLY));
+                communicator.setRmdup_allReadsAsMerged(true); //required for setting , as AR doesn't annotate unmerged reads / singletons with F_/R_ tags
+
             }
 
         }

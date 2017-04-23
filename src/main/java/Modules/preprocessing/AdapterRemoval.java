@@ -21,7 +21,6 @@ public class AdapterRemoval extends AModule {
     public AdapterRemoval(Communicator c, int config){
         super(c);
         this.currentConfiguration = config;
-        c.setRmdup_allReadsAsMerged(true);
     }
 
 
@@ -42,7 +41,7 @@ public class AdapterRemoval extends AModule {
 
     private String[] getDefaultParameterList(){
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
-        this.outputfile.add(getOutputfolder()+output_stem+".collapsed.gz");
+        this.outputfile.add(getOutputfolder()+output_stem+".paired.truncated.gz");
 
         return new String[]{"AdapterRemoval", "--file1", getForwards(), "--file2", getReverse(), "--basename", getOutputfolder()+ output_stem, "--gzip",
                 "--threads", this.communicator.getCpucores(), "--trimns", "--trimqualities",
