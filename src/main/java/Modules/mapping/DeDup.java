@@ -35,7 +35,7 @@ public class DeDup extends AModule {
     @Override
     public void setParameters() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
-        if ( this.communicator.isRmdup_allReadsAsMerged() ) {
+        if ( this.communicator.isRmdup_all_reads_as_merged() ) {
             this.parameters = new String[]{"dedup", "-i", this.inputfile.get(0), "-m", "-o", getOutputfolder()};
         } else {
             this.parameters = new String[]{"dedup", "-i", this.inputfile.get(0), "-o", getOutputfolder()};
