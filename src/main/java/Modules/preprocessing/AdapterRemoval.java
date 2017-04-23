@@ -47,7 +47,7 @@ public class AdapterRemoval extends AModule {
                 "--threads", this.communicator.getCpucores(), "--trimns", "--trimqualities",
                 "--adapter1", this.communicator.getMerge_fwadaptor(), "--adapter2", this.communicator.getMerge_bwadaptor(),
                 "--minlength", String.valueOf(this.communicator.getQuality_readlength()), "--minquality", String.valueOf(this.communicator.getQuality_minreadquality()),
-        "--collapse"};
+        "--collapse", "--combined-output", "--interleaved-output"};
     }
 
     private String[] getAdapterClippingOnlyParameterList(){
@@ -58,7 +58,7 @@ public class AdapterRemoval extends AModule {
 
         return new String[]{"AdapterRemoval", "--file1", getForwards(), "--file2", getReverse(), "--basename", getOutputfolder()+ output_stem, "--gzip", "--threads", this.communicator.getCpucores(),
         "--trimns", "--trimqualities", "--adapter1", this.communicator.getMerge_fwadaptor(), "--adapter2", this.communicator.getMerge_bwadaptor(),
-        "--minlength", String.valueOf(this.communicator.getQuality_readlength()), "--minquality", String.valueOf(this.communicator.getQuality_minreadquality())};
+        "--minlength", String.valueOf(this.communicator.getQuality_readlength()), "--minquality", String.valueOf(this.communicator.getQuality_minreadquality()), "--combined-output"};
 
     }
 
@@ -69,7 +69,7 @@ public class AdapterRemoval extends AModule {
 
         return new String[]{"AdapterRemoval", "--file1", getForwards(), "--basename", getOutputfolder()+ output_stem, "--gzip", "--threads", this.communicator.getCpucores(),
                 "--trimns", "--trimqualities", "--adapter1", this.communicator.getMerge_fwadaptor(), "--adapter2", this.communicator.getMerge_bwadaptor(),
-                "--minlength", String.valueOf(this.communicator.getQuality_readlength()), "--minquality", String.valueOf(this.communicator.getQuality_minreadquality())};
+                "--minlength", String.valueOf(this.communicator.getQuality_readlength()), "--minquality", String.valueOf(this.communicator.getQuality_minreadquality()), "--combined-output"};
 
     }
 
