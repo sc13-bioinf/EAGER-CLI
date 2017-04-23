@@ -21,6 +21,7 @@ public class AdapterRemoval extends AModule {
     public AdapterRemoval(Communicator c, int config){
         super(c);
         this.currentConfiguration = config;
+        c.setRmdup_allReadsAsMerged(true);
     }
 
 
