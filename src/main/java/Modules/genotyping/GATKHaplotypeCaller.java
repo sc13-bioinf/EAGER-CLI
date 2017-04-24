@@ -108,7 +108,6 @@ public class GATKHaplotypeCaller extends AModule {
                 "-nct", String.valueOf(this.communicator.getCpucores()),
                 "--sample_ploidy", this.communicator.getGatk_ploidy(),
                 "-stand_call_conf", this.communicator.getGatk_standard_call_confidence(),
-                "-stand_emit_conf", this.communicator.getGatk_standard_emit_confidence(),
                 "--ERC BP_RESOLUTION --variant_index_type LINEAR --variant_index_parameter 128000",
                 this.communicator.getGatk_snp_advanced()};
     }
@@ -122,7 +121,6 @@ public class GATKHaplotypeCaller extends AModule {
                 "-nct", String.valueOf(this.communicator.getCpucores()),
                 "--sample_ploidy", this.communicator.getGatk_ploidy(),
                 "-stand_call_conf", this.communicator.getGatk_standard_call_confidence(),
-                "-stand_emit_conf", this.communicator.getGatk_standard_emit_confidence(),
                 "--ERC GVCF --variant_index_type LINEAR --variant_index_parameter 128000",
                 this.communicator.getGatk_snp_advanced()};
     }
@@ -136,7 +134,6 @@ public class GATKHaplotypeCaller extends AModule {
                 "-nct", this.communicator.getCpucores(),
                 "--sample_ploidy", this.communicator.getGatk_ploidy(),
                 "-stand_call_conf", this.communicator.getGatk_standard_call_confidence(),
-                "-stand_emit_conf", this.communicator.getGatk_standard_emit_confidence(),
                 "--ERC BP_RESOLUTION --variant_index_type LINEAR --variant_index_parameter 128000",
                 this.communicator.getGatk_snp_advanced()};
     }
@@ -150,7 +147,6 @@ public class GATKHaplotypeCaller extends AModule {
                 "-nct", this.communicator.getCpucores(),
                 "--sample_ploidy", this.communicator.getGatk_ploidy(),
                 "-stand_call_conf", this.communicator.getGatk_standard_call_confidence(),
-                "-stand_emit_conf", this.communicator.getGatk_standard_emit_confidence(),
                 "--ERC GVCF --variant_index_type LINEAR --variant_index_parameter 128000",
                 this.communicator.getGatk_snp_advanced()};
     }
