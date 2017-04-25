@@ -67,7 +67,7 @@ public class AdapterRemoval extends AModule {
         this.outputfile.add(getOutputfolder()+output_stem+".truncated.gz");
 
 
-        return new String[]{"AdapterRemoval", "--file1", getForwards(), "--basename", getOutputfolder()+ output_stem, "--gzip", "--threads", this.communicator.getCpucores(),
+        return new String[]{"AdapterRemoval", "--file1", getAll(), "--basename", getOutputfolder()+ output_stem, "--gzip", "--threads", this.communicator.getCpucores(),
                 "--trimns", "--trimqualities", "--adapter1", this.communicator.getMerge_fwadaptor(), "--adapter2", this.communicator.getMerge_bwadaptor(),
                 "--minlength", String.valueOf(this.communicator.getQuality_readlength()), "--minquality", String.valueOf(this.communicator.getQuality_minreadquality()), "--combined-output"};
 
