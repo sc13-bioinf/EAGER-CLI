@@ -123,7 +123,7 @@ public class AdapterRemoval extends AModule {
         for (String s : this.communicator.getGUI_inputfiles()){
             out+= s + " ";
         }
-        return out;
+        return out.trim();
     }
 
 
