@@ -49,7 +49,7 @@ public class PreseqCCurveCalculation extends AModule {
                 break;
             case RUN_ON_HISTOGRAM:
                 this.parameters = new String[]{"preseq", "c_curve", "-s", String.valueOf(this.communicator.getPreseq_ccurve_stepsize()), "-o",
-                        getOutputfolder() + "/" + output_stem + ".ccurve", "-H", this.inputfile.get(0).replace("_rmdup.bam", ".hist")};
+                        getOutputfolder() + "/" + output_stem + ".ccurve", "-H", this.inputfile.get(0).replace("_rmdup.sorted.bam", ".hist")};
         }
 
     }

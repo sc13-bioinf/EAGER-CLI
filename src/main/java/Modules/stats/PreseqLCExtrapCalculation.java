@@ -81,7 +81,7 @@ public class PreseqLCExtrapCalculation extends AModule {
     private String[] getHistParameters() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         return new String[]{"preseq", "lc_extrap", "-s", String.valueOf(this.communicator.getPreseq_lcextrap_stepsize()), "-o",
-                getOutputfolder() + "/" + output_stem + ".lcextrap", "-H", this.inputfile.get(0).replace("_rmdup.bam", ".hist"),
+                getOutputfolder() + "/" + output_stem + ".lcextrap", "-H", this.inputfile.get(0).replace("_rmdup.sorted.bam", ".hist"),
                 "-e", this.communicator.getPreseq_lcextrap_extrapolationsize(), "-Q"
         };
     }
