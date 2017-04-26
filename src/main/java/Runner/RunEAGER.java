@@ -22,10 +22,7 @@ import Modules.filehandling.*;
 import Modules.genotyping.*;
 import Modules.indexing.*;
 import Modules.mapping.*;
-import Modules.preprocessing.AdapterRemoval;
-import Modules.preprocessing.ClipAndMerge;
-import Modules.preprocessing.FastQC;
-import Modules.preprocessing.QualityTrimmer;
+import Modules.preprocessing.*;
 import Modules.stats.*;
 import com.thoughtworks.xstream.XStream;
 
@@ -1092,6 +1089,7 @@ public class RunEAGER {
             if(communicator.getMerge_type().equals("PAIRED")){
                 if(!communicator.isMerge_only_clipping()){
                     toadd.addModule(new AdapterRemoval(communicator));
+                    toadd.addModule(new CombineFastQ(communicator));
                 } else {
                     toadd.addModule(new AdapterRemoval(communicator, AdapterRemoval.ADAPTER_CLIPPING_ONLY));
                 }

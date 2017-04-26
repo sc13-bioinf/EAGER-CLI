@@ -47,7 +47,7 @@ public class AdapterRemoval extends AModule {
                 "--threads", this.communicator.getCpucores(), "--trimns", "--trimqualities",
                 "--adapter1", this.communicator.getMerge_fwadaptor(), "--adapter2", this.communicator.getMerge_bwadaptor(),
                 "--minlength", String.valueOf(this.communicator.getQuality_readlength()), "--minquality", String.valueOf(this.communicator.getQuality_minreadquality()),
-        "--collapse", "--combined-output", "--interleaved-output"};
+        "--collapse"};
     }
 
     private String[] getAdapterClippingOnlyParameterList(){
