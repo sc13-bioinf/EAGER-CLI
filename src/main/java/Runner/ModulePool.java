@@ -116,10 +116,10 @@ public class ModulePool {
 
     private String getParameterString(AModule m){
 
-        String out = "#---------------\n#" + m.getModulename() + " was executed with the following commandline:" + "\n";
+        String out = "################\n#" + m.getModulename() + " was executed with the following commandline:" + "\n";
         for(String s : m.getParameters()){
             out += s+" ";
         }
-        return out+"\n#---------------\n";
+        return out+"\n################\n#";
     }
 }
