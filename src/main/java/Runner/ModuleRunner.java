@@ -17,6 +17,7 @@
 package Runner;
 
 import Modules.AModule;
+import exceptions.ModuleFailedException;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -31,13 +32,19 @@ import java.util.Map;
  */
 public class ModuleRunner{
     private String[] parameters;
+    private int returnCode = 0;
 
     //Constructor of Class
-    public ModuleRunner(AModule module) throws IOException, InterruptedException {
+    public ModuleRunner(AModule module) throws IOException, InterruptedException, ModuleFailedException {
         this.parameters = module.getParameters();
         if(!module.hasbeenExecuted()) {
             run(module.getResultfolder(),module);
-            runDependencyChecker(module.getOutputfolder(),module);
+            if(returnCode == 0){
+                runDependencyChecker(module.getOutputfolder(),module);
+            } else {
+                throw new ModuleFailedException("Module " + module.getModulename() + " failed in execution. Check Logfile for details.");
+                //Dont write DONE file if not succesfully terminated!
+            }
         }
     }
 
@@ -51,25 +58,34 @@ public class ModuleRunner{
         processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(new File(outputpath + "/EAGER.log")));
 
         Process process = processBuilder.start();
-        process.waitFor();
-        long currtime_post_execution = System.currentTimeMillis();
-        long diff = currtime_post_execution - currtime_prior_execution;
-        long runtime_s = diff / 1000;
-        if(runtime_s > 60) {
-            long minutes = runtime_s / 60;
-            long seconds = runtime_s % 60;
-            String outputText = "# Runtime of Module was: " + minutes +" minutes, and " + seconds +" seconds.";
-            System.out.println(outputText);
-            bfw.write(outputText + "\n");
-            bfw.flush();
 
-        } else {
-            String outputText = "# Runtime of Module was: " + runtime_s + " seconds.";
-            System.out.println(outputText);
-            bfw.write(outputText + "\n");
+        if((returnCode = process.waitFor()) == 0) { //Exit Value should be zero = normal
+            long currtime_post_execution = System.currentTimeMillis();
+            long diff = currtime_post_execution - currtime_prior_execution;
+            long runtime_s = diff / 1000;
+            if (runtime_s > 60) {
+                long minutes = runtime_s / 60;
+                long seconds = runtime_s % 60;
+                String outputText = "# Runtime of Module was: " + minutes + " minutes, and " + seconds + " seconds.";
+                System.out.println(outputText);
+                bfw.write(outputText + "\n");
+                bfw.flush();
+
+            } else {
+                String outputText = "# Runtime of Module was: " + runtime_s + " seconds.";
+                System.out.println(outputText);
+                bfw.write(outputText + "\n");
+                bfw.flush();
+            }
+            bfw.close();
+        } else { //Exit Value is not zero
+            String failText = "# The Module " + module.getModulename() + " failed in execution. Check what happened in the logfile.";
+            process.destroy(); //We fail then
+            System.out.println(failText);
+            bfw.write(failText);
             bfw.flush();
+            bfw.close();
         }
-        bfw.close();
     }
 
     public void runDependencyChecker(String outputpath, AModule module) throws InterruptedException, IOException {

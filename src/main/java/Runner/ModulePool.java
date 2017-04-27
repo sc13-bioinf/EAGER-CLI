@@ -17,6 +17,7 @@
 package Runner;
 
 import Modules.AModule;
+import exceptions.ModuleFailedException;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -44,7 +45,7 @@ public class ModulePool {
         modulePool.add(mod);
     }
 
-    public void start() throws IOException, InterruptedException {
+    public void start() throws IOException, InterruptedException, ModuleFailedException {
         this.setCurrentFilePath(this.getModulePoolPaths());
         if ( modulePool.isEmpty() ) {
           ModulePool nonEmptyPool = listofPredecessors.stream().filter( p -> ! p.getModules().isEmpty() ).findAny().orElseThrow(() -> new RuntimeException("# This modulePool is empty and all of its predecessors are empty. Giving up attempt to create a log file"));

@@ -25,6 +25,7 @@ import Modules.mapping.*;
 import Modules.preprocessing.*;
 import Modules.stats.*;
 import com.thoughtworks.xstream.XStream;
+import exceptions.ModuleFailedException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -99,7 +100,12 @@ public class RunEAGER {
         pools.get(0).setCurrentFilePath(communicator.getGUI_inputfiles());
         //Now start all the pools
         for (ModulePool pool : pools) {
-            pool.start();
+            try {
+                pool.start();
+            } catch (ModuleFailedException e) {
+                e.printStackTrace();
+                break;
+            }
         }
     }
 
