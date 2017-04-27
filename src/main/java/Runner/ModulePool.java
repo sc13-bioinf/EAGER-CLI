@@ -47,7 +47,7 @@ public class ModulePool {
     public void start() throws IOException, InterruptedException {
         this.setCurrentFilePath(this.getModulePoolPaths());
         if ( modulePool.isEmpty() ) {
-          ModulePool nonEmptyPool = listofPredecessors.stream().filter( p -> ! p.getModules().isEmpty() ).findAny().orElseThrow(() -> new RuntimeException("This modulePool is empty and all of its predecessors are empty. Giving up attempt to create a log file"));
+          ModulePool nonEmptyPool = listofPredecessors.stream().filter( p -> ! p.getModules().isEmpty() ).findAny().orElseThrow(() -> new RuntimeException("# This modulePool is empty and all of its predecessors are empty. Giving up attempt to create a log file"));
           eager_version = nonEmptyPool.getModules().get(0).getCommunicator().getEager_version();
           fw = new FileWriter(nonEmptyPool.getModules().get(0).getResultfolder() + "/" + "EAGER.log", true);
         } else {
@@ -55,7 +55,7 @@ public class ModulePool {
           fw = new FileWriter(modulePool.get(0).getResultfolder() + "/" + "EAGER.log", true);
         }
         bfw = new BufferedWriter(fw);
-        bfw.write("EAGER Version used for this run: " + eager_version);
+        bfw.write("# EAGER Version used for this run: " + eager_version);
         bfw.newLine();
         bfw.flush();
         bfw.close();
@@ -67,15 +67,15 @@ public class ModulePool {
             module.getCommunicator().setGUI_inputfiles(this.getModulePoolPaths());
             fw = new FileWriter(module.getResultfolder() + "/" + "EAGER.log", true); //append only, do not overwrite!
             bfw = new BufferedWriter(fw);
-            System.out.println("ModulePoolPaths: " + Arrays.toString(this.getModulePoolPaths().toArray()));
-            System.out.println("Module that will be now executed: " + module.getModulename());
+            System.out.println("# ModulePoolPaths: " + Arrays.toString(this.getModulePoolPaths().toArray()));
+            System.out.println("# Module that will be now executed: " + module.getModulename());
             bfw.write(getParameterString(module));
             bfw.flush();
             bfw.close();
 
             ModuleRunner modrunner = new ModuleRunner(module);
             this.setCurrentFilePath(module.getOutputfile());
-            System.out.println("Outputpath of ModulePool right now: " + this.getCurrentFilePath());
+            System.out.println("# Outputpath of ModulePool right now: " + this.getCurrentFilePath());
         }
       }
     }
@@ -115,10 +115,10 @@ public class ModulePool {
 
     private String getParameterString(AModule m){
 
-        String out = "---------------\n" + m.getModulename() + " was executed with the following commandline:" + "\n";
+        String out = "#---------------\n#" + m.getModulename() + " was executed with the following commandline:" + "\n";
         for(String s : m.getParameters()){
             out += s+" ";
         }
-        return out+"\n---------------\n";
+        return out+"\n#---------------\n";
     }
 }

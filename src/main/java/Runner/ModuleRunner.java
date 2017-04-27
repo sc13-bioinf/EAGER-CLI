@@ -49,6 +49,7 @@ public class ModuleRunner{
         Map<String, String> env = processBuilder.environment();
         module.setProcessEnvironment (env);
         processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(new File(outputpath + "/EAGER.log")));
+
         Process process = processBuilder.start();
         process.waitFor();
         long currtime_post_execution = System.currentTimeMillis();
@@ -57,13 +58,13 @@ public class ModuleRunner{
         if(runtime_s > 60) {
             long minutes = runtime_s / 60;
             long seconds = runtime_s % 60;
-            String outputText = "Runtime of Module was: " + minutes +" minutes, and " + seconds +" seconds.";
+            String outputText = "# Runtime of Module was: " + minutes +" minutes, and " + seconds +" seconds.";
             System.out.println(outputText);
             bfw.write(outputText + "\n");
             bfw.flush();
 
         } else {
-            String outputText = "Runtime of Module was: " + runtime_s + " seconds.";
+            String outputText = "# Runtime of Module was: " + runtime_s + " seconds.";
             System.out.println(outputText);
             bfw.write(outputText + "\n");
             bfw.flush();
