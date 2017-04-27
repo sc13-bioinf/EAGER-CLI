@@ -49,10 +49,10 @@ public class ModulePool {
         if ( modulePool.isEmpty() ) {
           ModulePool nonEmptyPool = listofPredecessors.stream().filter( p -> ! p.getModules().isEmpty() ).findAny().orElseThrow(() -> new RuntimeException("This modulePool is empty and all of its predecessors are empty. Giving up attempt to create a log file"));
           eager_version = nonEmptyPool.getModules().get(0).getCommunicator().getEager_version();
-          fw = new FileWriter(nonEmptyPool.getModules().get(0).getResultfolder() + "/" + "execution_log.log", true);
+          fw = new FileWriter(nonEmptyPool.getModules().get(0).getResultfolder() + "/" + "EAGER.log", true);
         } else {
           eager_version = modulePool.get(0).getCommunicator().getEager_version();
-          fw = new FileWriter(modulePool.get(0).getResultfolder() + "/" + "execution_log.log", true);
+          fw = new FileWriter(modulePool.get(0).getResultfolder() + "/" + "EAGER.log", true);
         }
         bfw = new BufferedWriter(fw);
         bfw.write("EAGER Version used for this run: " + eager_version);
@@ -65,7 +65,7 @@ public class ModulePool {
 
             module.setInputfile(this.getCurrentFilePath());
             module.getCommunicator().setGUI_inputfiles(this.getModulePoolPaths());
-            fw = new FileWriter(module.getResultfolder() + "/" + "execution_log.log", true); //append only, do not overwrite!
+            fw = new FileWriter(module.getResultfolder() + "/" + "EAGER.log", true); //append only, do not overwrite!
             bfw = new BufferedWriter(fw);
             System.out.println("ModulePoolPaths: " + Arrays.toString(this.getModulePoolPaths().toArray()));
             System.out.println("Module that will be now executed: " + module.getModulename());
@@ -114,10 +114,11 @@ public class ModulePool {
     }
 
     private String getParameterString(AModule m){
-        String out = m.getModulename() + " was executed with the following commandline:" + "\n";
+
+        String out = "---------------\n" + m.getModulename() + " was executed with the following commandline:" + "\n";
         for(String s : m.getParameters()){
             out += s+" ";
         }
-        return out+"\n";
+        return out+"\n---------------\n";
     }
 }

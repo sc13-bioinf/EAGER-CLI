@@ -18,9 +18,10 @@ package Runner;
 
 import Modules.AModule;
 
-import java.io.*;
-import java.nio.channels.FileChannel;
-import java.sql.Time;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -41,11 +42,13 @@ public class ModuleRunner{
     }
 
     public void run(String outputpath, AModule module) throws IOException, InterruptedException {
+        FileWriter fw = new FileWriter(new File(outputpath+"/EAGER.log"), true);
+        BufferedWriter bfw = new BufferedWriter(fw);
         long currtime_prior_execution = System.currentTimeMillis();
         ProcessBuilder processBuilder = new ProcessBuilder(this.parameters);
         Map<String, String> env = processBuilder.environment();
         module.setProcessEnvironment (env);
-        processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(new File(outputpath + "/log.log")));
+        processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(new File(outputpath + "/EAGER.log")));
         Process process = processBuilder.start();
         process.waitFor();
         long currtime_post_execution = System.currentTimeMillis();
@@ -54,10 +57,18 @@ public class ModuleRunner{
         if(runtime_s > 60) {
             long minutes = runtime_s / 60;
             long seconds = runtime_s % 60;
-            System.out.println("Runtime of Module was: " + minutes +" minutes, and " + seconds +" seconds.");
+            String outputText = "Runtime of Module was: " + minutes +" minutes, and " + seconds +" seconds.";
+            System.out.println(outputText);
+            bfw.write(outputText + "\n");
+            bfw.flush();
+
         } else {
-            System.out.println("Runtime of Module was: " + runtime_s + " seconds.");
+            String outputText = "Runtime of Module was: " + runtime_s + " seconds.";
+            System.out.println(outputText);
+            bfw.write(outputText + "\n");
+            bfw.flush();
         }
+        bfw.close();
     }
 
     public void runDependencyChecker(String outputpath, AModule module) throws InterruptedException, IOException {
