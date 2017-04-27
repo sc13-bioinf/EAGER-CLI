@@ -19,10 +19,7 @@ package Runner;
 import Modules.AModule;
 import exceptions.ModuleFailedException;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 
 /**
@@ -55,11 +52,16 @@ public class ModuleRunner{
         ProcessBuilder processBuilder = new ProcessBuilder(this.parameters);
         Map<String, String> env = processBuilder.environment();
         module.setProcessEnvironment (env);
-        processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(new File(outputpath + "/EAGER.log")));
+
+       // processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(new File(outputpath + "/EAGER.log")));
 
         Process process = processBuilder.start();
 
+        InputStream errorStream = process.getErrorStream();
+
+
         if((returnCode = process.waitFor()) == 0) { //Exit Value should be zero = normal
+            bfw.write(handleErrorStreamOutput(errorStream));
             long currtime_post_execution = System.currentTimeMillis();
             long diff = currtime_post_execution - currtime_prior_execution;
             long runtime_s = diff / 1000;
@@ -79,6 +81,7 @@ public class ModuleRunner{
             }
             bfw.close();
         } else { //Exit Value is not zero
+            bfw.write(handleErrorStreamOutput(errorStream));
             String failText = "# The Module " + module.getModulename() + " failed in execution. Check what happened in the logfile.";
             process.destroy(); //We fail then
             System.out.println(failText);
@@ -93,6 +96,20 @@ public class ModuleRunner{
         ProcessBuilder processBuilder = new ProcessBuilder(createDoneParameters);
         Process process = processBuilder.start();
         process.waitFor();
+    }
+
+    private String handleErrorStreamOutput(InputStream errorStream) throws IOException {
+        InputStreamReader isr = new InputStreamReader(errorStream);
+        BufferedReader bfr = new BufferedReader(isr);
+
+        StringBuilder stderr = new StringBuilder();
+
+        String line = "";
+        while((line = bfr.readLine()) != null){
+            stderr.append("#" + line + "\n");
+        }
+
+        return stderr.toString();
     }
 
 
