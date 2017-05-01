@@ -108,6 +108,7 @@ public class AdapterRemoval extends AModule {
         cmd.add(this.communicator.getMerge_fwadaptor());
         cmd.add("--adapter2");
         cmd.add(this.communicator.getMerge_bwadaptor());
+        cmd.add("--minlength");
         cmd.add(String.valueOf(this.communicator.getQuality_readlength()));
         cmd.add("--minquality");
         cmd.add(String.valueOf(this.communicator.getQuality_minreadquality()));
