@@ -4,6 +4,7 @@ import IO.Communicator;
 import Modules.AModule;
 import com.google.common.io.Files;
 
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -43,11 +44,37 @@ public class AdapterRemoval extends AModule {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         this.outputfile.add(getOutputfolder()+output_stem);
 
-        return new String[]{"AdapterRemoval", "--file1", getForwards(), "--file2", getReverse(), "--basename", getOutputfolder()+ output_stem, "--gzip",
-                "--threads", this.communicator.getCpucores(), "--trimns", "--trimqualities",
-                "--adapter1", this.communicator.getMerge_fwadaptor(), "--adapter2", this.communicator.getMerge_bwadaptor(),
-                "--minlength", String.valueOf(this.communicator.getQuality_readlength()), "--minquality", String.valueOf(this.communicator.getQuality_minreadquality()),
-        "--collapse"};
+        List<String> cmd = new ArrayList<String>();
+        cmd.add("AdapterRemoval");
+        cmd.add("--file1");
+
+        for (String s : getForwardFilePaths()) {
+            cmd.add(s);
+        }
+
+        cmd.add("--file2");
+
+        for (String s : getReverseFilePaths()) {
+            cmd.add(s);
+        }
+        cmd.add("--basename");
+        cmd.add(getOutputfolder()+ output_stem);
+        cmd.add("--gzip");
+        cmd.add("--threads");
+        cmd.add(this.communicator.getCpucores());
+        cmd.add("--trimns");
+        cmd.add("--trimqualities");
+        cmd.add("--adapter1");
+        cmd.add(this.communicator.getMerge_fwadaptor());
+        cmd.add("--adapter2");
+        cmd.add(this.communicator.getMerge_bwadaptor());
+        cmd.add("--minlength");
+        cmd.add(String.valueOf(this.communicator.getQuality_readlength()));
+        cmd.add("--minquality");
+        cmd.add(String.valueOf(this.communicator.getQuality_minreadquality()));
+        cmd.add("--collapse");
+
+        return cmd.toArray(new String[0]);
     }
 
     private String[] getAdapterClippingOnlyParameterList(){
@@ -56,20 +83,69 @@ public class AdapterRemoval extends AModule {
         this.outputfile.add(getOutputfolder()+output_stem+".pair1.truncated.gz");
         this.outputfile.add(getOutputfolder()+output_stem+".pair2.truncated.gz");
 
-        return new String[]{"AdapterRemoval", "--file1", getForwards(), "--file2", getReverse(), "--basename", getOutputfolder()+ output_stem, "--gzip", "--threads", this.communicator.getCpucores(),
-        "--trimns", "--trimqualities", "--adapter1", this.communicator.getMerge_fwadaptor(), "--adapter2", this.communicator.getMerge_bwadaptor(),
-        "--minlength", String.valueOf(this.communicator.getQuality_readlength()), "--minquality", String.valueOf(this.communicator.getQuality_minreadquality()), "--combined-output"};
+        List<String> cmd = new ArrayList<String>();
+        cmd.add("AdapterRemoval");
+        cmd.add("--file1");
 
+        for (String s : getForwardFilePaths()) {
+            cmd.add(s);
+        }
+
+        cmd.add("--file2");
+
+        for (String s : getReverseFilePaths()) {
+            cmd.add(s);
+        }
+
+        cmd.add("--basename");
+        cmd.add(getOutputfolder()+ output_stem);
+        cmd.add("--gzip");
+        cmd.add("--threads");
+        cmd.add(this.communicator.getCpucores());
+        cmd.add("--trimns");
+        cmd.add("--trimqualities");
+        cmd.add("--adapter1");
+        cmd.add(this.communicator.getMerge_fwadaptor());
+        cmd.add("--adapter2");
+        cmd.add(this.communicator.getMerge_bwadaptor());
+        cmd.add("--minlength");
+        cmd.add(String.valueOf(this.communicator.getQuality_readlength()));
+        cmd.add("--minquality");
+        cmd.add(String.valueOf(this.communicator.getQuality_minreadquality()));
+        cmd.add("--combined-output");
+
+        return cmd.toArray(new String[0]);
     }
 
     private String[] getSingleEndedOnlyParameterList() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         this.outputfile.add(getOutputfolder()+output_stem+".truncated.gz");
 
+        List<String> cmd = new ArrayList<String>();
+        cmd.add("AdapterRemoval");
+        cmd.add("--file1");
 
-        return new String[]{"AdapterRemoval", "--file1", getAll(), "--basename", getOutputfolder()+ output_stem, "--gzip", "--threads", this.communicator.getCpucores(),
-                "--trimns", "--trimqualities", "--adapter1", this.communicator.getMerge_fwadaptor(), "--adapter2", this.communicator.getMerge_bwadaptor(),
-                "--minlength", String.valueOf(this.communicator.getQuality_readlength()), "--minquality", String.valueOf(this.communicator.getQuality_minreadquality())};
+        for ( String s : getAllFilePaths() ) {
+            cmd.add(s);
+        }
+
+        cmd.add("--basename");
+        cmd.add(getOutputfolder()+ output_stem);
+        cmd.add("--gzip");
+        cmd.add("--threads");
+        cmd.add(this.communicator.getCpucores());
+        cmd.add("--trimns");
+        cmd.add("--trimqualities");
+        cmd.add("--adapter1");
+        cmd.add(this.communicator.getMerge_fwadaptor());
+        cmd.add("--adapter2");
+        cmd.add(this.communicator.getMerge_bwadaptor());
+        cmd.add("--minlength");
+        cmd.add(String.valueOf(this.communicator.getQuality_readlength()));
+        cmd.add("--minquality");
+        cmd.add(String.valueOf(this.communicator.getQuality_minreadquality()));
+
+        return cmd.toArray(new String[0]);
 
     }
 
@@ -97,33 +173,33 @@ public class AdapterRemoval extends AModule {
 
 
 
-    private String getForwards(){
+    private List<String> getForwardFilePaths(){
 
-        String out = "";
+        List<String> result = new ArrayList<String>(this.communicator.getGUI_inputfiles().size());
         for(String s : this.communicator.getGUI_inputfiles()){
             if(s.contains("R1_") || s.contains("R1.")){
-                out+= s + " ";
+                result.add(s);
             }
         }
-        return out.trim(); //remove trailing space
+        return result;
     }
 
-    private String getReverse(){
-        String out = "";
+    private List<String> getReverseFilePaths(){
+        List<String> result = new ArrayList<String>(this.communicator.getGUI_inputfiles().size());
         for(String s : this.communicator.getGUI_inputfiles()){
             if(s.contains("R2_") || s.contains("R2.")){
-                out+= s + " ";
+                result.add(s);
             }
         }
-        return out.trim(); //remove trailing space
+        return result;
     }
 
-    private String getAll(){
-        String out = "";
+    private List<String> getAllFilePaths(){
+        List<String> result = new ArrayList<String>(this.communicator.getGUI_inputfiles().size());
         for (String s : this.communicator.getGUI_inputfiles()){
-            out+= s + " ";
+            result.add(s);
         }
-        return out.trim();
+        return result;
     }
 
 
