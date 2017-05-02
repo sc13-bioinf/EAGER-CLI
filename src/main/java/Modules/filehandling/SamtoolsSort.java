@@ -50,7 +50,7 @@ public class SamtoolsSort extends AModule {
         outputfile.add(output_path);
 
         this.parameters = new String[]{"samtools","sort","-@", this.communicator.getCpucores(),
-                "-m",this.communicator.getMaxmemory()+"G", this.inputfile.get(0), "-o", output_path};
+                "-m", String.valueOf((Integer.parseInt(this.communicator.getMaxmemory())) / Integer.parseInt(communicator.getCpucores()))+"G", this.inputfile.get(0), "-o", output_path};
     }
 
     @Override
