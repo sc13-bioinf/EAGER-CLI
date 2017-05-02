@@ -28,6 +28,7 @@ public class CombineFastQ extends AModule{
     private String[] getDefaultParameters() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         //stem would be WGS42_S0_L001_R1_001.fastq.gz (without gz)
+        //PRC012.A0101_S0_L001_R1_001.fastq.gz
         String basename = getOutputfolder()+output_stem;
         String zcatcombine = "zcat " + basename + ".collapsed.gz " +
                                     basename+".collapsed.truncated.gz " +

@@ -42,7 +42,8 @@ public class AdapterRemoval extends AModule {
 
     private String[] getDefaultParameterList(){
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
-        this.outputfile.add(getOutputfolder()+output_stem);
+        String ext = Files.getFileExtension(this.inputfile.get(0));
+        this.outputfile.add(getOutputfolder()+output_stem +"." + ext);
 
         List<String> cmd = new ArrayList<String>();
         cmd.add("AdapterRemoval");
