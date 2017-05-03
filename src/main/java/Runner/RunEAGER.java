@@ -1081,7 +1081,7 @@ public class RunEAGER {
      */
 
     private void addClipAndMerge(ModulePool toadd){
-        if (communicator.isRun_clipandmerge() && communicator.getMerge_tool().equals("Clip&Merge")) {
+        if (communicator.isRun_clipandmerge() && (communicator.getMerge_tool() == null | communicator.getMerge_tool().equals("Clip&Merge"))) {
             if(communicator.getMerge_type().equals("PAIRED")){
                 if (!communicator.isMerge_only_clipping()) {
                     toadd.addModule(new ClipAndMerge(communicator));
