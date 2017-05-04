@@ -153,7 +153,7 @@ public class AdapterRemoval extends AModule {
 
     @Override
     public String getOutputfolder() {
-        return  this.communicator.getGUI_resultspath()+"/1-ClipAndMerge/";
+        return  this.communicator.getGUI_resultspath()+"/1-AdapClip/";
     }
 
     @Override

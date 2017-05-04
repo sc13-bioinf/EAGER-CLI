@@ -48,7 +48,7 @@ public class CreateResultsDirectories extends AModule {
             listOfFolders.add(this.communicator.getGUI_resultspath()+"/0-FastQC"+useOutputFolderAsTmp);
         }
         if(this.communicator.isRun_clipandmerge()){
-            listOfFolders.add(this.communicator.getGUI_resultspath()+"/1-ClipAndMerge"+useOutputFolderAsTmp);
+            listOfFolders.add(this.communicator.getGUI_resultspath()+"/1-AdapClip"+useOutputFolderAsTmp);
         }
         if(this.communicator.isRun_qualityfilter()){
             listOfFolders.add(this.communicator.getGUI_resultspath()+"/2-QualityTrimming"+useOutputFolderAsTmp);
