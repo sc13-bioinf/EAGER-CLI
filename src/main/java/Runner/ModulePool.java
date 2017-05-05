@@ -24,6 +24,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by peltzer on 22.01.14.
@@ -116,7 +118,8 @@ public class ModulePool {
 
     private String getParameterString(AModule m){
 
-        String out = "################\n#" + m.getModulename() + " was executed with the following commandline:" + "\n";
+        String time = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        String out = "################\n#" + m.getModulename() + " at " + time + " was executed with the following commandline:" + "\n";
         for(String s : m.getParameters()){
             out += s+" ";
         }
