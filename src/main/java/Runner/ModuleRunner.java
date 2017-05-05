@@ -36,7 +36,7 @@ public class ModuleRunner{
         this.parameters = module.getParameters();
         if(!module.hasbeenExecuted()) {
             run(module.getResultfolder(),module);
-            if(returnCode == 0){
+            if(returnCode == 0 | containsNonStoppingModule(module.getModulename())){
                 runDependencyChecker(module.getOutputfolder(),module);
             } else {
                 throw new ModuleFailedException("Module " + module.getModulename() + " failed in execution. Check Logfile for details.");
@@ -110,6 +110,22 @@ public class ModuleRunner{
         }
 
         return stderr.toString();
+    }
+
+    private enum NonStoppingModules {
+        ComplexityPlotting, ContaminationEstimator, ContaminationEstimatorMT, PreseqCCurveCalculation, PreseqLCExtrapCalculation,
+        ReportGenerator
+    }
+
+
+    private boolean containsNonStoppingModule(String ModuleName){
+        for(Object mod : NonStoppingModules.values()){
+            String data = (String) mod;
+            if(ModuleName.equals(mod)){
+                return true;
+            }
+        }
+        return false;
     }
 
 
