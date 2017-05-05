@@ -56,11 +56,8 @@ public class ModuleRunner{
         Map<String, String> env = processBuilder.environment();
         module.setProcessEnvironment (env);
 
-       // processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(new File(outputpath + "/EAGER.log")));
 
         Process process = processBuilder.start();
-
-        //InputStream errorStream = process.getErrorStream();
 
         StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream(), System.out::println);
         StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(), (String l) -> { try { bfw.write(l);bfw.newLine(); } catch (IOException ioe) { System.out.println("Failed to read from Module error stream"+ioe.getMessage()); } });
@@ -76,7 +73,6 @@ public class ModuleRunner{
 
 
         if( returnCode == 0 ) { //Exit Value should be zero = normal
-            //bfw.write(handleErrorStreamOutput(errorStream));
             String outputText = "# Runtime of Module was: " + runtime_s + " seconds.";
 
             if (runtime_s > 60) {
@@ -91,7 +87,6 @@ public class ModuleRunner{
             bfw.close();
 
         } else { //Exit Value is not zero
-            //bfw.write(handleErrorStreamOutput(errorStream));
             String time = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
             String failText = "# The Module " + module.getModulename() + " failed in execution at " + time + ". Check what happened in the logfile.";
             process.destroy(); //We fail then

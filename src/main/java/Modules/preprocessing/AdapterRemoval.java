@@ -70,7 +70,7 @@ public class AdapterRemoval extends AModule {
         cmd.add("--adapter2");
         cmd.add(this.communicator.getMerge_bwadaptor());
         cmd.add("--minlength");
-        cmd.add(String.valueOf(this.communicator.getQuality_readlength()));
+        cmd.add(String.valueOf(this.communicator.getMerge_min_adapter_overlap()));
         cmd.add("--minquality");
         cmd.add(String.valueOf(this.communicator.getQuality_minreadquality()));
         cmd.add("--collapse");
@@ -110,7 +110,7 @@ public class AdapterRemoval extends AModule {
         cmd.add("--adapter2");
         cmd.add(this.communicator.getMerge_bwadaptor());
         cmd.add("--minlength");
-        cmd.add(String.valueOf(this.communicator.getQuality_readlength()));
+        cmd.add(String.valueOf(this.communicator.getMerge_min_adapter_overlap()));
         cmd.add("--minquality");
         cmd.add(String.valueOf(this.communicator.getQuality_minreadquality()));
         cmd.add("--combined-output");
@@ -142,7 +142,7 @@ public class AdapterRemoval extends AModule {
         cmd.add("--adapter2");
         cmd.add(this.communicator.getMerge_bwadaptor());
         cmd.add("--minlength");
-        cmd.add(String.valueOf(this.communicator.getQuality_readlength()));
+        cmd.add(String.valueOf(this.communicator.getMerge_min_adapter_overlap()));
         cmd.add("--minquality");
         cmd.add(String.valueOf(this.communicator.getQuality_minreadquality()));
 
