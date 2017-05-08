@@ -21,6 +21,8 @@ import exceptions.ModuleFailedException;
 
 import java.io.*;
 import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by peltzer on 22.01.14.
@@ -39,7 +41,8 @@ public class ModuleRunner{
             if(returnCode == 0 | containsNonStoppingModule(module.getModulename())){
                 runDependencyChecker(module.getOutputfolder(),module);
             } else {
-                throw new ModuleFailedException("Module " + module.getModulename() + " failed in execution. Check Logfile for details.");
+                String time = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                throw new ModuleFailedException("Module " + module.getModulename() + " failed in execution at " + time + ". Check Logfile for details.");
                 //Dont write DONE file if not succesfully terminated!
             }
         }
@@ -53,36 +56,39 @@ public class ModuleRunner{
         Map<String, String> env = processBuilder.environment();
         module.setProcessEnvironment (env);
 
-       // processBuilder.redirectError(ProcessBuilder.Redirect.appendTo(new File(outputpath + "/EAGER.log")));
 
         Process process = processBuilder.start();
 
-        InputStream errorStream = process.getErrorStream();
+        StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream(), System.out::println);
+        StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(), (String l) -> { try { bfw.write(l);bfw.newLine(); } catch (IOException ioe) { System.out.println("Failed to read from Module error stream"+ioe.getMessage()); } });
+
+        new Thread(outputGobbler).start();
+        new Thread(errorGobbler).start();
+
+        returnCode = process.waitFor();
+
+        long currtime_post_execution = System.currentTimeMillis();
+        long diff = currtime_post_execution - currtime_prior_execution;
+        long runtime_s = diff / 1000;
 
 
-        if((returnCode = process.waitFor()) == 0) { //Exit Value should be zero = normal
-            bfw.write(handleErrorStreamOutput(errorStream));
-            long currtime_post_execution = System.currentTimeMillis();
-            long diff = currtime_post_execution - currtime_prior_execution;
-            long runtime_s = diff / 1000;
+        if( returnCode == 0 ) { //Exit Value should be zero = normal
+            String outputText = "# Runtime of Module was: " + runtime_s + " seconds.";
+
             if (runtime_s > 60) {
                 long minutes = runtime_s / 60;
                 long seconds = runtime_s % 60;
-                String outputText = "# Runtime of Module was: " + minutes + " minutes, and " + seconds + " seconds.";
-                System.out.println(outputText);
-                bfw.write(outputText + "\n");
-                bfw.flush();
-
-            } else {
-                String outputText = "# Runtime of Module was: " + runtime_s + " seconds.";
-                System.out.println(outputText);
-                bfw.write(outputText + "\n");
-                bfw.flush();
+                outputText = "# Runtime of Module was: " + minutes + " minutes, and " + seconds + " seconds.";
             }
+
+            System.out.println(outputText);
+            bfw.write(outputText + "\n");
+            bfw.flush();
             bfw.close();
+
         } else { //Exit Value is not zero
-            bfw.write(handleErrorStreamOutput(errorStream));
-            String failText = "# The Module " + module.getModulename() + " failed in execution. Check what happened in the logfile.";
+            String time = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            String failText = "# The Module " + module.getModulename() + " failed in execution at " + time + ". Check what happened in the logfile.";
             process.destroy(); //We fail then
             System.out.println(failText);
             bfw.write(failText);
@@ -119,9 +125,8 @@ public class ModuleRunner{
 
 
     private boolean containsNonStoppingModule(String ModuleName){
-        for(Object mod : NonStoppingModules.values()){
-            String data = (String) mod;
-            if(ModuleName.equals(mod)){
+        for(NonStoppingModules mod : NonStoppingModules.values()){
+            if(ModuleName.equals(mod.toString())){
                 return true;
             }
         }
