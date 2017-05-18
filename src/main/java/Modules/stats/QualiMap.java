@@ -20,6 +20,7 @@ import IO.Communicator;
 import Modules.AModule;
 import com.google.common.io.Files;
 
+import java.util.Map;
 import java.util.ArrayList;
 
 /**
@@ -36,6 +37,11 @@ public class QualiMap extends AModule {
     public QualiMap(Communicator c, int currentconf){
         super(c);
         this.currentConf = currentconf;
+    }
+
+    @Override
+    public void setProcessEnvironment (Map<String, String> env) {
+        AModule.setEnvironmentForParameterDelete (env, "DISPLAY");
     }
 
     @Override

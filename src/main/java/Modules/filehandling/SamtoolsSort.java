@@ -20,6 +20,7 @@ import IO.Communicator;
 import Modules.AModule;
 import com.google.common.io.Files;
 
+import java.util.Map;
 import java.util.ArrayList;
 
 /**
@@ -41,6 +42,14 @@ public class SamtoolsSort extends AModule {
         this.currentConfiguration = config;
     }
 
+    @Override
+    public void setProcessEnvironment (Map<String, String> env) {
+        if ( !this.communicator.isUsesystemtmpdir() ) {
+            AModule.setEnvironmentForParameterReplace (env,
+                    "TMPDIR",
+                    getOutputfolder() + System.getProperty ("file.separator") + ".tmp");
+        }
+    }
 
     @Override
     public void setParameters() {
