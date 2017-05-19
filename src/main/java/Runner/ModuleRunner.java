@@ -45,6 +45,13 @@ public class ModuleRunner{
                 throw new ModuleFailedException("Module " + module.getModulename() + " failed in execution at " + time + ". Check Logfile for details.");
                 //Dont write DONE file if not succesfully terminated!
             }
+        } else {
+            FileWriter fw = new FileWriter(new File(module.getResultfolder()+"/EAGER.log"), true);
+            BufferedWriter bfw = new BufferedWriter(fw);
+            String notRunningText = "# The Module " + module.getModulename() + " has already been run! (i.e the command above was NOT executed)";
+            bfw.write(notRunningText);
+            bfw.flush();
+            bfw.close();
         }
     }
 
