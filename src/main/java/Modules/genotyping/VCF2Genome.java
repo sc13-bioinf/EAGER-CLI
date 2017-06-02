@@ -34,7 +34,7 @@ public class VCF2Genome extends AModule {
     public void setParameters() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
         String output_path = getOutputfolder();
-        String filename = Files.getNameWithoutExtension(this.inputfile.get(0)).substring(0,8);
+        String filename = Files.getNameWithoutExtension(this.inputfile.get(0));
 
        // -in -ref -draft -refMod -uncertain -minq -minc -minfreq -draftname -h
 
