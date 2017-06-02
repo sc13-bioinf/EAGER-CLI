@@ -113,4 +113,8 @@ public abstract class AModule {
     public static void setEnvironmentForParameterReplace (Map <String, String> env, String key, String value) {
         env.put(key, value);
     }
+
+    public static void setEnvironmentForParameterDelete (Map <String, String> env, String key) {
+        env.remove(key);
+    }
 }

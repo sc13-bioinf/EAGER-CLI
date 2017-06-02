@@ -30,17 +30,24 @@ public class CombineFastQ extends AModule{
         //stem would be WGS42_S0_L001_R1_001.fastq.gz (without gz)
         //PRC012.A0101_S0_L001_R1_001.fastq.gz
         String basename = getOutputfolder()+output_stem;
-        String zcatcombine = "zcat " + basename + ".collapsed.gz " +
-                                    basename+".collapsed.truncated.gz " +
-                                    basename+".singleton.truncated.gz " + " | gzip > " +
-                                    basename+ ".combined.fq.gz";
-        String[] params = new String[]{"/bin/sh", "-c", zcatcombine};
+
+        String zcatcombine = "zcat " +
+        basename + ".collapsed.gz " +
+        basename+".collapsed.truncated.gz ";
+
+        if (!this.communicator.isMerge_keep_only_merged()) {
+            zcatcombine += basename+".singleton.truncated.gz ";
+        }
+        zcatcombine += "| gzip > " + basename+ ".combined.fq.gz";
+
+
+                String[] params = new String[]{"/bin/sh", "-c", zcatcombine};
         return params;
     }
 
     @Override
     public String getOutputfolder() {
-        return this.communicator.getGUI_resultspath()+"/1-ClipAndMerge/";
+        return this.communicator.getGUI_resultspath()+"/1-AdapClip/";
     }
 
 }

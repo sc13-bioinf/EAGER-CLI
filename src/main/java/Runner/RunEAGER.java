@@ -809,7 +809,9 @@ public class RunEAGER {
         if (!this.communicator.getMapper_mapquality_filter().equals("0")) {
             pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.DEFAULT));
             pooltoadd.addModule(new Flagstat(communicator));
-            pooltoadd.addModule(new SamtoolsView(communicator, communicator.isMapper_filter_unmapped() ? SamtoolsView.ONLYMAPPED : SamtoolsView.DEFAULT));
+            if ( communicator.isMapper_filter_unmapped() ) {
+                pooltoadd.addModule(new SamtoolsView(communicator, SamtoolsView.ONLYMAPPED));
+            }
             pooltoadd.addModule(new SamtoolsSort(communicator, SamtoolsSort.UNFILTERED));
             pooltoadd.addModule(new SamtoolsIndex(communicator, SamtoolsIndex.UNFILTERED));
             // We want to retain the bam file before quality filtering, therefore only mapped must come before that and produce a bam
