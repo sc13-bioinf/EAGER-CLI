@@ -37,6 +37,10 @@ public class CombineFastQ extends AModule{
 
         if (!this.communicator.isMerge_keep_only_merged()) {
             zcatcombine += basename+".singleton.truncated.gz ";
+            if(this.communicator.getMerge_type().equals("PAIRED")) {
+                zcatcombine += basename+".pair1.truncated.gz ";
+                zcatcombine += basename+".pair2.truncated.gz ";
+            }
         }
         zcatcombine += "| gzip > " + basename+ ".combined.fq.gz";
 
