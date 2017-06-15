@@ -1101,10 +1101,10 @@ public class RunEAGER {
                 } else {
                     toadd.addModule(new AdapterRemoval(communicator, AdapterRemoval.ADAPTER_CLIPPING_ONLY));
                 }
+                toadd.addModule(new AdapterRemovalFixReadPrefix(communicator));
             } else {
                 toadd.addModule(new AdapterRemoval(communicator, AdapterRemoval.SINGLE_ENDED_ONLY));
-            }
-            toadd.addModule(new AdapterRemovalFixReadPrefix(communicator));
+            } 
         }
     }
 
