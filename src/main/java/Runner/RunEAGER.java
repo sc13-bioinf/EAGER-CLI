@@ -215,7 +215,7 @@ public class RunEAGER {
 
         if (communicator.isRun_coveragecalc() && communicator.isRun_mt_capture_mode()) {
             bacterialpool.addModule(new QualiMap(communicator,QualiMap.CAPTURE));
-        } else if (communicator.isRun_coveragecalc()) {
+        } else if (communicator.isRun_coveragecalc()&& communicator.isRun_mapping()) {
 
             bacterialpool.addModule(new QualiMap(communicator));
         }
@@ -379,7 +379,7 @@ public class RunEAGER {
 
         if (communicator.isRun_coveragecalc() && communicator.isRun_mt_capture_mode()) {
             ancientbacterialpool.addModule(new QualiMap(communicator,QualiMap.CAPTURE));
-        } else if (communicator.isRun_coveragecalc()) {
+        } else if (communicator.isRun_coveragecalc() && communicator.isRun_mapping()) {
             ancientbacterialpool.addModule(new QualiMap(communicator));
         }
 
@@ -536,7 +536,7 @@ public class RunEAGER {
         }
 
 
-        if (communicator.isRun_coveragecalc()) {
+        if (communicator.isRun_coveragecalc()&& communicator.isRun_mapping()) {
             if(communicator.isSnpcapturedata() || communicator.isRun_mt_capture_mode()){
                 humanmodernpool.addModule(new QualiMap(communicator,QualiMap.CAPTURE));
             } else {
@@ -712,7 +712,7 @@ public class RunEAGER {
         }
 
 
-        if (communicator.isRun_coveragecalc()) {
+        if (communicator.isRun_coveragecalc() && communicator.isRun_mapping()) {
             if(communicator.isSnpcapturedata() || communicator.isRun_mt_capture_mode()){
                 humanancientpool.addModule(new QualiMap(communicator,QualiMap.CAPTURE));
             } else {
