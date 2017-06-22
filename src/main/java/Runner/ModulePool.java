@@ -41,6 +41,7 @@ public class ModulePool {
     public ModulePool() {
         modulePool = new ArrayList<AModule>();
         listofPredecessors = new ArrayList<ModulePool>();
+        eager_version = getEager_version();
     }
 
     public void addModule(AModule mod) {
@@ -51,10 +52,8 @@ public class ModulePool {
         this.setCurrentFilePath(this.getModulePoolPaths());
         if ( modulePool.isEmpty() ) {
           ModulePool nonEmptyPool = listofPredecessors.stream().filter( p -> ! p.getModules().isEmpty() ).findAny().orElseThrow(() -> new RuntimeException("# This modulePool is empty and all of its predecessors are empty. Giving up attempt to create a log file"));
-          eager_version = nonEmptyPool.getModules().get(0).getCommunicator().getEager_version();
           fw = new FileWriter(nonEmptyPool.getModules().get(0).getResultfolder() + "/" + "EAGER.log", true);
         } else {
-          eager_version = modulePool.get(0).getCommunicator().getEager_version();
           fw = new FileWriter(modulePool.get(0).getResultfolder() + "/" + "EAGER.log", true);
         }
         bfw = new BufferedWriter(fw);
@@ -124,5 +123,11 @@ public class ModulePool {
             out += s+" ";
         }
         return out+"\n################\n#";
+    }
+
+    private String getEager_version() {
+        String version =  Runner.RunEAGER.class.getPackage().getImplementationVersion();
+        System.out.println(version);
+        return version;
     }
 }
