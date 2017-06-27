@@ -63,7 +63,7 @@ public class CleanUpRedundantData extends AModule {
         }
 
         return new String[] {
-                "/bin/sh", "-c", remove_sam_sai+remove_sam_data+remove_bam_unsorted_data
+                "/bin/sh", "-c", remove_sam_data + remove_sam_sai +remove_bam_unsorted_data
         };
     }
 
