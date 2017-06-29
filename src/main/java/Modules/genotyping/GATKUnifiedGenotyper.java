@@ -126,7 +126,7 @@ public class GATKUnifiedGenotyper extends AModule {
                 "-stand_call_conf", this.communicator.getGatk_standard_call_confidence(),
                 "--sample_ploidy", this.communicator.getGatk_ploidy(),
                 "-dcov", this.communicator.getGatk_downsampling(),
-                "--output_Mode EMIT_ALL_SITES",
+                "--output_mode EMIT_ALL_SITES",
                 this.communicator.getGatk_snp_advanced()};
     }
 
