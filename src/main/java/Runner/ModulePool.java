@@ -127,7 +127,6 @@ public class ModulePool {
 
     private String getEager_version() {
         String version =  Runner.RunEAGER.class.getPackage().getImplementationVersion();
-        System.out.println(version);
         return version;
     }
 }
