@@ -95,7 +95,6 @@ public class GATKHaplotypeCaller extends AModule {
                 "-nct", String.valueOf(this.communicator.getCpucores()),
                 "--sample_ploidy", this.communicator.getGatk_ploidy(),
                 "-stand_call_conf", this.communicator.getGatk_standard_call_confidence(),
-                "-stand_emit_conf", this.communicator.getGatk_standard_emit_confidence(),
                 this.communicator.getGatk_snp_advanced()};
     }
 
