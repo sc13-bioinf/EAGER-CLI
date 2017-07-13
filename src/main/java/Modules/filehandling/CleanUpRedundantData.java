@@ -43,27 +43,51 @@ public class CleanUpRedundantData extends AModule {
         String combiner = "; ";
         //This is to remove sam files, as these are just uncompressed BAM files and therefore are not required in the pipeline!
         //Afterwards we run touch with the name "DUMMY.SAM"
-        String remove_sam_data = "rm "+this.communicator.getGUI_resultspath()+"/3-Mapper/*.sam";
+        String remove_sam_data = "rm "+this.communicator.getGUI_resultspath()+"/3-Mapper/*.sam" + combiner;
         String remove_sam_sai =  "rm "+communicator.getGUI_resultspath()+"/3-Mapper/*.sai";
 
         String remove_bam_unsorted_data = combiner+"echo \"No bam dir found\"";
+
+        String remove_unprefixed_fastq_files = combiner+"echo \"No fastq dir found\"";
 
         File d = new File(this.communicator.getGUI_resultspath()+"/4-Samtools");
 
         if ( d.isDirectory() ) {
             remove_bam_unsorted_data = "";
             for (File f : d.listFiles()) {
-                if ( f.getName().endsWith(".bam") && !( f.getName().endsWith(".mappedonly.sorted.bam") || f.getName().endsWith(".mapped.sorted.bam") || f.getName().endsWith(".unmapped.bam")) || f.getName().endsWith(".qF.bam")) {
+                if ( f.getName().endsWith(".bam") && !( f.getName().endsWith(".mappedonly.sorted.bam") || f.getName().endsWith(".mapped.sorted.bam") || f.getName().endsWith(".extractunmapped.bam")) || f.getName().endsWith(".qF.bam")) {
                     remove_bam_unsorted_data += combiner+"rm " + f.getPath() + " ";
                 }
-                else if ( f.getName().endsWith(".bai") && !( f.getName().endsWith(".mappedonly.sorted.bam.bai") || f.getName().endsWith(".mapped.sorted.bam.bai") || f.getName().endsWith(".unmapped.bam.bai") || f.getName().endsWith(".qF.bam.bai"))) {
+                else if ( f.getName().endsWith(".bai") && !( f.getName().endsWith(".mappedonly.sorted.bam.bai") || f.getName().endsWith(".mapped.sorted.bam.bai") || f.getName().endsWith(".extractunmapped.bam.bai") || f.getName().endsWith(".qF.bam.bai"))) {
                     remove_bam_unsorted_data += combiner + "rm " + f.getPath();
                 }
             }
         }
 
+
+        //RMdup stuff
+
+        d = new File(this.communicator.getGUI_resultspath()+"/5-DeDup");
+
+        if ( d.isDirectory() ) {
+            for (File f : d.listFiles()) {
+                if(f.getName().endsWith("_rmdup.bam") && !f.getName().endsWith("_rmdup.sorted.bam") && communicator.isRmdup_run()){
+                    remove_bam_unsorted_data += combiner + "rm " + f.getPath();
+                }
+            }
+        }
+
+        remove_bam_unsorted_data += combiner;
+
+        File fq = new File(this.communicator.getGUI_resultspath() + "/1-AdapClip/*.combined.fq.gz");
+        remove_unprefixed_fastq_files = "";
+
+        if ( communicator.getMerge_tool().equals("AdapterRemoval") && communicator.getMerge_type().equals("PAIRED")){
+            remove_unprefixed_fastq_files += "rm " + fq + combiner;
+        }
+
         return new String[] {
-                "/bin/sh", "-c", remove_sam_data + combiner + remove_sam_sai  + remove_bam_unsorted_data
+                "/bin/sh", "-c", remove_sam_data + remove_sam_sai  + remove_bam_unsorted_data + remove_unprefixed_fastq_files
         };
     }
 
