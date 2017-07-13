@@ -44,7 +44,7 @@ public class CleanUpRedundantData extends AModule {
         //This is to remove sam files, as these are just uncompressed BAM files and therefore are not required in the pipeline!
         //Afterwards we run touch with the name "DUMMY.SAM"
         String remove_sam_data = "rm "+this.communicator.getGUI_resultspath()+"/3-Mapper/*.sam";
-        String remove_sam_sai = combiner + "rm "+communicator.getGUI_resultspath()+"/3-Mapper/*.sai";
+        String remove_sam_sai =  "rm "+communicator.getGUI_resultspath()+"/3-Mapper/*.sai";
 
         String remove_bam_unsorted_data = combiner+"echo \"No bam dir found\"";
 
@@ -63,7 +63,7 @@ public class CleanUpRedundantData extends AModule {
         }
 
         return new String[] {
-                "/bin/sh", "-c", remove_sam_data + remove_sam_sai +remove_bam_unsorted_data
+                "/bin/sh", "-c", remove_sam_data + combiner + remove_sam_sai  + remove_bam_unsorted_data
         };
     }
 
