@@ -61,12 +61,23 @@ public class CleanUpRedundantData extends AModule {
                 else if ( f.getName().endsWith(".bai") && !( f.getName().endsWith(".mappedonly.sorted.bam.bai") || f.getName().endsWith(".mapped.sorted.bam.bai") || f.getName().endsWith(".extractunmapped.bam.bai") || f.getName().endsWith(".qF.bam.bai"))) {
                     remove_bam_unsorted_data += combiner + "rm " + f.getPath();
                 }
+            }
+        }
+
+
+        //RMdup stuff
+
+        d = new File(this.communicator.getGUI_resultspath()+"/5-DeDup");
+
+        if ( d.isDirectory() ) {
+            for (File f : d.listFiles()) {
                 if(f.getName().endsWith("_rmdup.bam") && !f.getName().endsWith("_rmdup.sorted.bam") && communicator.isRmdup_run()){
                     remove_bam_unsorted_data += combiner + "rm " + f.getPath();
                 }
             }
-            remove_bam_unsorted_data += combiner;
         }
+
+        remove_bam_unsorted_data += combiner;
 
         File fq = new File(this.communicator.getGUI_resultspath() + "/1-AdapClip/*.combined.fq.gz");
         remove_unprefixed_fastq_files = "";
