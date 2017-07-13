@@ -59,6 +59,9 @@ public class CleanUpRedundantData extends AModule {
                 else if ( f.getName().endsWith(".bai") && !( f.getName().endsWith(".mappedonly.sorted.bam.bai") || f.getName().endsWith(".mapped.sorted.bam.bai") || f.getName().endsWith(".extractunmapped.bam.bai") || f.getName().endsWith(".qF.bam.bai"))) {
                     remove_bam_unsorted_data += combiner + "rm " + f.getPath();
                 }
+                if(f.getName().endsWith("_rmdup.bam") && !f.getName().contains("sorted") && communicator.isRmdup_run()){
+                    remove_bam_unsorted_data += combiner + "rm " + f.getPath();
+                }
             }
         }
 
