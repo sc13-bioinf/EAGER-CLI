@@ -53,10 +53,10 @@ public class CleanUpRedundantData extends AModule {
         if ( d.isDirectory() ) {
             remove_bam_unsorted_data = "";
             for (File f : d.listFiles()) {
-                if ( f.getName().endsWith(".bam") && !( f.getName().endsWith(".mappedonly.sorted.bam") || f.getName().endsWith(".mapped.sorted.bam") || f.getName().endsWith(".unmapped.bam")) || f.getName().endsWith(".qF.bam")) {
+                if ( f.getName().endsWith(".bam") && !( f.getName().endsWith(".mappedonly.sorted.bam") || f.getName().endsWith(".mapped.sorted.bam") || f.getName().endsWith(".extractunmapped.bam")) || f.getName().endsWith(".qF.bam")) {
                     remove_bam_unsorted_data += combiner+"rm " + f.getPath() + " ";
                 }
-                else if ( f.getName().endsWith(".bai") && !( f.getName().endsWith(".mappedonly.sorted.bam.bai") || f.getName().endsWith(".mapped.sorted.bam.bai") || f.getName().endsWith(".unmapped.bam.bai") || f.getName().endsWith(".qF.bam.bai"))) {
+                else if ( f.getName().endsWith(".bai") && !( f.getName().endsWith(".mappedonly.sorted.bam.bai") || f.getName().endsWith(".mapped.sorted.bam.bai") || f.getName().endsWith(".extractunmapped.bam.bai") || f.getName().endsWith(".qF.bam.bai"))) {
                     remove_bam_unsorted_data += combiner + "rm " + f.getPath();
                 }
             }
