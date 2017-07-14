@@ -1025,8 +1025,27 @@ public class RunEAGER {
         mp.addModule(new GATKIndelRealigner(communicator));
 
         if (communicator.getGatk_caller().equals("HaplotypeCaller")) {
-            mp.addModule(new GATKHaplotypeCaller(communicator));
-        } else {
+            if(communicator.isGatk_emit_all_confident_sites()){
+                if(communicator.isDbsnpreference()){
+                    mp.addModule(new GATKHaplotypeCaller(communicator, GATKHaplotypeCaller.EMIT_CONF_WITHDBSNP));
+                } else {
+                    mp.addModule(new GATKHaplotypeCaller(communicator, GATKHaplotypeCaller.EMIT_CONF_SITES));
+                }
+
+            } else if (communicator.isGatk_emit_all_sites()){
+                if(communicator.isDbsnpreference()){
+                    mp.addModule(new GATKHaplotypeCaller(communicator, GATKHaplotypeCaller.EMIT_ALL_WITHDBSNP));
+                } else {
+                    mp.addModule(new GATKHaplotypeCaller(communicator, GATKHaplotypeCaller.EMIT_ALL_SITES));
+                }
+            } else if((!communicator.isGatk_emit_all_confident_sites() && !communicator.isGatk_emit_all_sites())){
+                if(communicator.isDbsnpreference()){
+                    mp.addModule(new GATKHaplotypeCaller(communicator, GATKHaplotypeCaller.EMIT_DEFAULT_WITHDBSNP));
+                } else {
+                    mp.addModule(new GATKHaplotypeCaller(communicator, GATKHaplotypeCaller.DEFAULT));
+                }
+            }
+        } else { //UnifiedGenotyper case
             if (communicator.isGatk_emit_all_confident_sites()) {
                 if (communicator.isDbsnpreference()) {
                     mp.addModule(new GATKUnifiedGenotyper(communicator, GATKUnifiedGenotyper.EMIT_CONF_SITES_DBSNP));

@@ -33,6 +33,7 @@ public class GATKHaplotypeCaller extends AModule {
     public static final int EMIT_CONF_SITES = 2;
     public static final int EMIT_ALL_WITHDBSNP = 3;
     public static final int EMIT_CONF_WITHDBSNP = 4;
+    public static final int EMIT_DEFAULT_WITHDBSNP = 5;
 
     public GATKHaplotypeCaller(Communicator c) {
         super(c);
@@ -82,6 +83,10 @@ public class GATKHaplotypeCaller extends AModule {
                 this.parameters = getEmitConfwithDBSNP();
                 getTargetInformation();
                 break;
+            case EMIT_DEFAULT_WITHDBSNP:
+                this.parameters = getDefaultwithDBSNP();
+                getTargetInformation();
+                break;
         }
     }
 
@@ -97,6 +102,19 @@ public class GATKHaplotypeCaller extends AModule {
                 "-stand_call_conf", this.communicator.getGatk_standard_call_confidence(),
                 this.communicator.getGatk_snp_advanced()};
     }
+
+    private String[] getDefaultwithDBSNP() {
+        String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
+        String output_path = getOutputfolder();
+        return new String[]{"gatk", "-T", "HaplotypeCaller", "-R", this.communicator.getGUI_reference(),
+                "-I", this.inputfile.get(0), "--dbsnp", this.communicator.getGUI_GATKSNPreference(),
+                "-o", output_path + "/" + output_stem + ".haplotyper.vcf",
+                "-nct", String.valueOf(this.communicator.getCpucores()),
+                "--sample_ploidy", this.communicator.getGatk_ploidy(),
+                "-stand_call_conf", this.communicator.getGatk_standard_call_confidence(),
+                this.communicator.getGatk_snp_advanced()};
+    }
+
 
     private String[] getEmitAllwithoutDBSNP() {
         String output_stem = Files.getNameWithoutExtension(this.inputfile.get(0));
