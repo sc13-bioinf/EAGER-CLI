@@ -44,7 +44,7 @@ public final class FileSearcher {
         public FileVisitResult visitFile(Path aFile, BasicFileAttributes aAttrs
         ) throws IOException {
             if(!aFile.toFile().isDirectory()){
-                if(aFile.toFile().getAbsolutePath().endsWith(".xml") && !aFile.toFile().getAbsolutePath().startsWith(".")){
+                if(aFile.toFile().getAbsolutePath().endsWith(".xml") && !aFile.toFile().getAbsolutePath().startsWith(".") && !aFile.toFile().getName().startsWith(".")){
                     configuration_files.add(aFile.toString());
                 }
             }
