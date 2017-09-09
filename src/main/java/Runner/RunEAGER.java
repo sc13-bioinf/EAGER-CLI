@@ -1112,6 +1112,7 @@ public class RunEAGER {
             } else {
                 toadd.addModule(new ClipAndMerge(communicator, ClipAndMerge.SINGLE_ENDED_ONLY));
             }
+            toadd.addModule(new TrackFastQ(communicator));
         } else if(communicator.isRun_clipandmerge() && communicator.getMerge_tool().equals("AdapterRemoval")){
             if(communicator.getMerge_type().equals("PAIRED")){
                 if(!communicator.isMerge_only_clipping()){
@@ -1123,7 +1124,8 @@ public class RunEAGER {
                 toadd.addModule(new AdapterRemovalFixReadPrefix(communicator));
             } else {
                 toadd.addModule(new AdapterRemoval(communicator, AdapterRemoval.SINGLE_ENDED_ONLY));
-            } 
+            }
+            toadd.addModule(new TrackFastQ(communicator));
         }
     }
 
