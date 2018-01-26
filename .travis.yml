@@ -1,0 +1,15 @@
+language: java
+sudo: false
+jdk:
+- oraclejdk8
+script: gradle build
+env:
+- version=1.92.55
+deploy:
+  provider: releases
+  api_key:
+    secure: TZk9U6//r7pPQsAEbD94MSVA8F8pgxeuKGZwNFnNZDa5vX1dtHH5K+QaQF0pSeKBEeP+n/p65oE7b0UtRuRdT/olp7Cd97fZhrnUd5nJUXF/cLGKd65g/JJzDOungzDqON+uLFmBT/RClig1/S2VVuiya/jyxrx7Fb2hZyfljEhggLr8YIVsIZFPzTMb/uXLWJvQF9z4k/aL95CSvcjUyVmnfAylVCLtayQFKrSn18fWW2J1zEEoV7nn2Fyene5fvqCtAfEIEzAn6dkmmh8dIFMcVC/cOz6xWjMpvxPuXoDx8Pw0xMcABtyyEhxW6gmFejZi6cRmTkulQBfv9Xs5sih0chzy2/6HP33dmrl4L8L+BkmWordc52K2Hb1dTQ0Fu/xzpSGbd2Pw75YJuR+osP1nB+RLaVjhlnONJyEdLR/Y1sXIgYFYDNYpgc2EsmzP34OX3kQKPXsLNu4p+tb/CyGnC5zMMYgnixc6WImPFkBnJftlqeKZ+jqeW/kWyQrNJMhBBAkl47s/0hMFfkAUU8q3j9v1wzyp3LfYTqcQvNkytR4sCScS+AIAIQ8m+HuA0WEIQidL8qMVQ4WXxzZi5QNE4ogyvngXt+k+VOXt4SO8QEP2s+Hj51QG7hu0irwDj25V3vWFHt5lqSce6sv/g6syYmeAtPtIMJ0th4Luw80=
+  file: build/libs/EAGER-CLI-$version.jar
+  on:
+    tags: true
+    repo: apeltzer/EAGER-CLI
