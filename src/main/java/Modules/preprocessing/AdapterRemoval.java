@@ -65,6 +65,7 @@ public class AdapterRemoval extends AModule {
         cmd.add(this.communicator.getCpucores());
         cmd.add("--trimns");
         cmd.add("--trimqualities");
+        cmd.add("--preserve5p");
         cmd.add("--adapter1");
         cmd.add(this.communicator.getMerge_fwadaptor());
         cmd.add("--adapter2");
@@ -114,6 +115,7 @@ public class AdapterRemoval extends AModule {
         cmd.add(this.communicator.getCpucores());
         cmd.add("--trimns");
         cmd.add("--trimqualities");
+        cmd.add("--preserve5p");
         cmd.add("--adapter1");
         cmd.add(this.communicator.getMerge_fwadaptor());
         cmd.add("--adapter2");
@@ -155,6 +157,7 @@ public class AdapterRemoval extends AModule {
         cmd.add(this.communicator.getCpucores());
         cmd.add("--trimns");
         cmd.add("--trimqualities");
+        cmd.add("--preserve5p");
         cmd.add("--adapter1");
         cmd.add(this.communicator.getMerge_fwadaptor());
         cmd.add("--adapter2");
