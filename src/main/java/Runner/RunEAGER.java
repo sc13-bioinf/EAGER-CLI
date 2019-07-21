@@ -1124,6 +1124,7 @@ public class RunEAGER {
                 toadd.addModule(new AdapterRemovalFixReadPrefix(communicator));
             } else {
                 toadd.addModule(new AdapterRemoval(communicator, AdapterRemoval.SINGLE_ENDED_ONLY));
+                toadd.addModule(new AdapterRemovalFixReadPrefix(communicator));
             }
             toadd.addModule(new TrackFastQ(communicator));
         }
